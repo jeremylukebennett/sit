@@ -1,0 +1,322 @@
+
+$font-stack: 'Mada', sans-serif;
+$header-text: 'Mada', sans-serif;
+$main-button-color: #007AFF;
+$stop-button: #FF0068;
+$border-color: #979797;
+// font-family: 'Madurai', sans-serif;
+
+%label-text-extender{
+    font-family: $font-stack;
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+// Basic selectors ========================================================================================
+body {
+    font-family: $font-stack;
+    font-weight: 200;
+}
+
+
+
+// ID Selectors ========================================================================================
+#main-header {
+    font-weight: 400;
+    border-bottom: solid grey 1px;
+}
+
+// Header menu dropdown
+#dropdownMenu2 { 
+    color: black;
+    background-color: #ffffff;
+    border: none;
+    position: absolute;
+    right: 10%;
+    padding-bottom: 0em;
+    top: -1.2em;
+}
+
+#sliderData1 {
+    padding: 3em 0 0 0;
+}
+
+#sliderData2, #sliderData3 {
+    padding: 2em 0 0 0;
+}
+
+#sit-btn-container {
+
+    margin: 5em auto 0 auto; 
+}
+
+#duration-label {
+    display: block;
+}
+
+#testing-width {
+    width: 80%;
+    margin: auto;
+
+}
+
+h1#sit-header-title {
+    font-weight: 200;
+    margin-bottom: auto;
+    font-family: 'Mada', sans-serif;
+}
+
+
+
+#menu1, #menu2, #menu3 {
+    padding: 1.25rem 0 1.5rem 1.5rem;
+}
+
+// Class Selectors ========================================================================================
+.dropdown {
+    margin: 0 0 0 -9%;
+}
+
+.dropdown-menu {
+
+    position: absolute;
+    top: 0.7em;
+    left: -9em;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 10rem;
+    padding: .5rem 0;
+    margin: .125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .25rem;
+}
+
+.btn.btn-primary {
+    width: 13em;
+}
+
+.rangeSliderLabels {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.sliderListItemsDuration {
+    list-style: none;
+    margin: 0 1em 0 -2em;
+    font-size: 14px;
+}
+
+.sliderListItemsInterval {
+    list-style: none;
+    margin: 0 0.4em 0 -3.9em;
+    font-size: 14px;
+}
+
+.sliderListItemsSound {
+    list-style: none;
+    margin: 0 0 0 -2.7em;
+    font-size: 14px;
+}
+
+.slider-titles {
+    margin-bottom: 0em;
+    font-weight: 700;
+    font-size: 14px;
+    padding-bottom: 0em;
+}
+
+
+
+
+// Range Slider Stylings ========================================================================================
+
+// This code hides the original slider
+input[type=range] {
+    -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+    width: 98%; /* Specific width is required for Firefox. */
+    background: transparent; /* Otherwise white in Chrome */
+    margin: 0 0 1em 0;
+  }
+  
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+  }
+  
+  input[type=range]:focus {
+    outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+  }
+  
+  input[type=range]::-ms-track {
+    width: 100%;
+    cursor: pointer;
+  
+    /* Hides the slider so custom styles can be added */
+    background: transparent; 
+    border-color: transparent;
+    color: transparent;
+  }
+
+// This code restyles the thumb of the slider:
+/* Special styling for WebKit/Blink */
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    // border: 1px solid #D8D8D8;
+    height: 26px;
+    width: 26px;
+    border-radius: 40px;
+    background: #ffffff;
+    cursor: pointer;
+    margin-top: -11px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+    box-shadow: 1px 1px 10px #D8D8D8, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
+  }
+  
+  /* All the same stuff for Firefox */
+  input[type=range]::-moz-range-thumb {
+    // box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    border: 1px solid #000000;
+    height: 26px;
+    width: 26px;
+    border-radius: 40px;
+    background: #ffffff;
+    cursor: pointer;
+  }
+  
+  /* All the same stuff for IE */
+  input[type=range]::-ms-thumb {
+    // box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    border: 1px solid #000000;
+    height: 26px;
+    width: 26px;
+    border-radius: 40px;
+    background: #ffffff;
+    cursor: pointer;
+  }
+
+// This code styles the range slider's track
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 80%;
+    height: 3px;
+    cursor: pointer;
+    // box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    background: #007AFF;
+    border-radius: 1.3px;
+    border: 0.2px solid #010101;
+  }
+  
+  input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #367ebd;
+  }
+  
+  input[type=range]::-moz-range-track {
+    width: 80%;
+    height: 3px;
+    cursor: pointer;
+    // box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    background: #007AFF;
+    border-radius: 1.3px;
+    border: 0.2px solid #010101;
+  }
+  
+  input[type=range]::-ms-track {
+    width: 80%;
+    height: 3px;
+    cursor: pointer;
+    background: transparent;
+    border-color: transparent;
+    border-width: 16px 0;
+    color: transparent;
+  }
+  input[type=range]::-ms-fill-lower {
+    background: #2a6495;
+    border: 0.2px solid #010101;
+    border-radius: 2.6px;
+    // box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  }
+  input[type=range]:focus::-ms-fill-lower {
+    background: #007AFF;
+  }
+  input[type=range]::-ms-fill-upper {
+    background: #007AFF;
+    border: 0.2px solid #010101;
+    border-radius: 2.6px;
+    // box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  }
+  input[type=range]:focus::-ms-fill-upper {
+    background: #367ebd;
+  }
+
+
+
+
+
+
+
+// Media Query Breakpoints
+// Extra small devices (portrait phones, less than 576px)
+// No media query since this is the default in Bootstrap
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+    #main-header {
+        font-weight: 400;
+        // margin: 0 0 0 1%;
+    }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+    #main-header {
+        h1 {
+            font-weight: normal;
+            font-size: 70px;
+        }
+    }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {  
+
+    #main-header {
+        h1 {
+            font-weight: 400;
+            font-size: 80px;
+        }
+    }
+    #sit-btn {
+        font-size: 1.3em;
+    }
+}
+
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { 
+
+    #main-header {
+        #nav-bar-container{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            h1 {
+                font-weight: 400;
+                font-size: 110px;
+            }
+        }
+    }
+
+    #sit-btn {
+        font-size: 1.3em;
+        color: black;
+    }
+
+}

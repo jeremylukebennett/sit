@@ -1,10 +1,14 @@
 "use strict";
 let $ = require("jquery");
 
+let mainContainer = document.getElementById("mainContentDiv");
+
+
+
+
 // This prints the main content to the screen on initial load.
 function printMainScreen() {
 
-    let mainContainer = document.getElementById("mainContentDiv");
     mainContainer.innerHTML = `    
     <form id="sliderData1">
 
@@ -31,7 +35,7 @@ function printMainScreen() {
           <input id="slider2" type="range" min="0" max="5" value="0">
           <span></span>
           <ul class="rangeSliderLabels">
-              <li class="sliderListItemsInterval">None</li> 
+              <li class="sliderListItemsInterval" id="noneOption">None</li> 
               <li class="sliderListItemsInterval">1</li> 
               <li class="sliderListItemsInterval">2</li> 
               <li class="sliderListItemsInterval">3</li> 
@@ -59,14 +63,37 @@ function printMainScreen() {
 
       </form>
       
-      
+
       
       
       <div class="text-center" id="sit-btn-container">
         <button type="button" class="btn btn-primary" id="sit-btn">Sit!</button>
       </div>`;
 
-
 }
 
-module.exports = {printMainScreen};
+// function printButtonToPage() {
+
+// }
+
+function printTimerToPage() {
+  console.log("are we getting to the print dunction");
+  mainContainer.innerHTML = `<div id="countdownString">
+                              <div class="values text-center" id="countdownTime"></div>
+                            </div>`;
+
+  mainContainer.innerHTML += `<div class="text-center" id="sit-btn-container">
+                                <button class="btn btn-primary" id="stop-btn">Stop</button>
+                              </div>`;
+}
+
+function printAudioHTMLToPage() {
+  console.log("audio function");
+
+  mainContainer.innerHTML += `<audio id="myAudio">
+                                <source src="audioFiles/bassMarimba.mp3" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                              </audio>`;
+}
+
+module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage};

@@ -3,6 +3,7 @@ let printIt = require("./printToDom");
 let $ = require("jquery");
 var Timer = require('easytimer');
 var userSliderValue = require("./readSliderValue");
+let soundAlert = require("./playAudio");
 
 
 let timerDiv = document.getElementById("countdownString");
@@ -39,7 +40,9 @@ function timerInitialize() {
         });
 
         timer.addEventListener('targetAchieved', function (e) {
-        
+            console.log("times up");
+            soundAlert.alertLaunch();
+
         });
 
     }

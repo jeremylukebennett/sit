@@ -15,6 +15,8 @@ function countdownScreen() {
 
     // Prints the Timer and Stop button to the DOM
     printIt.printTimerToPage();
+    printIt.printAudioHTMLToPage();
+    
 
 
     sitCountdown.timerInitialize();

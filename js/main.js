@@ -3,6 +3,7 @@ let $ = require("jquery");
 let printIt = require("./printToDom");
 let startSit = require("./launchSit");
 let sliders = require("./readSliderValue");
+let soundAlerts = require("./playAudio");
 
 // Main Sit button at bottom of Home Page
 let sitButton = document.getElementById("sit-btn");

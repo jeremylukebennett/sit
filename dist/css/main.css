@@ -49,6 +49,9 @@ h1#sit-header-title {
   animation-duration: 1s;
   animation-name: slidein; }
 
+#countdownTime {
+  font-size: 6em; }
+
 .dropdown {
   margin: 0 0 0 -9%; }
 

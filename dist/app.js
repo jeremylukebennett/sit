@@ -16,6 +16,8 @@ function countdownScreen() {
 
     // Prints the Timer and Stop button to the DOM
     printIt.printTimerToPage();
+    printIt.printAudioHTMLToPage();
+    
 
 
     sitCountdown.timerInitialize();
@@ -26,12 +28,13 @@ function countdownScreen() {
 
 
 module.exports = {countdownScreen};
-},{"./printToDom":3,"./timer":5,"jquery":8}],2:[function(require,module,exports){
+},{"./printToDom":4,"./timer":6,"jquery":9}],2:[function(require,module,exports){
 "use strict";
 let $ = require("jquery");    
 let printIt = require("./printToDom");
 let startSit = require("./launchSit");
 let sliders = require("./readSliderValue");
+let soundAlerts = require("./playAudio");
 
 // Main Sit button at bottom of Home Page
 let sitButton = document.getElementById("sit-btn");
@@ -55,7 +58,38 @@ document.addEventListener("click", function(e){
 
 
 
-},{"./launchSit":1,"./printToDom":3,"./readSliderValue":4,"jquery":8}],3:[function(require,module,exports){
+},{"./launchSit":1,"./playAudio":3,"./printToDom":4,"./readSliderValue":5,"jquery":9}],3:[function(require,module,exports){
+"use strict";
+
+let printIt = require("./printToDom");
+
+
+let $ = require("jquery");
+
+function alertLaunch() {
+    console.log("play audio");
+    // printIt.printAudioHTMLToPage();
+
+    var x = document.getElementById("myAudio"); 
+    x.play(); 
+    // function playAudio() { 
+    // } 
+    
+    // function pauseAudio() { 
+    //     x.pause(); 
+    // }
+
+
+
+
+
+
+}
+
+
+
+module.exports = {alertLaunch};
+},{"./printToDom":4,"jquery":9}],4:[function(require,module,exports){
 "use strict";
 let $ = require("jquery");
 
@@ -136,16 +170,26 @@ function printMainScreen() {
 
 function printTimerToPage() {
   console.log("are we getting to the print dunction");
-  mainContainer.innerHTML = `    <div id="countdownString">
-              <div class="values"></div>
-              </div>`;
-  mainContainer.innerHTML += `      <div class="text-center" id="sit-btn-container">
-  <button class="btn btn-primary" id="stop-btn">Stop</button>
-</div>`;
+  mainContainer.innerHTML = `<div id="countdownString">
+                              <div class="values text-center" id="countdownTime"></div>
+                            </div>`;
+
+  mainContainer.innerHTML += `<div class="text-center" id="sit-btn-container">
+                                <button class="btn btn-primary" id="stop-btn">Stop</button>
+                              </div>`;
 }
 
-module.exports = {printMainScreen, printTimerToPage};
-},{"jquery":8}],4:[function(require,module,exports){
+function printAudioHTMLToPage() {
+  console.log("audio function");
+
+  mainContainer.innerHTML += `<audio id="myAudio">
+                                <source src="audioFiles/bassMarimba.mp3" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                              </audio>`;
+}
+
+module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage};
+},{"jquery":9}],5:[function(require,module,exports){
 "use strict";
 
 let $ = require("jquery");    
@@ -178,12 +222,13 @@ console.log("hi");
 
 
 // module.exports = {sendToTimer};
-},{"jquery":8}],5:[function(require,module,exports){
+},{"jquery":9}],6:[function(require,module,exports){
 "use strict";
 let printIt = require("./printToDom");
 let $ = require("jquery");
 var Timer = require('easytimer');
 var userSliderValue = require("./readSliderValue");
+let soundAlert = require("./playAudio");
 
 
 let timerDiv = document.getElementById("countdownString");
@@ -220,13 +265,15 @@ function timerInitialize() {
         });
 
         timer.addEventListener('targetAchieved', function (e) {
-        
+            console.log("times up");
+            soundAlert.alertLaunch();
+
         });
 
     }
 
     module.exports = {timerInitialize};
-},{"./printToDom":3,"./readSliderValue":4,"easytimer":6,"jquery":8}],6:[function(require,module,exports){
+},{"./playAudio":3,"./printToDom":4,"./readSliderValue":5,"easytimer":7,"jquery":9}],7:[function(require,module,exports){
 /**
  * @license easytimer.js v1.0
  * Created by Albert González
@@ -781,7 +828,7 @@ var Timer = (
     }(module)
 );
 
-},{"events":7}],7:[function(require,module,exports){
+},{"events":8}],8:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -1085,7 +1132,7 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v3.3.1
  * https://jquery.com/

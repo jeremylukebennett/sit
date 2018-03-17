@@ -1,10 +1,49 @@
 (function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
 "use strict";
+
+let $ = require("jquery");    
+
+
+
+function countdownScreen() {
+    console.log("is this on?");
+
+// Clears Home Page
+    let mainContent = document.getElementById("mainContentDiv");
+    let stopButton = `      <div class="text-center" id="sit-btn-container">
+    <button class="btn btn-primary" id="stop-btn">Stop</button>
+  </div>`;
+    mainContent.innerHTML = ``;
+
+    // mainContent.innerHTML = `<p>Hello</p>`;
+
+    $(mainContent).append(stopButton);
+
+}
+
+
+
+
+module.exports = {countdownScreen};
+},{"jquery":4}],2:[function(require,module,exports){
+"use strict";
 let $ = require("jquery");    
 let printIt = require("./printToDom");
+let startSit = require("./launchSit");
+
+// Main Sit button at bottom of Home Page
+let sitButton = document.getElementById("sit-btn");
+
 
 printIt.printMainScreen();
-},{"./printToDom":2,"jquery":3}],2:[function(require,module,exports){
+
+// Launch Sit Button function
+document.addEventListener("click", function(e){
+    if(e.target.id === "sit-btn") {
+        startSit.countdownScreen();
+    }
+});
+},{"./launchSit":1,"./printToDom":3,"jquery":4}],3:[function(require,module,exports){
 "use strict";
 let $ = require("jquery");
 
@@ -73,11 +112,10 @@ function printMainScreen() {
         <button type="button" class="btn btn-primary" id="sit-btn">Sit!</button>
       </div>`;
 
-
 }
 
 module.exports = {printMainScreen};
-},{"jquery":3}],3:[function(require,module,exports){
+},{"jquery":4}],4:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v3.3.1
  * https://jquery.com/
@@ -10443,4 +10481,4 @@ if ( !noGlobal ) {
 return jQuery;
 } );
 
-},{}]},{},[1]);
+},{}]},{},[2]);

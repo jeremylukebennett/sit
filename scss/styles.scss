@@ -72,6 +72,13 @@ h1#sit-header-title {
     padding: 1.25rem 0 1.5rem 1.5rem;
 }
 
+#stop-btn {
+    background-color: #FF0068;
+    border: none;
+    animation-duration: 1s;
+    animation-name: slidein;
+}
+
 // Class Selectors ========================================================================================
 .dropdown {
     margin: 0 0 0 -9%;
@@ -255,9 +262,19 @@ input[type=range]::-webkit-slider-runnable-track {
     background: #367ebd;
   }
 
+// Animations ========================================================================================================
 
-
-
+@keyframes slidein {
+    from {
+      margin-left: 100%;
+      width: 30%; 
+    }
+  
+    to {
+      margin-left: 0%;
+      width: 13em;
+    }
+  }
 
 
 

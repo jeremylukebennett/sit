@@ -39,6 +39,12 @@ h1#sit-header-title {
 #menu1, #menu2, #menu3 {
   padding: 1.25rem 0 1.5rem 1.5rem; }
 
+#stop-btn {
+  background-color: #FF0068;
+  border: none;
+  animation-duration: 1s;
+  animation-name: slidein; }
+
 .dropdown {
   margin: 0 0 0 -9%; }
 
@@ -190,6 +196,13 @@ input[type=range]::-ms-fill-upper {
 input[type=range]:focus::-ms-fill-upper {
   background: #367ebd; }
 
+@keyframes slidein {
+  from {
+    margin-left: 100%;
+    width: 30%; }
+  to {
+    margin-left: 0%;
+    width: 13em; } }
 @media (min-width: 576px) {
   #main-header {
     font-weight: 400; } }

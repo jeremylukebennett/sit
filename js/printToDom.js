@@ -66,7 +66,6 @@ function printMainScreen() {
         <button type="button" class="btn btn-primary" id="sit-btn">Sit!</button>
       </div>`;
 
-
 }
 
 module.exports = {printMainScreen};

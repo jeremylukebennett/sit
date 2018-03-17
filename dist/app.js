@@ -3,30 +3,22 @@
 
 let $ = require("jquery");   
 let printIt = require("./printToDom");
- 
 let sitCountdown = require("./timer");    
 
 
 
 function countdownScreen() {
-    console.log("is this on?");
 
-    console.log("should've printed");
-// Clears Home Page
     let mainContent = document.getElementById("mainContentDiv");
-//     let stopButton = `      <div class="text-center" id="sit-btn-container">
-//     <button class="btn btn-primary" id="stop-btn">Stop</button>
-//   </div>`;
 
-
+    // Clears Home Page DOM
     mainContent.innerHTML = ``;
 
-    // mainContent.innerHTML = `<p>Hello</p>`;
-
-    // $(mainContent).append(stopButton);
+    // Prints the Timer and Stop button to the DOM
     printIt.printTimerToPage();
 
-    // sitCountdown.timerInitialize(createCountdownDiv);
+
+    sitCountdown.timerInitialize();
 
 }
 
@@ -145,33 +137,34 @@ module.exports = {printMainScreen, printTimerToPage};
 },{"jquery":7}],4:[function(require,module,exports){
 "use strict";
 let printIt = require("./printToDom");
-let $ = require("jquery");    
-
-
+let $ = require("jquery");
 var Timer = require('easytimer');
+
+
+let timerDiv = document.getElementById("countdownString");
 
 // Countdown timer 
 function timerInitialize() {
     console.log("timer function starts");
     // console.log(myDiv);
 
-    printIt.printTimerToPage();
+    // printIt.printTimerToPage();
 
 
     var timer = new Timer();
 
-console.log(document.getElementById("countdownString"));
+// console.log(document.getElementById("countdownString"));
 
-        // timer.start({countdown: true, startValues: {seconds: 5}});
-        // $('#countdownString .values').html(timer.getTimeValues().toString());
+        timer.start({countdown: true, startValues: {seconds: 5}});
+        $('#countdownString .values').html(timer.getTimeValues().toString());
 
-        // timer.addEventListener('secondsUpdated', function (e) {
-        //     $('#countdownString .values').html(timer.getTimeValues().toString());
-        // });
+        timer.addEventListener('secondsUpdated', function (e) {
+            $('#countdownString .values').html(timer.getTimeValues().toString());
+        });
 
-        // timer.addEventListener('targetAchieved', function (e) {
+        timer.addEventListener('targetAchieved', function (e) {
         
-        // });
+        });
     }
 
     module.exports = {timerInitialize};

@@ -26,11 +26,12 @@ function countdownScreen() {
 
 
 module.exports = {countdownScreen};
-},{"./printToDom":3,"./timer":4,"jquery":7}],2:[function(require,module,exports){
+},{"./printToDom":3,"./timer":5,"jquery":8}],2:[function(require,module,exports){
 "use strict";
 let $ = require("jquery");    
 let printIt = require("./printToDom");
 let startSit = require("./launchSit");
+let sliders = require("./readSliderValue");
 
 // Main Sit button at bottom of Home Page
 let sitButton = document.getElementById("sit-btn");
@@ -44,7 +45,17 @@ document.addEventListener("click", function(e){
         startSit.countdownScreen();
     }
 });
-},{"./launchSit":1,"./printToDom":3,"jquery":7}],3:[function(require,module,exports){
+
+// let durationValues = [5, 10, 15, 20, 25, 30]; 
+// $("#slider1").change(function(){
+
+//     // .text(values[this.value]);
+// console.log(durationValues[this.value]);
+// });
+
+
+
+},{"./launchSit":1,"./printToDom":3,"./readSliderValue":4,"jquery":8}],3:[function(require,module,exports){
 "use strict";
 let $ = require("jquery");
 
@@ -82,7 +93,7 @@ function printMainScreen() {
           <input id="slider2" type="range" min="0" max="5" value="0">
           <span></span>
           <ul class="rangeSliderLabels">
-              <li class="sliderListItemsInterval">None</li> 
+              <li class="sliderListItemsInterval" id="noneOption">None</li> 
               <li class="sliderListItemsInterval">1</li> 
               <li class="sliderListItemsInterval">2</li> 
               <li class="sliderListItemsInterval">3</li> 
@@ -134,26 +145,72 @@ function printTimerToPage() {
 }
 
 module.exports = {printMainScreen, printTimerToPage};
-},{"jquery":7}],4:[function(require,module,exports){
+},{"jquery":8}],4:[function(require,module,exports){
+"use strict";
+
+let $ = require("jquery");    
+
+
+console.log("hi");
+// let durationValues = [5, 10, 15, 20, 25, 30]; 
+
+
+
+
+
+
+// function sendToTimer(){
+//     $(window).bind("load", function() {
+//         $("#slider1").change(function(){
+//             let userDurationChoice = durationValues[this.value];
+//             console.log(durationValues[this.value]);
+//         });        
+//     });
+
+// }
+
+
+
+
+
+
+
+
+
+// module.exports = {sendToTimer};
+},{"jquery":8}],5:[function(require,module,exports){
 "use strict";
 let printIt = require("./printToDom");
 let $ = require("jquery");
 var Timer = require('easytimer');
+var userSliderValue = require("./readSliderValue");
 
 
 let timerDiv = document.getElementById("countdownString");
 
+// This is not working. Its meant to capture the value of the first range slider and send it into the timerInitialize function
+
+let durationValues = [5, 10, 15, 20, 25, 30]; 
+
+
+let myPick = $(window).on("load", function() {
+     
+    $("#slider1").change(function(){
+        console.log(durationValues[this.value]);  
+    });      
+});
+
+
+
+console.log(myPick);
+
+
 // Countdown timer 
 function timerInitialize() {
     console.log("timer function starts");
-    // console.log(myDiv);
-
-    // printIt.printTimerToPage();
 
 
     var timer = new Timer();
-
-// console.log(document.getElementById("countdownString"));
 
         timer.start({countdown: true, startValues: {seconds: 5}});
         $('#countdownString .values').html(timer.getTimeValues().toString());
@@ -165,10 +222,11 @@ function timerInitialize() {
         timer.addEventListener('targetAchieved', function (e) {
         
         });
+
     }
 
     module.exports = {timerInitialize};
-},{"./printToDom":3,"easytimer":5,"jquery":7}],5:[function(require,module,exports){
+},{"./printToDom":3,"./readSliderValue":4,"easytimer":6,"jquery":8}],6:[function(require,module,exports){
 /**
  * @license easytimer.js v1.0
  * Created by Albert González
@@ -723,7 +781,7 @@ var Timer = (
     }(module)
 );
 
-},{"events":6}],6:[function(require,module,exports){
+},{"events":7}],7:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -1027,7 +1085,7 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v3.3.1
  * https://jquery.com/

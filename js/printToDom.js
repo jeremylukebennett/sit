@@ -35,7 +35,7 @@ function printMainScreen() {
           <input id="slider2" type="range" min="0" max="5" value="0">
           <span></span>
           <ul class="rangeSliderLabels">
-              <li class="sliderListItemsInterval">None</li> 
+              <li class="sliderListItemsInterval" id="noneOption">None</li> 
               <li class="sliderListItemsInterval">1</li> 
               <li class="sliderListItemsInterval">2</li> 
               <li class="sliderListItemsInterval">3</li> 

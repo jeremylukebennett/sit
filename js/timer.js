@@ -2,21 +2,34 @@
 let printIt = require("./printToDom");
 let $ = require("jquery");
 var Timer = require('easytimer');
+var userSliderValue = require("./readSliderValue");
 
 
 let timerDiv = document.getElementById("countdownString");
 
+// This is not working. Its meant to capture the value of the first range slider and send it into the timerInitialize function
+
+let durationValues = [5, 10, 15, 20, 25, 30]; 
+
+
+let myPick = $(window).on("load", function() {
+     
+    $("#slider1").change(function(){
+        console.log(durationValues[this.value]);  
+    });      
+});
+
+
+
+console.log(myPick);
+
+
 // Countdown timer 
 function timerInitialize() {
     console.log("timer function starts");
-    // console.log(myDiv);
-
-    // printIt.printTimerToPage();
 
 
     var timer = new Timer();
-
-// console.log(document.getElementById("countdownString"));
 
         timer.start({countdown: true, startValues: {seconds: 5}});
         $('#countdownString .values').html(timer.getTimeValues().toString());
@@ -28,6 +41,7 @@ function timerInitialize() {
         timer.addEventListener('targetAchieved', function (e) {
         
         });
+
     }
 
     module.exports = {timerInitialize};

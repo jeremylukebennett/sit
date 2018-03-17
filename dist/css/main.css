@@ -27,6 +27,10 @@ body {
 #duration-label {
   display: block; }
 
+#noneOption {
+  position: relative;
+  left: 1em; }
+
 #testing-width {
   width: 80%;
   margin: auto; }

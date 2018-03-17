@@ -46,12 +46,16 @@ body {
 }
 
 #sit-btn-container {
-
     margin: 5em auto 0 auto; 
 }
 
 #duration-label {
     display: block;
+}
+
+#noneOption {
+    position: relative;
+    left: 1em;
 }
 
 #testing-width {
@@ -65,8 +69,6 @@ h1#sit-header-title {
     margin-bottom: auto;
     font-family: 'Mada', sans-serif;
 }
-
-
 
 #menu1, #menu2, #menu3 {
     padding: 1.25rem 0 1.5rem 1.5rem;

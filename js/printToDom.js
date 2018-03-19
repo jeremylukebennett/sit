@@ -102,7 +102,12 @@ function printAudioHTMLToPage() {
   console.log("audio function");
 
   mainContainer.innerHTML += `<audio id="myAudio">
-                                <source src="audioFiles/gradualBells.mp3" type="audio/mpeg">
+                                <source src="audioFiles/gradualTone.mp3" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                              </audio>`;
+
+  mainContainer.innerHTML += `<audio id="myIntervalAudio">
+                                <source src="audioFiles/singleTone.mp3" type="audio/mpeg">
                                 Your browser does not support the audio element.
                               </audio>`;
 }

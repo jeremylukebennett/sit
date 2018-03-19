@@ -16,6 +16,7 @@ $border-color: #979797;
 body {
     font-family: $font-stack;
     font-weight: 200;
+    background-color: #F5EFE3;
 }
 
 
@@ -29,7 +30,7 @@ body {
 // Header menu dropdown
 #dropdownMenu2 { 
     color: black;
-    background-color: #ffffff;
+    background-color: #F5EFE3;
     border: none;
     position: absolute;
     right: 10%;
@@ -83,6 +84,7 @@ h1#sit-header-title {
 
 #countdownTime {
     font-size: 6em;
+    margin: 1em 0 0 0;
 }
 
 // Class Selectors ========================================================================================
@@ -186,7 +188,7 @@ input[type=range]::-webkit-slider-thumb {
     height: 26px;
     width: 26px;
     border-radius: 40px;
-    background: #ffffff;
+    background:#6D6B6A;
     cursor: pointer;
     margin-top: -11px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
     box-shadow: 1px 1px 10px #D8D8D8, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
@@ -199,7 +201,7 @@ input[type=range]::-webkit-slider-thumb {
     height: 26px;
     width: 26px;
     border-radius: 40px;
-    background: #ffffff;
+    background: #F5EFE3;
     cursor: pointer;
   }
   
@@ -210,7 +212,7 @@ input[type=range]::-webkit-slider-thumb {
     height: 26px;
     width: 26px;
     border-radius: 40px;
-    background: #ffffff;
+    background: #F5EFE3;
     cursor: pointer;
   }
 

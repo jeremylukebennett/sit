@@ -66,33 +66,28 @@ document.addEventListener("click", function(e){
 "use strict";
 
 let printIt = require("./printToDom");
-
-
 let $ = require("jquery");
 
 function alertLaunch() {
     console.log("play audio");
-    // printIt.printAudioHTMLToPage();
 
-    var x = document.getElementById("myAudio"); 
-    x.play(); 
-    // function playAudio() { 
-    // } 
-    
-    // function pauseAudio() { 
-    //     x.pause(); 
-    // }
+    let x = document.getElementById("myAudio"); 
+        x.play(); 
+    }
 
 
+    function intervalAlertLaunch() {
+    console.log("play audio");
 
-
-
-
-}
+    let y = document.getElementById("myIntervalAudio"); 
+        
+        y.pause(); 
+        y.play(); 
+    }
 
 
 
-module.exports = {alertLaunch};
+module.exports = {alertLaunch, intervalAlertLaunch};
 },{"./printToDom":4,"jquery":9}],4:[function(require,module,exports){
 "use strict";
 let $ = require("jquery");
@@ -198,7 +193,12 @@ function printAudioHTMLToPage() {
   console.log("audio function");
 
   mainContainer.innerHTML += `<audio id="myAudio">
-                                <source src="audioFiles/gradualBells.mp3" type="audio/mpeg">
+                                <source src="audioFiles/gradualTone.mp3" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                              </audio>`;
+
+  mainContainer.innerHTML += `<audio id="myIntervalAudio">
+                                <source src="audioFiles/singleTone.mp3" type="audio/mpeg">
                                 Your browser does not support the audio element.
                               </audio>`;
 }
@@ -248,36 +248,41 @@ let soundAlert = require("./playAudio");
 
 let timerDiv = document.getElementById("countdownString");
 
-// This is not working. Its meant to capture the value of the first range slider and send it into the timerInitialize function
-
+// Main alarm slider settings
+let intervalFlag = true;
 let durationValues = [5, 10, 15, 20, 25, 30];
+let newDuration;
 
 
+$(document).on("change", "#slider1", ()=>{
+    let newVal = $("#slider1").val();
+    console.log(durationValues[newVal]);
+    newDuration = durationValues[newVal];
+    
+});   
 
+// Interval Slider Settings
+
+let intervalDurationValues = [0, 1, 2, 3, 4, 5];
+let newIntervalDuration;
+
+$(document).on("change", "#slider2", ()=>{
+    let newVal = $("#slider2").val();
+    console.log(intervalDurationValues[newVal]);
+    newIntervalDuration = intervalDurationValues[newVal];
+    
+});  
+
+    
 
 // Countdown timer 
 function timerInitialize() {
     console.log("timer function starts");
-    
-    // $(document).on("load", "#slider1", ()=>{
-    //     let newVal = $("#slider1").val();
-    //     console.log(durationValues[newVal]);
-        
-        // $(document).on("change", "#slider1", ()=>{
-            //     let newVal = $("#slider1").val();
-            //     console.log(durationValues[newVal]);
-            // });   
-            
-            
-            // console.log("are we this far?");
 
-    // var testVal = document.getElementById("slider1").value;
-    // console.log(testVal);
-
-
+// Main Timer
     var timer = new Timer();
 
-        timer.start({countdown: true, startValues: {seconds: 5}});
+        timer.start({countdown: true, startValues: {seconds: newDuration}});
         $('#countdownString .values').html(timer.getTimeValues().toString());
 
         timer.addEventListener('secondsUpdated', function (e) {
@@ -286,16 +291,18 @@ function timerInitialize() {
 
         timer.addEventListener('targetAchieved', function (e) {
             console.log("times up");
+            intervalFlag = false;
             soundAlert.alertLaunch();
 
         });
-
 
         // This is a Pause function. Still need a back to home function.
         document.addEventListener("click", function(e){
             if(e.target.id === "pause-btn") {
                 printIt.printResumeButtonToPage();
                 timer.pause();
+                intervalFlag = false;
+
                 // $("#pause-id").hide();
                 // printIt.printMainScreen();
             }
@@ -308,19 +315,32 @@ function timerInitialize() {
             }
         });
 
-
-
-
         document.addEventListener("click", function(e){
             if(e.target.id === "stop-btn") {
                 timer.stop();
+                intervalFlag = false;
                 printIt.printMainScreen();
             }
         });
+// Interval Timer
 
-    // }); 
 
+
+    function runInterval() {
+        if(intervalFlag) {
+            var intervalTimer = new Timer();
+            intervalTimer.start({countdown: true, startValues: {seconds: newIntervalDuration}});
+            intervalTimer.addEventListener('targetAchieved', function (e) {
+                console.log("INTERVAL");
+                soundAlert.intervalAlertLaunch();
+                runInterval();
+            });
+        }
     }
+
+    runInterval();
+
+}
 
     module.exports = {timerInitialize};
 },{"./playAudio":3,"./printToDom":4,"./readSliderValue":5,"easytimer":7,"jquery":9}],7:[function(require,module,exports){

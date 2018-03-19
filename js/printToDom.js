@@ -83,17 +83,28 @@ function printTimerToPage() {
                             </div>`;
 
   mainContainer.innerHTML += `<div class="text-center" id="sit-btn-container">
-                                <button class="btn btn-primary" id="stop-btn">Stop</button>
+                                <button class="btn btn-primary" id="pause-btn">Pause</button>
                               </div>`;
+
+mainContainer.innerHTML += `<div class="text-center" id="sit-btn-container">
+                                <button class="btn btn-primary" id="stop-btn">Stop</button>
+                            </div>`;
+}
+
+function printResumeButtonToPage() {
+  console.log("resume yet?");
+  mainContainer.innerHTML += `<div class="text-center" id="sit-btn-container">
+                                <button class="btn btn-primary" id="resume-btn">Resume</button>
+                            </div>`;
 }
 
 function printAudioHTMLToPage() {
   console.log("audio function");
 
   mainContainer.innerHTML += `<audio id="myAudio">
-                                <source src="audioFiles/bassMarimba.mp3" type="audio/mpeg">
+                                <source src="audioFiles/gradualBells.mp3" type="audio/mpeg">
                                 Your browser does not support the audio element.
                               </audio>`;
 }
 
-module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage};
+module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage};

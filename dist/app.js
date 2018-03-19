@@ -35,6 +35,9 @@ let printIt = require("./printToDom");
 let startSit = require("./launchSit");
 let sliders = require("./readSliderValue");
 let soundAlerts = require("./playAudio");
+var Timer = require('easytimer');
+let timerTools = require('./timer');
+
 
 // Main Sit button at bottom of Home Page
 let sitButton = document.getElementById("sit-btn");
@@ -49,6 +52,7 @@ document.addEventListener("click", function(e){
     }
 });
 
+
 // let durationValues = [5, 10, 15, 20, 25, 30]; 
 // $("#slider1").change(function(){
 
@@ -58,7 +62,7 @@ document.addEventListener("click", function(e){
 
 
 
-},{"./launchSit":1,"./playAudio":3,"./printToDom":4,"./readSliderValue":5,"jquery":9}],3:[function(require,module,exports){
+},{"./launchSit":1,"./playAudio":3,"./printToDom":4,"./readSliderValue":5,"./timer":6,"easytimer":7,"jquery":9}],3:[function(require,module,exports){
 "use strict";
 
 let printIt = require("./printToDom");
@@ -175,20 +179,31 @@ function printTimerToPage() {
                             </div>`;
 
   mainContainer.innerHTML += `<div class="text-center" id="sit-btn-container">
-                                <button class="btn btn-primary" id="stop-btn">Stop</button>
+                                <button class="btn btn-primary" id="pause-btn">Pause</button>
                               </div>`;
+
+mainContainer.innerHTML += `<div class="text-center" id="sit-btn-container">
+                                <button class="btn btn-primary" id="stop-btn">Stop</button>
+                            </div>`;
+}
+
+function printResumeButtonToPage() {
+  console.log("resume yet?");
+  mainContainer.innerHTML += `<div class="text-center" id="sit-btn-container">
+                                <button class="btn btn-primary" id="resume-btn">Resume</button>
+                            </div>`;
 }
 
 function printAudioHTMLToPage() {
   console.log("audio function");
 
   mainContainer.innerHTML += `<audio id="myAudio">
-                                <source src="audioFiles/bassMarimba.mp3" type="audio/mpeg">
+                                <source src="audioFiles/gradualBells.mp3" type="audio/mpeg">
                                 Your browser does not support the audio element.
                               </audio>`;
 }
 
-module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage};
+module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage};
 },{"jquery":9}],5:[function(require,module,exports){
 "use strict";
 
@@ -235,24 +250,29 @@ let timerDiv = document.getElementById("countdownString");
 
 // This is not working. Its meant to capture the value of the first range slider and send it into the timerInitialize function
 
-let durationValues = [5, 10, 15, 20, 25, 30]; 
+let durationValues = [5, 10, 15, 20, 25, 30];
 
 
-let myPick = $(window).on("load", function() {
-     
-    $("#slider1").change(function(){
-        console.log(durationValues[this.value]);  
-    });      
-});
-
-
-
-console.log(myPick);
 
 
 // Countdown timer 
 function timerInitialize() {
     console.log("timer function starts");
+    
+    // $(document).on("load", "#slider1", ()=>{
+    //     let newVal = $("#slider1").val();
+    //     console.log(durationValues[newVal]);
+        
+        // $(document).on("change", "#slider1", ()=>{
+            //     let newVal = $("#slider1").val();
+            //     console.log(durationValues[newVal]);
+            // });   
+            
+            
+            // console.log("are we this far?");
+
+    // var testVal = document.getElementById("slider1").value;
+    // console.log(testVal);
 
 
     var timer = new Timer();
@@ -269,6 +289,36 @@ function timerInitialize() {
             soundAlert.alertLaunch();
 
         });
+
+
+        // This is a Pause function. Still need a back to home function.
+        document.addEventListener("click", function(e){
+            if(e.target.id === "pause-btn") {
+                printIt.printResumeButtonToPage();
+                timer.pause();
+                // $("#pause-id").hide();
+                // printIt.printMainScreen();
+            }
+        });
+
+        document.addEventListener("click", function(e){
+            if(e.target.id === "resume-btn") {
+                timer.start();
+                // printIt.printMainScreen();
+            }
+        });
+
+
+
+
+        document.addEventListener("click", function(e){
+            if(e.target.id === "stop-btn") {
+                timer.stop();
+                printIt.printMainScreen();
+            }
+        });
+
+    // }); 
 
     }
 

@@ -1,6 +1,7 @@
 body {
   font-family: "Mada", sans-serif;
-  font-weight: 200; }
+  font-weight: 200;
+  background-color: #F5EFE3; }
 
 #main-header {
   font-weight: 400;
@@ -8,7 +9,7 @@ body {
 
 #dropdownMenu2 {
   color: black;
-  background-color: #ffffff;
+  background-color: #F5EFE3;
   border: none;
   position: absolute;
   right: 10%;
@@ -50,7 +51,8 @@ h1#sit-header-title {
   animation-name: slidein; }
 
 #countdownTime {
-  font-size: 6em; }
+  font-size: 6em;
+  margin: 1em 0 0 0; }
 
 .dropdown {
   margin: 0 0 0 -9%; }
@@ -134,7 +136,7 @@ input[type=range]::-webkit-slider-thumb {
   height: 26px;
   width: 26px;
   border-radius: 40px;
-  background: #ffffff;
+  background: #6D6B6A;
   cursor: pointer;
   margin-top: -11px;
   /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
@@ -147,7 +149,7 @@ input[type=range]::-moz-range-thumb {
   height: 26px;
   width: 26px;
   border-radius: 40px;
-  background: #ffffff;
+  background: #F5EFE3;
   cursor: pointer; }
 
 /* All the same stuff for IE */
@@ -156,7 +158,7 @@ input[type=range]::-ms-thumb {
   height: 26px;
   width: 26px;
   border-radius: 40px;
-  background: #ffffff;
+  background: #F5EFE3;
   cursor: pointer; }
 
 input[type=range]::-webkit-slider-runnable-track {

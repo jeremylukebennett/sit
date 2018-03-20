@@ -1,6 +1,6 @@
 "use strict";
 
-let $ = require("jquery");   
+// let $ = require("jquery");   
 let printIt = require("./printToDom");
 let sitCountdown = require("./timer");    
 

@@ -11,7 +11,7 @@ let timerDiv = document.getElementById("countdownString");
 // Main alarm slider settings
 let intervalFlag = true;
 let durationValues = [5, 10, 15, 20, 25, 30];
-let newDuration;
+let newDuration = 5;
 
 
 $(document).on("change", "#slider1", ()=>{

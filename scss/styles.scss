@@ -38,6 +38,10 @@ body {
     top: -1.2em;
 }
 
+#dropdownMenu2:focus { 
+    box-shadow: none;
+}
+
 #sliderData1 {
     padding: 3em 0 0 0;
 }
@@ -73,6 +77,9 @@ h1#sit-header-title {
 
 #menu1, #menu2, #menu3 {
     padding: 1.25rem 0 1.5rem 1.5rem;
+    font-weight: 200;
+    border: solid #979797 1px;
+    background-color: #F5EFE3;
 }
 
 #stop-btn {
@@ -85,6 +92,10 @@ h1#sit-header-title {
 #countdownTime {
     font-size: 6em;
     margin: 1em 0 0 0;
+}
+
+#menu-options {
+    padding: 0;
 }
 
 // Class Selectors ========================================================================================
@@ -149,7 +160,18 @@ h1#sit-header-title {
     padding-bottom: 0em;
 }
 
+.closeBtn {
+    font-weight: 200;
+}
 
+.modal-content {
+    background-color: #F5EFE3;
+}
+
+.modal-body {
+    border-bottom: solid black 1px;
+    border-top: solid black 1px;
+}
 
 
 // Range Slider Stylings ========================================================================================
@@ -302,38 +324,44 @@ input[type=range]::-webkit-slider-runnable-track {
 @media (min-width: 768px) {
     #main-header {
         h1 {
-            font-weight: normal;
+            font-weight: 200;
             font-size: 70px;
         }
     }
 }
 
 // Large devices (desktops, 992px and up)
+// Needs broad menu
+
 @media (min-width: 992px) {  
 
     #main-header {
         h1 {
-            font-weight: 400;
+            font-weight: 200;
             font-size: 80px;
         }
     }
     #sit-btn {
         font-size: 1.3em;
     }
+
+    #dropdownMenu2 {
+        display: none;
+    }
 }
 
 
 // Extra large devices (large desktops, 1200px and up)
 @media (min-width: 1200px) { 
-
+    
     #main-header {
         #nav-bar-container{
             display: flex;
             flex-direction: row;
             justify-content: space-between;
-
+            
             h1 {
-                font-weight: 400;
+                font-weight: 200;
                 font-size: 110px;
             }
         }
@@ -341,7 +369,11 @@ input[type=range]::-webkit-slider-runnable-track {
 
     #sit-btn {
         font-size: 1.3em;
-        color: black;
+        color: white;
+    }
+
+    #dropdownMenu2 {
+        display: none;
     }
 
 }

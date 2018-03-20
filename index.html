@@ -19,8 +19,8 @@
                 | | |
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenu2" id="menu-options">
-                <button class="dropdown-item" type="button" id="menu1">How to Use</button>
-                <button class="dropdown-item" type="button" id="menu2">About</button>
+                <button class="dropdown-item" type="button" data-toggle="modal" data-target="#exampleModal" id="menu1">How to Use</button>
+                <button class="dropdown-item" type="button" data-toggle="modal" data-target="#aboutModal" id="menu2">About</button>
                 <button class="dropdown-item" type="button" id="menu3">Login/Sign Up</button>
                 </div>
             </div>
@@ -30,25 +30,61 @@
 <!-- Main content div -->
     <div id="mainContentDiv">
 
-
-
-
-
-
-
-
         
     </div>
 
+     <!-- Modal "How to Use"-->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">How to Use...</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          This is a simple meditation timer. Use the sliders to set the duration of your meditation, the frequency of interval alerts and the alert sound. 
+
+          If you'd like to track your progress over time you can create an account. Make sure you're logged in before beginning the timer if you'd like for your session to be recorded.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary closeBtn" data-dismiss="modal">Close</button>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="aboutModalLabel">About Sit</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+Hi.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary closeBtn" data-dismiss="modal">Close</button>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
-    <!-- <script
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script
     src="https://code.jquery.com/jquery-3.3.1.js"
     integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-    crossorigin="anonymous"></script> -->
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+    crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="dist/app.js"></script>
 
 </body>

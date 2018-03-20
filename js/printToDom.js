@@ -112,4 +112,9 @@ function printAudioHTMLToPage() {
                               </audio>`;
 }
 
-module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage};
+
+function printHowToUse() {
+  mainContainer.innerHTML = ``;
+}
+
+module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage, printHowToUse};

@@ -1,7 +1,7 @@
 (function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
 "use strict";
 
-let $ = require("jquery");   
+// let $ = require("jquery");   
 let printIt = require("./printToDom");
 let sitCountdown = require("./timer");    
 
@@ -28,7 +28,7 @@ function countdownScreen() {
 
 
 module.exports = {countdownScreen};
-},{"./printToDom":4,"./timer":6,"jquery":9}],2:[function(require,module,exports){
+},{"./printToDom":4,"./timer":6}],2:[function(require,module,exports){
 "use strict";
 let $ = require("jquery");    
 let printIt = require("./printToDom");
@@ -51,6 +51,30 @@ document.addEventListener("click", function(e){
         startSit.countdownScreen();
     }
 });
+
+// document.addEventListener("click", function(e){
+//     if(e.target.id === "menu1") {
+//         console.log("How to Use");
+//         printIt.printHowToUse();
+
+
+
+//     }
+// });
+
+// document.addEventListener("click", function(e){
+//     if(e.target.id === "menu2") {
+//         console.log("menu2 clicked");
+//     }
+// });
+
+// document.addEventListener("click", function(e){
+//     if(e.target.id === "menu3") {
+//         console.log("menu3 clicked");
+//     }
+// });
+
+
 
 
 // let durationValues = [5, 10, 15, 20, 25, 30]; 
@@ -203,7 +227,12 @@ function printAudioHTMLToPage() {
                               </audio>`;
 }
 
-module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage};
+
+function printHowToUse() {
+  mainContainer.innerHTML = ``;
+}
+
+module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage, printHowToUse};
 },{"jquery":9}],5:[function(require,module,exports){
 "use strict";
 
@@ -251,7 +280,7 @@ let timerDiv = document.getElementById("countdownString");
 // Main alarm slider settings
 let intervalFlag = true;
 let durationValues = [5, 10, 15, 20, 25, 30];
-let newDuration;
+let newDuration = 5;
 
 
 $(document).on("change", "#slider1", ()=>{

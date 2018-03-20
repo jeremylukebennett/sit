@@ -21,6 +21,30 @@ document.addEventListener("click", function(e){
     }
 });
 
+// document.addEventListener("click", function(e){
+//     if(e.target.id === "menu1") {
+//         console.log("How to Use");
+//         printIt.printHowToUse();
+
+
+
+//     }
+// });
+
+// document.addEventListener("click", function(e){
+//     if(e.target.id === "menu2") {
+//         console.log("menu2 clicked");
+//     }
+// });
+
+// document.addEventListener("click", function(e){
+//     if(e.target.id === "menu3") {
+//         console.log("menu3 clicked");
+//     }
+// });
+
+
+
 
 // let durationValues = [5, 10, 15, 20, 25, 30]; 
 // $("#slider1").change(function(){

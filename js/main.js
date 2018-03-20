@@ -6,7 +6,8 @@ let sliders = require("./readSliderValue");
 let soundAlerts = require("./playAudio");
 var Timer = require('easytimer');
 let timerTools = require('./timer');
-
+// require("./fb-config");
+require("./interaction");
 
 // Main Sit button at bottom of Home Page
 let sitButton = document.getElementById("sit-btn");
@@ -20,37 +21,3 @@ document.addEventListener("click", function(e){
         startSit.countdownScreen();
     }
 });
-
-// document.addEventListener("click", function(e){
-//     if(e.target.id === "menu1") {
-//         console.log("How to Use");
-//         printIt.printHowToUse();
-
-
-
-//     }
-// });
-
-// document.addEventListener("click", function(e){
-//     if(e.target.id === "menu2") {
-//         console.log("menu2 clicked");
-//     }
-// });
-
-// document.addEventListener("click", function(e){
-//     if(e.target.id === "menu3") {
-//         console.log("menu3 clicked");
-//     }
-// });
-
-
-
-
-// let durationValues = [5, 10, 15, 20, 25, 30]; 
-// $("#slider1").change(function(){
-
-//     // .text(values[this.value]);
-// console.log(durationValues[this.value]);
-// });
-
-

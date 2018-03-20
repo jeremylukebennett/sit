@@ -21,7 +21,7 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownMenu2" id="menu-options">
                 <button class="dropdown-item" type="button" data-toggle="modal" data-target="#exampleModal" id="menu1">How to Use</button>
                 <button class="dropdown-item" type="button" data-toggle="modal" data-target="#aboutModal" id="menu2">About</button>
-                <button class="dropdown-item" type="button" id="menu3">Login/Sign Up</button>
+                <button class="dropdown-item" type="button" data-toggle="modal" data-target="#loginModal" id="menu3">Login/Sign Up</button>
                 </div>
             </div>
         </div>
@@ -32,14 +32,14 @@
 
         
     </div>
-
-     <!-- Modal "How to Use"-->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">How to Use...</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    
+    <!-- Modal "How to Use"-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">How to Use...</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -56,6 +56,10 @@
     </div>
   </div>
 
+
+
+    <!-- Modal "About"-->
+  
   <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -66,7 +70,7 @@
           </button>
         </div>
         <div class="modal-body">
-Hi.
+          Hi.
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary closeBtn" data-dismiss="modal">Close</button>
@@ -77,8 +81,39 @@ Hi.
   </div>
 
 
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Login / Sign Up</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="user-email" class="col-form-label">Email:</label>
+            <input type="text" class="form-control" id="user-email">
+          </div>
+          <div class="form-group">
+            <label for="user-password" class="col-form-label">Password:</label>
+            <input class="form-control" id="user-password"></input>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="user-login">Login</button>
+        <button type="button" class="btn btn-primary" id="user-sign-up">Sign Up</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
+
+    <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script
     src="https://code.jquery.com/jquery-3.3.1.js"

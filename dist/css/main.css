@@ -63,6 +63,9 @@ h1#sit-header-title {
 #menu-options {
   padding: 0; }
 
+#user-login, #user-sign-up {
+  width: auto; }
+
 .dropdown {
   margin: 0 0 0 -9%; }
 

@@ -44,7 +44,7 @@ h1#sit-header-title {
   margin-bottom: auto;
   font-family: 'Mada', sans-serif; }
 
-#menu1, #menu2, #menu3 {
+#menu1, #menu2, #menu3, #menuProgress, #menuLogOutOption {
   padding: 1.25rem 0 1.5rem 1.5rem;
   font-weight: 200;
   border: solid #979797 1px;
@@ -63,7 +63,7 @@ h1#sit-header-title {
 #menu-options {
   padding: 0; }
 
-#user-login, #user-sign-up {
+#user-login, #user-sign-up, #user-logout {
   width: auto; }
 
 .dropdown {
@@ -126,7 +126,11 @@ h1#sit-header-title {
 
 .modal-body {
   border-bottom: solid black 1px;
-  border-top: solid black 1px; }
+  border-top: solid black 1px;
+  font-size: 1.5em; }
+
+.hide {
+  display: none; }
 
 input[type=range] {
   -webkit-appearance: none;

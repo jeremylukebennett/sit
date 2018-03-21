@@ -1,5 +1,8 @@
 "use strict";
 let $ = require("jquery");
+let firebase = require("firebase/app");
+let graphUserInfo = require("./graphData");
+require("./fb-config");
 
 let mainContainer = document.getElementById("mainContentDiv");
 
@@ -101,15 +104,15 @@ function printResumeButtonToPage() {
 function printAudioHTMLToPage() {
   console.log("audio function");
 
-  mainContainer.innerHTML += `<audio id="myAudio">
-                                <source src="audioFiles/gradualTone.mp3" type="audio/mpeg">
-                                Your browser does not support the audio element.
-                              </audio>`;
+  // mainContainer.innerHTML += `<audio id="myAudio">
+  //                               <source src="audioFiles/gradualTone.mp3" type="audio/mpeg id="alertSource">
+  //                               Your browser does not support the audio element.
+  //                             </audio>`;
 
-  mainContainer.innerHTML += `<audio id="myIntervalAudio">
-                                <source src="audioFiles/singleTone.mp3" type="audio/mpeg">
-                                Your browser does not support the audio element.
-                              </audio>`;
+  // mainContainer.innerHTML += `<audio id="myIntervalAudio">
+  //                               <source src="audioFiles/singleTone.mp3" type="audio/mpeg id="intervalSource">
+  //                               Your browser does not support the audio element.
+  //                             </audio>`;
 }
 
 
@@ -117,4 +120,48 @@ function printHowToUse() {
   mainContainer.innerHTML = ``;
 }
 
-module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage, printHowToUse};
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+    mainContainer.innerHTML += `<p>You're signed in!</p>`;
+    
+  } else {
+    // No user is signed in.
+    mainContainer.innerHTML += `<p>You're NOT signed in!</p>`;
+  }
+});
+
+
+function printGraphData() {
+  mainContainer.innerHTML = ``;
+  mainContainer.innerHTML += `<canvas class="hide" id="myChart"></canvas>`;
+  console.log("should make button and should be below");
+  
+  
+  
+  
+  
+
+
+
+  	
+$( "#myChart" ).after( "<div class='text-center'><button class='btn btn-primary' id='back-btn'>Back</button></div>" );
+  // mainContainer.innerHTML += `<button>Back</button>`;
+
+}
+
+function refillLoginModal() {
+  document.getElementById("loginModalBox").innerHTML = `<form>
+  <div class="form-group">
+    <label for="user-email" class="col-form-label">Email:</label>
+    <input type="text" class="form-control" id="user-email">
+  </div>
+  <div class="form-group">
+    <label for="user-password" class="col-form-label">Password:</label>
+    <input class="form-control" id="user-password"></input>
+  </div>
+</form>`;
+
+}
+
+module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage, printHowToUse, printGraphData, refillLoginModal};

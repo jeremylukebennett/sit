@@ -33,6 +33,29 @@ $(document).on("change", "#slider2", ()=>{
     
 });  
 
+
+// Sound Slider Settings
+
+let intervalSoundValues = ["audioFiles/singleBell.mp3", "audioFiles/singleBlock.mp3", "audioFiles/singleTone.mp3"];
+let alarmSoundValues = ["audioFiles/gradualBells.mp3", "audioFiles/gradualBlock.mp3", "audioFiles/gradualTone.mp3"];
+let newIntervalSound;
+let newAlarmSound;
+
+$(document).on("change", "#slider3", ()=>{
+    let newVal = $("#slider3").val();
+    newAlarmSound = alarmSoundValues[newVal];
+    newIntervalSound = intervalSoundValues[newVal];
+    
+
+    $("#alertSource").attr("src", newAlarmSound);
+    $("#intervalSource").attr("src", newIntervalSound);
+
+
+
+
+    console.log(alarmSoundValues[newVal]);
+    console.log(intervalSoundValues[newVal]);
+});  
     
 
 // Countdown timer 
@@ -53,6 +76,7 @@ function timerInitialize() {
             console.log("times up");
             intervalFlag = false;
             soundAlert.alertLaunch();
+            console.log("this is the value of the alarm that just completed: ", newDuration);
 
         });
 
@@ -60,11 +84,9 @@ function timerInitialize() {
         document.addEventListener("click", function(e){
             if(e.target.id === "pause-btn") {
                 printIt.printResumeButtonToPage();
+
                 timer.pause();
                 intervalFlag = false;
-
-                // $("#pause-id").hide();
-                // printIt.printMainScreen();
             }
         });
 
@@ -79,6 +101,7 @@ function timerInitialize() {
             if(e.target.id === "stop-btn") {
                 timer.stop();
                 intervalFlag = false;
+                console.log("you clicked stop");
                 printIt.printMainScreen();
             }
         });
@@ -102,4 +125,4 @@ function timerInitialize() {
 
 }
 
-    module.exports = {timerInitialize};
+    module.exports = {timerInitialize, newDuration};

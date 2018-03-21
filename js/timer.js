@@ -1,5 +1,6 @@
 "use strict";
-let printIt = require("./printToDom");
+// console.log("printIt before timeerInititalize", printIt);
+
 let $ = require("jquery");
 var Timer = require('easytimer');
 var userSliderValue = require("./readSliderValue");
@@ -12,7 +13,7 @@ let timerDiv = document.getElementById("countdownString");
 let intervalFlag = true;
 let durationValues = [5, 10, 15, 20, 25, 30];
 let newDuration = 5;
-
+let printIt = require("./printToDom");
 
 $(document).on("change", "#slider1", ()=>{
     let newVal = $("#slider1").val();
@@ -60,6 +61,8 @@ $(document).on("change", "#slider3", ()=>{
 
 // Countdown timer 
 function timerInitialize() {
+
+    // console.log('printIt',printIt);
     console.log("timer function starts");
 
 // Main Timer
@@ -98,11 +101,13 @@ function timerInitialize() {
         });
 
         document.addEventListener("click", function(e){
+            
             if(e.target.id === "stop-btn") {
                 timer.stop();
                 intervalFlag = false;
                 console.log("you clicked stop");
-                printIt.printMainScreen();
+
+                window.printIt.printMainScreen();
             }
         });
 // Interval Timer

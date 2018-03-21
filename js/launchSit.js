@@ -10,6 +10,8 @@ function countdownScreen() {
 
     let mainContent = document.getElementById("mainContentDiv");
 
+
+    // console.log("printIt", printIt);
     // Clears Home Page DOM
     mainContent.innerHTML = ``;
 

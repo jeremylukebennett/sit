@@ -164,4 +164,8 @@ function refillLoginModal() {
 
 }
 
+// function testOfPrintModule() {
+//   console.log("does the print module work???");
+// }
+
 module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage, printHowToUse, printGraphData, refillLoginModal};

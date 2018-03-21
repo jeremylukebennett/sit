@@ -104,6 +104,7 @@ trackProgressMenuOption.addEventListener("click", e => {
 document.addEventListener("click", function(e){
   if(e.target.id === "back-btn") {
     console.log("go back??");
+    console.log('printIt',printIt);
     printIt.printMainScreen();
   }
 });

@@ -23,15 +23,6 @@ module.exports = {};
 
 function pushUserAlarmDataToFB() {
     console.log("pushUserAlarm");
-
-
-
-
-
-
-
-
-    
 }
 
 
@@ -131,7 +122,6 @@ const userLoginMenuOption = document.getElementById("menu3");
 const backButton = document.getElementById("back-btn");
 
 
-
 userLogin.addEventListener("click", e => {
   // get email and pass
   const email = userEmail.value;
@@ -150,30 +140,20 @@ userLogin.addEventListener("click", e => {
 
     console.log('idAndEmail', idAndEmail);    
 
-
-
     // add user object to firebase
     function addUser(value) {
-      return $.ajax({
-       url: `${fbConfig.config.databaseURL}/user.json`, // "user" can be anything even if it hasn't be added in firebase yet
-       type: 'POST',
-       data: JSON.stringify(value),
-       dataType: 'json'
-    }).done((valueID) => {
-       return valueID;
-    });
-  }
+        return $.ajax({
+        url: `${fbConfig.config.databaseURL}/user.json`, // "user" can be anything even if it hasn't be added in firebase yet
+        type: 'POST',
+        data: JSON.stringify(value),
+        dataType: 'json'
+      }).done((valueID) => {
+        return valueID;
+      });
+    }
 
-addUser(idAndEmail);
-
-
-
-
-
-
-
-
-
+    addUser(idAndEmail);
+  
     
   }).catch(e => console.log(e.message));
   document.getElementById("loginModalBox").innerHTML = `<p>You're logged in :D</p>`;
@@ -192,20 +172,6 @@ userSignUp.addEventListener("click", e => {
   // Sign in
   const promise = auth.createUserWithEmailAndPassword(email, pass);
   promise.catch(e => console.log(e.message));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 });  
@@ -238,6 +204,7 @@ trackProgressMenuOption.addEventListener("click", e => {
 document.addEventListener("click", function(e){
   if(e.target.id === "back-btn") {
     console.log("go back??");
+    console.log('printIt',printIt);
     printIt.printMainScreen();
   }
 });
@@ -282,20 +249,6 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 
 
 
-//     function addUserAlarmData(value) {
-//       return $.ajax({
-//        url: `${fbConfig.config.databaseURL}/progress.json`, // "user" can be anything even if it hasn't be added in firebase yet
-//        type: 'POST',
-//        data: JSON.stringify(value),
-//        dataType: 'json'
-//     }).done((valueID) => {
-//        return valueID;
-//     });
-//   }
-
-// addUserAlarmData(userAlarmData);
-
-
 
 
   } else {
@@ -327,6 +280,8 @@ function countdownScreen() {
 
     let mainContent = document.getElementById("mainContentDiv");
 
+
+    // console.log("printIt", printIt);
     // Clears Home Page DOM
     mainContent.innerHTML = ``;
 
@@ -344,6 +299,7 @@ module.exports = {countdownScreen};
 "use strict";
 let $ = require("jquery");    
 let printIt = require("./printToDom");
+window.printIt = printIt;
 let startSit = require("./launchSit");
 let sliders = require("./readSliderValue");
 let soundAlerts = require("./playAudio");
@@ -562,6 +518,10 @@ function refillLoginModal() {
 
 }
 
+// function testOfPrintModule() {
+//   console.log("does the print module work???");
+// }
+
 module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage, printHowToUse, printGraphData, refillLoginModal};
 },{"./fb-config":3,"./graphData":4,"firebase/app":122,"jquery":126}],10:[function(require,module,exports){
 "use strict";
@@ -573,7 +533,8 @@ console.log("hi");
 
 },{"jquery":126}],11:[function(require,module,exports){
 "use strict";
-let printIt = require("./printToDom");
+// console.log("printIt before timeerInititalize", printIt);
+
 let $ = require("jquery");
 var Timer = require('easytimer');
 var userSliderValue = require("./readSliderValue");
@@ -586,7 +547,7 @@ let timerDiv = document.getElementById("countdownString");
 let intervalFlag = true;
 let durationValues = [5, 10, 15, 20, 25, 30];
 let newDuration = 5;
-
+let printIt = require("./printToDom");
 
 $(document).on("change", "#slider1", ()=>{
     let newVal = $("#slider1").val();
@@ -634,6 +595,8 @@ $(document).on("change", "#slider3", ()=>{
 
 // Countdown timer 
 function timerInitialize() {
+
+    // console.log('printIt',printIt);
     console.log("timer function starts");
 
 // Main Timer
@@ -672,11 +635,13 @@ function timerInitialize() {
         });
 
         document.addEventListener("click", function(e){
+            
             if(e.target.id === "stop-btn") {
                 timer.stop();
                 intervalFlag = false;
                 console.log("you clicked stop");
-                printIt.printMainScreen();
+
+                window.printIt.printMainScreen();
             }
         });
 // Interval Timer
@@ -715,37 +680,37 @@ function makeUserObject(id, email) {
 }
 
 
-let checkForUser = (uid) => {
-    fbInteraction.getFBdetails(uid)
-    .then((result) => {
-        console.log('result', result);
-        let data = Object.values(result);
-        console.log("result data:", data.length);
-        if (data.length === 0) {
-            console.log('need to create user');
-            console.log('creating profile for', uid);
-            fbInteraction.addUserFB(makeNewUser(uid)) //making new user in firebase
-            .then((result) => {
-                console.log('new user added to firebase', result);
-                document.location.replace('edit-profile.html');
-            });
-        } else {
-            console.log('user exists', data);
-            let key = Object.keys(result);
-            data[0].fbID = key[0];
-            setUserVars(data[0])
-            .then((resolve) => {
-                console.log(resolve);
-            });
-        }
-    });
-};
+// let checkForUser = (uid) => {
+//     fbInteraction.getFBdetails(uid)
+//     .then((result) => {
+//         console.log('result', result);
+//         let data = Object.values(result);
+//         console.log("result data:", data.length);
+//         if (data.length === 0) {
+//             console.log('need to create user');
+//             console.log('creating profile for', uid);
+//             fbInteraction.addUserFB(makeNewUser(uid)) //making new user in firebase
+//             .then((result) => {
+//                 console.log('new user added to firebase', result);
+//                 document.location.replace('edit-profile.html');
+//             });
+//         } else {
+//             console.log('user exists', data);
+//             let key = Object.keys(result);
+//             data[0].fbID = key[0];
+//             setUserVars(data[0])
+//             .then((resolve) => {
+//                 console.log(resolve);
+//             });
+//         }
+//     });
+// };
 
 
 
 
 
-module.exports = {makeUserObject, checkForUser};
+// module.exports = {makeUserObject, checkForUser};
 },{"./interaction":5}],13:[function(require,module,exports){
 "use strict";
 /**

@@ -1,6 +1,7 @@
 "use strict";
 let $ = require("jquery");    
 let printIt = require("./printToDom");
+window.printIt = printIt;
 let startSit = require("./launchSit");
 let sliders = require("./readSliderValue");
 let soundAlerts = require("./playAudio");

@@ -1,5 +1,8 @@
 "use strict";
 let $ = require("jquery");
+let firebase = require("firebase/app");
+let graphUserInfo = require("./graphData");
+require("./fb-config");
 
 let mainContainer = document.getElementById("mainContentDiv");
 
@@ -17,12 +20,12 @@ function printMainScreen() {
         <input id="slider1" type="range" min="0" max="5" value="0">
         <span></span>
         <ul class="rangeSliderLabels">
-            <li class="sliderListItemsDuration">5</li> 
-            <li class="sliderListItemsDuration">10</li> 
-            <li class="sliderListItemsDuration">15</li> 
-            <li class="sliderListItemsDuration">20</li> 
-            <li class="sliderListItemsDuration">25</li> 
-            <li class="sliderListItemsDuration">30</li>
+            <li class="sliderListItemsDuration" id="fiveMinOption">5</li> 
+            <li class="sliderListItemsDuration" id="tenMinOption">10</li> 
+            <li class="sliderListItemsDuration" id="fifteenMinOption">15</li> 
+            <li class="sliderListItemsDuration" id="twentyMinOption">20</li> 
+            <li class="sliderListItemsDuration" id="twentyFiveMinOption">25</li> 
+            <li class="sliderListItemsDuration" id="thirtyMinOption">30</li>
         </ul>
         </div>
 
@@ -36,11 +39,11 @@ function printMainScreen() {
           <span></span>
           <ul class="rangeSliderLabels">
               <li class="sliderListItemsInterval" id="noneOption">None</li> 
-              <li class="sliderListItemsInterval">1</li> 
-              <li class="sliderListItemsInterval">2</li> 
-              <li class="sliderListItemsInterval">3</li> 
-              <li class="sliderListItemsInterval">4</li> 
-              <li class="sliderListItemsInterval">5</li>
+              <li class="sliderListItemsInterval" id="oneOption">1</li> 
+              <li class="sliderListItemsInterval" id="twoOption">2</li> 
+              <li class="sliderListItemsInterval" id="threeOption">3</li> 
+              <li class="sliderListItemsInterval" id="fourOption">4</li> 
+              <li class="sliderListItemsInterval" id="fiveOption">5</li>
           </ul>
         </div>
 
@@ -101,15 +104,15 @@ function printResumeButtonToPage() {
 function printAudioHTMLToPage() {
   console.log("audio function");
 
-  mainContainer.innerHTML += `<audio id="myAudio">
-                                <source src="audioFiles/gradualTone.mp3" type="audio/mpeg">
-                                Your browser does not support the audio element.
-                              </audio>`;
+  // mainContainer.innerHTML += `<audio id="myAudio">
+  //                               <source src="audioFiles/gradualTone.mp3" type="audio/mpeg id="alertSource">
+  //                               Your browser does not support the audio element.
+  //                             </audio>`;
 
-  mainContainer.innerHTML += `<audio id="myIntervalAudio">
-                                <source src="audioFiles/singleTone.mp3" type="audio/mpeg">
-                                Your browser does not support the audio element.
-                              </audio>`;
+  // mainContainer.innerHTML += `<audio id="myIntervalAudio">
+  //                               <source src="audioFiles/singleTone.mp3" type="audio/mpeg id="intervalSource">
+  //                               Your browser does not support the audio element.
+  //                             </audio>`;
 }
 
 
@@ -117,4 +120,52 @@ function printHowToUse() {
   mainContainer.innerHTML = ``;
 }
 
-module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage, printHowToUse};
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+    mainContainer.innerHTML += `<p>You're signed in!</p>`;
+    
+  } else {
+    // No user is signed in.
+    mainContainer.innerHTML += `<p>You're NOT signed in!</p>`;
+  }
+});
+
+
+function printGraphData() {
+  mainContainer.innerHTML = ``;
+  mainContainer.innerHTML += `<canvas class="hide" id="myChart"></canvas>`;
+  console.log("should make button and should be below");
+  
+  
+  
+  
+  
+
+
+
+  	
+$( "#myChart" ).after( "<div class='text-center'><button class='btn btn-primary' id='back-btn'>Back</button></div>" );
+  // mainContainer.innerHTML += `<button>Back</button>`;
+
+}
+
+function refillLoginModal() {
+  document.getElementById("loginModalBox").innerHTML = `<form>
+  <div class="form-group">
+    <label for="user-email" class="col-form-label">Email:</label>
+    <input type="text" class="form-control" id="user-email">
+  </div>
+  <div class="form-group">
+    <label for="user-password" class="col-form-label">Password:</label>
+    <input class="form-control" id="user-password"></input>
+  </div>
+</form>`;
+
+}
+
+// function testOfPrintModule() {
+//   console.log("does the print module work???");
+// }
+
+module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage, printHowToUse, printGraphData, refillLoginModal};

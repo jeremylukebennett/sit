@@ -1,7 +1,9 @@
 "use strict";
 
 let firebase = require("firebase/app");
-require("firebase/auth");
+let $ = require("jquery");
+let userDuration = require("./timer")
+;require("firebase/auth");
 require("firebase/database");
 
 
@@ -17,7 +19,21 @@ require("firebase/database");
 
 
   firebase.initializeApp(config);
+  let database = firebase.database();
 
 
-  module.exports = firebase;
+
+  function addUserSessionLength(durVal) {
+    // console.log(durVal);
+    // let tempObject = {
+    //   duration: durVal,
+    //   uid : 
+    // }
+  }
+
+  console.log("is fb-config connected?");
+  console.log(userDuration.newDuration);
+  addUserSessionLength(userDuration.newDuration);
+
+  module.exports = {firebase, config};
 

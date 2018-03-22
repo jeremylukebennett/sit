@@ -1,15 +1,16 @@
 body {
   font-family: "Mada", sans-serif;
   font-weight: 200;
-  background-color: #F5EFE3; }
+  background-color: #005cec;
+  color: #D5D5D5; }
 
 #main-header {
   font-weight: 400;
   border-bottom: solid grey 1px; }
 
 #dropdownMenu2 {
-  color: black;
-  background-color: #F5EFE3;
+  color: white;
+  background-color: #005cec;
   border: none;
   position: absolute;
   right: 10%;
@@ -28,12 +29,68 @@ body {
 #sit-btn-container {
   margin: 5em auto 0 auto; }
 
+#sit-btn {
+  background-color: #716259;
+  color: #DDE1E1; }
+
 #duration-label {
   display: block; }
 
 #noneOption {
   position: relative;
   left: 1em; }
+
+#toneOption {
+  position: relative;
+  right: 0.8em; }
+
+#blockOption {
+  position: relative;
+  right: 0.3em; }
+
+#oneOption {
+  position: relative;
+  right: 0.2em; }
+
+#twoOption {
+  position: relative;
+  right: 0.46em; }
+
+#threeOption {
+  position: relative;
+  right: 0.7em; }
+
+#fourOption {
+  position: relative;
+  right: .9em; }
+
+#fiveOption {
+  position: relative;
+  right: 1em; }
+
+#fiveMinOption {
+  position: relative;
+  right: 0.1em; }
+
+#tenMinOption {
+  position: relative;
+  right: 0.1em; }
+
+#fifteenMinOption {
+  position: relative;
+  right: 0.1em; }
+
+#twentyMinOption {
+  position: relative;
+  right: 0.17em; }
+
+#twentyFiveMinOption {
+  position: relative;
+  right: 0.26em; }
+
+#thirtyMinOption {
+  position: relative;
+  right: 0.3em; }
 
 #testing-width {
   width: 80%;
@@ -44,26 +101,35 @@ h1#sit-header-title {
   margin-bottom: auto;
   font-family: 'Mada', sans-serif; }
 
-#menu1, #menu2, #menu3 {
+#menu1, #menu2, #menu3, #menuProgress, #menuLogOutOption {
   padding: 1.25rem 0 1.5rem 1.5rem;
   font-weight: 200;
   border: solid #979797 1px;
-  background-color: #F5EFE3; }
+  background-color: #1F6FA3;
+  color: white; }
 
 #stop-btn {
-  background-color: #FF0068;
+  background-color: #da3d3d;
   border: none;
   animation-duration: 1s;
-  animation-name: slidein; }
+  animation-name: slideInFromRight; }
+
+#pause-btn {
+  border: none;
+  animation-duration: 1s;
+  animation-name: slideInFromLeft;
+  background-color: white;
+  color: black; }
 
 #countdownTime {
   font-size: 6em;
-  margin: 1em 0 0 0; }
+  margin: 1em 0 0 0;
+  color: white; }
 
 #menu-options {
   padding: 0; }
 
-#user-login, #user-sign-up {
+#user-login, #user-sign-up, #user-logout {
   width: auto; }
 
 .dropdown {
@@ -95,7 +161,8 @@ h1#sit-header-title {
   list-style-type: none;
   display: flex;
   flex-direction: row;
-  justify-content: space-between; }
+  justify-content: space-between;
+  color: white; }
 
 .sliderListItemsDuration {
   list-style: none;
@@ -122,11 +189,15 @@ h1#sit-header-title {
   font-weight: 200; }
 
 .modal-content {
-  background-color: #F5EFE3; }
+  background-color: #005cec; }
 
 .modal-body {
   border-bottom: solid black 1px;
-  border-top: solid black 1px; }
+  border-top: solid black 1px;
+  font-size: 1.5em; }
+
+.hide {
+  display: none; }
 
 input[type=range] {
   -webkit-appearance: none;
@@ -158,11 +229,11 @@ input[type=range]::-webkit-slider-thumb {
   height: 26px;
   width: 26px;
   border-radius: 40px;
-  background: #6D6B6A;
+  background: #E8E6E8;
   cursor: pointer;
   margin-top: -11px;
   /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
-  box-shadow: 1px 1px 10px #D8D8D8, 0px 0px 1px #0d0d0d;
+  box-shadow: 1px 1px 10px #333d4e, 0px 0px 1px #0d0d0d;
   /* Add cool effects to your sliders! */ }
 
 /* All the same stuff for Firefox */
@@ -171,7 +242,7 @@ input[type=range]::-moz-range-thumb {
   height: 26px;
   width: 26px;
   border-radius: 40px;
-  background: #F5EFE3;
+  background: #E8E6E8;
   cursor: pointer; }
 
 /* All the same stuff for IE */
@@ -180,14 +251,14 @@ input[type=range]::-ms-thumb {
   height: 26px;
   width: 26px;
   border-radius: 40px;
-  background: #F5EFE3;
+  background: #E8E6E8;
   cursor: pointer; }
 
 input[type=range]::-webkit-slider-runnable-track {
   width: 80%;
   height: 3px;
   cursor: pointer;
-  background: #007AFF;
+  background: #707476;
   border-radius: 1.3px;
   border: 0.2px solid #010101; }
 
@@ -198,7 +269,7 @@ input[type=range]::-moz-range-track {
   width: 80%;
   height: 3px;
   cursor: pointer;
-  background: #007AFF;
+  background: #707476;
   border-radius: 1.3px;
   border: 0.2px solid #010101; }
 
@@ -217,22 +288,29 @@ input[type=range]::-ms-fill-lower {
   border-radius: 2.6px; }
 
 input[type=range]:focus::-ms-fill-lower {
-  background: #007AFF; }
+  background: #707476; }
 
 input[type=range]::-ms-fill-upper {
-  background: #007AFF;
+  background: #707476;
   border: 0.2px solid #010101;
   border-radius: 2.6px; }
 
 input[type=range]:focus::-ms-fill-upper {
   background: #367ebd; }
 
-@keyframes slidein {
+@keyframes slideInFromRight {
   from {
     margin-left: 100%;
     width: 30%; }
   to {
     margin-left: 0%;
+    width: 13em; } }
+@keyframes slideInFromLeft {
+  from {
+    margin-right: 100%;
+    width: 30%; }
+  to {
+    margin-right: 0%;
     width: 13em; } }
 @media (min-width: 576px) {
   #main-header {
@@ -262,7 +340,8 @@ input[type=range]:focus::-ms-fill-upper {
 
   #sit-btn {
     font-size: 1.3em;
-    color: white; }
+    background-color: #716259;
+    color: #DDE1E1; }
 
   #dropdownMenu2 {
     display: none; } }

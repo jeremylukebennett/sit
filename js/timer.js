@@ -1,5 +1,6 @@
 "use strict";
-let printIt = require("./printToDom");
+// console.log("printIt before timeerInititalize", printIt);
+
 let $ = require("jquery");
 var Timer = require('easytimer');
 var userSliderValue = require("./readSliderValue");
@@ -12,7 +13,7 @@ let timerDiv = document.getElementById("countdownString");
 let intervalFlag = true;
 let durationValues = [5, 10, 15, 20, 25, 30];
 let newDuration = 5;
-
+let printIt = require("./printToDom");
 
 $(document).on("change", "#slider1", ()=>{
     let newVal = $("#slider1").val();
@@ -33,10 +34,35 @@ $(document).on("change", "#slider2", ()=>{
     
 });  
 
+
+// Sound Slider Settings
+
+let intervalSoundValues = ["audioFiles/singleBell.mp3", "audioFiles/singleBlock.mp3", "audioFiles/singleTone.mp3"];
+let alarmSoundValues = ["audioFiles/gradualBells.mp3", "audioFiles/gradualBlock.mp3", "audioFiles/gradualTone.mp3"];
+let newIntervalSound;
+let newAlarmSound;
+
+$(document).on("change", "#slider3", ()=>{
+    let newVal = $("#slider3").val();
+    newAlarmSound = alarmSoundValues[newVal];
+    newIntervalSound = intervalSoundValues[newVal];
+    
+
+    $("#alertSource").attr("src", newAlarmSound);
+    $("#intervalSource").attr("src", newIntervalSound);
+
+
+
+
+    console.log(alarmSoundValues[newVal]);
+    console.log(intervalSoundValues[newVal]);
+});  
     
 
 // Countdown timer 
 function timerInitialize() {
+
+    // console.log('printIt',printIt);
     console.log("timer function starts");
 
 // Main Timer
@@ -53,18 +79,17 @@ function timerInitialize() {
             console.log("times up");
             intervalFlag = false;
             soundAlert.alertLaunch();
+            console.log("this is the value of the alarm that just completed: ", newDuration);
 
         });
 
         // This is a Pause function. Still need a back to home function.
         document.addEventListener("click", function(e){
             if(e.target.id === "pause-btn") {
-                printIt.printResumeButtonToPage();
+                window.printIt.printResumeButtonToPage();
+
                 timer.pause();
                 intervalFlag = false;
-
-                // $("#pause-id").hide();
-                // printIt.printMainScreen();
             }
         });
 
@@ -76,10 +101,13 @@ function timerInitialize() {
         });
 
         document.addEventListener("click", function(e){
+            
             if(e.target.id === "stop-btn") {
                 timer.stop();
                 intervalFlag = false;
-                printIt.printMainScreen();
+                console.log("you clicked stop");
+
+                window.printIt.printMainScreen();
             }
         });
 // Interval Timer
@@ -102,4 +130,4 @@ function timerInitialize() {
 
 }
 
-    module.exports = {timerInitialize};
+    module.exports = {timerInitialize, newDuration};

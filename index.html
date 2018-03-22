@@ -21,6 +21,8 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownMenu2" id="menu-options">
                 <button class="dropdown-item" type="button" data-toggle="modal" data-target="#exampleModal" id="menu1">How to Use</button>
                 <button class="dropdown-item" type="button" data-toggle="modal" data-target="#aboutModal" id="menu2">About</button>
+                <button type="button" class="dropdown-item hide" id="menuProgress">Track Progress</button>
+                <button type="button" class="dropdown-item hide" id="menuLogOutOption">Log Out</button>
                 <button class="dropdown-item" type="button" data-toggle="modal" data-target="#loginModal" id="menu3">Login/Sign Up</button>
                 </div>
             </div>
@@ -28,10 +30,7 @@
     </header>    
 
 <!-- Main content div -->
-    <div id="mainContentDiv">
-
-        
-    </div>
+    <div id="mainContentDiv"></div>
     
     <!-- Modal "How to Use"-->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -44,7 +43,7 @@
           </button>
         </div>
         <div class="modal-body">
-          This is a simple meditation timer. Use the sliders to set the duration of your meditation, the frequency of interval alerts and the alert sound. 
+          'Sit' is a simple meditation timer. Use the first and second rows of sliders to set the duration of your meditation and the frequency of interval alerts. The third slider is used to select an alert sound. <br><br>
 
           If you'd like to track your progress over time you can create an account. Make sure you're logged in before beginning the timer if you'd like for your session to be recorded.
         </div>
@@ -90,7 +89,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="loginModalBox">
         <form>
           <div class="form-group">
             <label for="user-email" class="col-form-label">Email:</label>
@@ -103,8 +102,10 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        <button type="button" class="btn btn-primary btn-action hide" data-dismiss="modal" id="user-progress">Track Progress</button>
         <button type="button" class="btn btn-primary" id="user-login">Login</button>
+        <button type="button" class="btn btn-primary btn-action hide" data-dismiss="modal" id="user-logout">Logout</button>
         <button type="button" class="btn btn-primary" id="user-sign-up">Sign Up</button>
       </div>
     </div>
@@ -113,7 +114,21 @@
 
 
 
+<!-- Audio Alerts -->
+<audio id="myAudio">
+  <source src="audioFiles/gradualTone.mp3" type="audio/mpeg" id="alertSource">
+  Your browser does not support the audio element.
+</audio>
+
+<audio id="myIntervalAudio">
+  <source src="audioFiles/singleTone.mp3" type="audio/mpeg" id="intervalSource">
+  Your browser does not support the audio element.
+</audio>
+
+<!-- <canvas class="hide" id="myChart"></canvas> -->
+
     <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script
     src="https://code.jquery.com/jquery-3.3.1.js"
@@ -121,6 +136,7 @@
     crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="dist/app.js"></script>
+
 
 </body>
 </html>

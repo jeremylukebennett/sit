@@ -1,9 +1,23 @@
 
 $font-stack: 'Mada', sans-serif;
 $header-text: 'Mada', sans-serif;
-$main-button-color: #007AFF;
+$main-button-color: #716259;
+// $main-button-color: #F9F1EC;
+// $main-button-color: #007AFF;
 $stop-button: #FF0068;
 $border-color: #979797;
+$border-color: #979797;
+// $color-theme: #272821;
+// $color-theme: #595756;
+// $color-theme: rgb(197, 179, 143);
+// $color-theme: #C7B6AC;
+// $color-theme: #032965;
+$color-theme: #005cec;
+
+// $thumb-slider-color: #7B604E;
+$thumb-slider-color: #E8E6E8;
+$track-slider-color: #707476;
+// $thumb-slider-color: #707476;
 // font-family: 'Madurai', sans-serif;
 
 %label-text-extender{
@@ -16,7 +30,8 @@ $border-color: #979797;
 body {
     font-family: $font-stack;
     font-weight: 200;
-    background-color: #F5EFE3;
+    background-color: $color-theme;
+    color: #D5D5D5;
 }
 
 
@@ -29,8 +44,8 @@ body {
 
 // Header menu dropdown
 #dropdownMenu2 { 
-    color: black;
-    background-color: #F5EFE3;
+    color: white;
+    background-color: $color-theme;
     border: none;
     position: absolute;
     right: 10%;
@@ -54,14 +69,90 @@ body {
     margin: 5em auto 0 auto; 
 }
 
+#sit-btn {
+    background-color: $main-button-color;
+    // border: solid gray 2px;
+    color: #DDE1E1;
+}
+
 #duration-label {
     display: block;
 }
 
+
+
+// These numberOption ids correspond to the slider labels. They each needed their own separate positioning to line up properly
 #noneOption {
     position: relative;
     left: 1em;
 }
+
+#toneOption {
+    position: relative;
+    right: 0.8em;
+}
+
+#blockOption {
+    position: relative;
+    right: 0.3em;
+}
+
+#oneOption {
+    position: relative;
+    right: 0.2em;
+}
+
+#twoOption {
+    position: relative;
+    right: 0.46em;
+}
+
+#threeOption {
+    position: relative;
+    right: 0.7em;
+}
+
+#fourOption {
+    position: relative;
+    right: .9em;}
+
+#fiveOption {
+    position: relative;
+    right: 1em;
+}
+
+#fiveMinOption {
+    position: relative;
+    right: 0.1em;
+}
+
+#tenMinOption {
+    position: relative;
+    right: 0.1em;
+}
+
+#fifteenMinOption {
+    position: relative;
+    right: 0.1em;
+}
+
+#twentyMinOption {
+    position: relative;
+    right: 0.17em;
+}
+
+#twentyFiveMinOption {
+    position: relative;
+    right: 0.26em;
+}
+
+#thirtyMinOption {
+    position: relative;
+    right: 0.3em;
+}
+// End of slider label positioning
+
+
 
 #testing-width {
     width: 80%;
@@ -79,19 +170,30 @@ h1#sit-header-title {
     padding: 1.25rem 0 1.5rem 1.5rem;
     font-weight: 200;
     border: solid #979797 1px;
-    background-color: #F5EFE3;
+    background-color: #1F6FA3;
+    color: white;
 }
 
 #stop-btn {
-    background-color: #FF0068;
+    background-color: #da3d3d;
     border: none;
     animation-duration: 1s;
-    animation-name: slidein;
+    animation-name: slideInFromRight;
+}
+
+#pause-btn {
+    // background-color: #FF0068;
+    border: none;
+    animation-duration: 1s;
+    animation-name: slideInFromLeft;
+    background-color: white;
+    color: black;
 }
 
 #countdownTime {
     font-size: 6em;
     margin: 1em 0 0 0;
+    color: white;
 }
 
 #menu-options {
@@ -137,6 +239,7 @@ h1#sit-header-title {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    color: white;
 }
 
 .sliderListItemsDuration {
@@ -169,7 +272,7 @@ h1#sit-header-title {
 }
 
 .modal-content {
-    background-color: #F5EFE3;
+    background-color: $color-theme;
 }
 
 .modal-body {
@@ -219,10 +322,10 @@ input[type=range]::-webkit-slider-thumb {
     height: 26px;
     width: 26px;
     border-radius: 40px;
-    background:#6D6B6A;
+    background: $thumb-slider-color;
     cursor: pointer;
     margin-top: -11px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
-    box-shadow: 1px 1px 10px #D8D8D8, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
+    box-shadow: 1px 1px 10px #333d4e, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
   }
   
   /* All the same stuff for Firefox */
@@ -232,7 +335,7 @@ input[type=range]::-webkit-slider-thumb {
     height: 26px;
     width: 26px;
     border-radius: 40px;
-    background: #F5EFE3;
+    background: $thumb-slider-color;
     cursor: pointer;
   }
   
@@ -243,7 +346,7 @@ input[type=range]::-webkit-slider-thumb {
     height: 26px;
     width: 26px;
     border-radius: 40px;
-    background: #F5EFE3;
+    background: $thumb-slider-color;
     cursor: pointer;
   }
 
@@ -254,7 +357,7 @@ input[type=range]::-webkit-slider-runnable-track {
     height: 3px;
     cursor: pointer;
     // box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-    background: #007AFF;
+    background: $track-slider-color;
     border-radius: 1.3px;
     border: 0.2px solid #010101;
   }
@@ -268,7 +371,7 @@ input[type=range]::-webkit-slider-runnable-track {
     height: 3px;
     cursor: pointer;
     // box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-    background: #007AFF;
+    background: $track-slider-color;
     border-radius: 1.3px;
     border: 0.2px solid #010101;
   }
@@ -289,10 +392,10 @@ input[type=range]::-webkit-slider-runnable-track {
     // box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
   }
   input[type=range]:focus::-ms-fill-lower {
-    background: #007AFF;
+    background: $track-slider-color;
   }
   input[type=range]::-ms-fill-upper {
-    background: #007AFF;
+    background: $track-slider-color;
     border: 0.2px solid #010101;
     border-radius: 2.6px;
     // box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
@@ -303,7 +406,7 @@ input[type=range]::-webkit-slider-runnable-track {
 
 // Animations ========================================================================================================
 
-@keyframes slidein {
+@keyframes slideInFromRight {
     from {
       margin-left: 100%;
       width: 30%; 
@@ -311,6 +414,18 @@ input[type=range]::-webkit-slider-runnable-track {
   
     to {
       margin-left: 0%;
+      width: 13em;
+    }
+  }
+
+  @keyframes slideInFromLeft {
+    from {
+      margin-right: 100%;
+      width: 30%; 
+    }
+  
+    to {
+      margin-right: 0%;
       width: 13em;
     }
   }
@@ -378,7 +493,8 @@ input[type=range]::-webkit-slider-runnable-track {
 
     #sit-btn {
         font-size: 1.3em;
-        color: white;
+        background-color: #716259;
+        color: #DDE1E1;
     }
 
     #dropdownMenu2 {

@@ -280,9 +280,6 @@ function countdownScreen() {
 
     let mainContent = document.getElementById("mainContentDiv");
 
-
-    // console.log("printIt", printIt);
-    // Clears Home Page DOM
     mainContent.innerHTML = ``;
 
     // Prints the Timer and Stop button to the DOM
@@ -374,12 +371,12 @@ function printMainScreen() {
         <input id="slider1" type="range" min="0" max="5" value="0">
         <span></span>
         <ul class="rangeSliderLabels">
-            <li class="sliderListItemsDuration">5</li> 
-            <li class="sliderListItemsDuration">10</li> 
-            <li class="sliderListItemsDuration">15</li> 
-            <li class="sliderListItemsDuration">20</li> 
-            <li class="sliderListItemsDuration">25</li> 
-            <li class="sliderListItemsDuration">30</li>
+            <li class="sliderListItemsDuration" id="fiveMinOption">5</li> 
+            <li class="sliderListItemsDuration" id="tenMinOption">10</li> 
+            <li class="sliderListItemsDuration" id="fifteenMinOption">15</li> 
+            <li class="sliderListItemsDuration" id="twentyMinOption">20</li> 
+            <li class="sliderListItemsDuration" id="twentyFiveMinOption">25</li> 
+            <li class="sliderListItemsDuration" id="thirtyMinOption">30</li>
         </ul>
         </div>
 
@@ -393,11 +390,11 @@ function printMainScreen() {
           <span></span>
           <ul class="rangeSliderLabels">
               <li class="sliderListItemsInterval" id="noneOption">None</li> 
-              <li class="sliderListItemsInterval">1</li> 
-              <li class="sliderListItemsInterval">2</li> 
-              <li class="sliderListItemsInterval">3</li> 
-              <li class="sliderListItemsInterval">4</li> 
-              <li class="sliderListItemsInterval">5</li>
+              <li class="sliderListItemsInterval" id="oneOption">1</li> 
+              <li class="sliderListItemsInterval" id="twoOption">2</li> 
+              <li class="sliderListItemsInterval" id="threeOption">3</li> 
+              <li class="sliderListItemsInterval" id="fourOption">4</li> 
+              <li class="sliderListItemsInterval" id="fiveOption">5</li>
           </ul>
         </div>
 
@@ -620,7 +617,7 @@ function timerInitialize() {
         // This is a Pause function. Still need a back to home function.
         document.addEventListener("click", function(e){
             if(e.target.id === "pause-btn") {
-                printIt.printResumeButtonToPage();
+                window.printIt.printResumeButtonToPage();
 
                 timer.pause();
                 intervalFlag = false;

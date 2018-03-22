@@ -86,7 +86,7 @@ function timerInitialize() {
         // This is a Pause function. Still need a back to home function.
         document.addEventListener("click", function(e){
             if(e.target.id === "pause-btn") {
-                printIt.printResumeButtonToPage();
+                window.printIt.printResumeButtonToPage();
 
                 timer.pause();
                 intervalFlag = false;

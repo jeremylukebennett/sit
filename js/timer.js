@@ -5,8 +5,6 @@ let $ = require("jquery");
 var Timer = require('easytimer');
 var userSliderValue = require("./readSliderValue");
 let soundAlert = require("./playAudio");
-
-
 let timerDiv = document.getElementById("countdownString");
 
 // Main alarm slider settings
@@ -17,9 +15,10 @@ let printIt = require("./printToDom");
 
 $(document).on("change", "#slider1", ()=>{
     let newVal = $("#slider1").val();
+    $("#slider1").attr("value", newVal);
     console.log(durationValues[newVal]);
     newDuration = durationValues[newVal];
-    
+
 });   
 
 // Interval Slider Settings
@@ -29,6 +28,7 @@ let newIntervalDuration;
 
 $(document).on("change", "#slider2", ()=>{
     let newVal = $("#slider2").val();
+    $("#slider2").attr("value", newVal);
     console.log(intervalDurationValues[newVal]);
     newIntervalDuration = intervalDurationValues[newVal];
     
@@ -44,6 +44,8 @@ let newAlarmSound;
 
 $(document).on("change", "#slider3", ()=>{
     let newVal = $("#slider3").val();
+    $("#slider3").attr("value", newVal);
+
     newAlarmSound = alarmSoundValues[newVal];
     newIntervalSound = intervalSoundValues[newVal];
     

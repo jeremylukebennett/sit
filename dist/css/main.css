@@ -2,7 +2,10 @@ body {
   font-family: "Mada", sans-serif;
   font-weight: 200;
   background-color: #005cec;
-  color: #D5D5D5; }
+  color: white; }
+
+#myChart {
+  margin-top: 6em; }
 
 #main-header {
   font-weight: 400;
@@ -31,7 +34,24 @@ body {
 
 #sit-btn {
   background-color: #716259;
+  border: solid #00000054 2px;
   color: #DDE1E1; }
+
+#back-btn {
+  background-color: #716259;
+  border: solid #00000054 2px;
+  margin-top: 5em; }
+
+#user-login, #user-sign-up {
+  background-color: #716259;
+  border: none;
+  border: solid #00000054 2px; }
+
+#user-progress {
+  background-color: #1484A4; }
+
+#user-logout {
+  background-color: #716259; }
 
 #duration-label {
   display: block; }
@@ -99,24 +119,30 @@ body {
 h1#sit-header-title {
   font-weight: 200;
   margin-bottom: auto;
-  font-family: 'Mada', sans-serif; }
+  font-family: 'Mada', sans-serif;
+  color: white; }
 
 #menu1, #menu2, #menu3, #menuProgress, #menuLogOutOption {
   padding: 1.25rem 0 1.5rem 1.5rem;
   font-weight: 200;
   border: solid #979797 1px;
   background-color: #1F6FA3;
-  color: white; }
+  color: white;
+  text-shadow: -1px 2px #00000069; }
+
+#menu1:hover, #menu2:hover, #menu3:hover, #menuProgress:hover, #menuLogOutOption:hover {
+  background-color: #1b5a85;
+  transition: background-color .1s ease-in; }
 
 #stop-btn {
   background-color: #da3d3d;
   border: none;
-  animation-duration: 1s;
+  animation-duration: .5s;
   animation-name: slideInFromRight; }
 
 #pause-btn {
   border: none;
-  animation-duration: 1s;
+  animation-duration: .5s;
   animation-name: slideInFromLeft;
   background-color: white;
   color: black; }
@@ -124,13 +150,22 @@ h1#sit-header-title {
 #countdownTime {
   font-size: 6em;
   margin: 1em 0 0 0;
-  color: white; }
+  color: white;
+  animation-duration: .5s;
+  animation-name: slideInFromLeft; }
 
 #menu-options {
-  padding: 0; }
+  padding: 0;
+  box-shadow: 1px 14px 72px #333d4e, 13px 3px 25px #0d0d0d; }
 
 #user-login, #user-sign-up, #user-logout {
   width: auto; }
+
+#nav-bar-container {
+  box-shadow: -1px 2px #00000033; }
+
+#slider1, #slider2, #slider3 {
+  box-shadow: -1px 1.5px #00000033; }
 
 .dropdown {
   margin: 0 0 0 -9%; }
@@ -183,10 +218,12 @@ h1#sit-header-title {
   margin-bottom: 0em;
   font-weight: 700;
   font-size: 14px;
-  padding-bottom: 0em; }
+  padding-bottom: 0em;
+  text-shadow: -2px 2px #00000033; }
 
 .closeBtn {
-  font-weight: 200; }
+  font-weight: 200;
+  border: solid #00000054 2px; }
 
 .modal-content {
   background-color: #005cec; }
@@ -194,7 +231,7 @@ h1#sit-header-title {
 .modal-body {
   border-bottom: solid black 1px;
   border-top: solid black 1px;
-  font-size: 1.5em; }
+  font-size: 1.2em; }
 
 .hide {
   display: none; }
@@ -300,18 +337,9 @@ input[type=range]:focus::-ms-fill-upper {
 
 @keyframes slideInFromRight {
   from {
-    margin-left: 100%;
-    width: 30%; }
+    margin-left: 100%; }
   to {
-    margin-left: 0%;
-    width: 13em; } }
-@keyframes slideInFromLeft {
-  from {
-    margin-right: 100%;
-    width: 30%; }
-  to {
-    margin-right: 0%;
-    width: 13em; } }
+    margin-left: 0%; } }
 @media (min-width: 576px) {
   #main-header {
     font-weight: 400; } }
@@ -325,10 +353,7 @@ input[type=range]:focus::-ms-fill-upper {
     font-size: 80px; }
 
   #sit-btn {
-    font-size: 1.3em; }
-
-  #dropdownMenu2 {
-    display: none; } }
+    font-size: 1.3em; } }
 @media (min-width: 1200px) {
   #main-header #nav-bar-container {
     display: flex;
@@ -341,9 +366,6 @@ input[type=range]:focus::-ms-fill-upper {
   #sit-btn {
     font-size: 1.3em;
     background-color: #716259;
-    color: #DDE1E1; }
-
-  #dropdownMenu2 {
-    display: none; } }
+    color: #DDE1E1; } }
 
 /*# sourceMappingURL=main.css.map */

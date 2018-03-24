@@ -82,12 +82,12 @@ function graphTest() {
     
         // The data for our dataset
         data: {
-            labels: ["Test", "February", "March", "April", "May", "June", "July"],
+            labels: ["", "", "", "", "", "", ""],
             datasets: [{
-                label: "My First dataset",
+                label: "",
                 backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-                data: [0, 10, 5, 2, 20, 30, 45],
+                borderColor: 'black',
+                data: [0, 10, 5, 2, 20, 30, 15],
             }]
         },
     
@@ -120,6 +120,9 @@ const trackProgressMenuOption = document.getElementById("menuProgress");
 const userLogOutMenuOption = document.getElementById("menuLogOutOption");
 const userLoginMenuOption = document.getElementById("menu3");
 const backButton = document.getElementById("back-btn");
+const today = new Date();
+let durationValues = [5, 10, 15, 20, 25, 30];
+
 
 
 userLogin.addEventListener("click", e => {
@@ -136,7 +139,10 @@ userLogin.addEventListener("click", e => {
 
     let userID = response.uid;
     let userEmail = response.email;
-    let idAndEmail = userData.makeUserObject(userID, userEmail);
+    let currentDate = today;
+    let sessionDuration = durationValues[$("#slider1").val];
+    console.log('sessionDuration', durationValues[$("#slider1").val()]);
+    let idAndEmail = userData.makeUserObject(userID, userEmail); //Need to include duration and date values to pass to firebase
 
     console.log('idAndEmail', idAndEmail);    
 
@@ -153,10 +159,9 @@ userLogin.addEventListener("click", e => {
     }
 
     addUser(idAndEmail);
-  
     
   }).catch(e => console.log(e.message));
-  document.getElementById("loginModalBox").innerHTML = `<p>You're logged in :D</p>`;
+  document.getElementById("loginModalBox").innerHTML = `<p id="loginSuccess">You're logged in :D</p>`;
 
 });  
 
@@ -172,8 +177,6 @@ userSignUp.addEventListener("click", e => {
   // Sign in
   const promise = auth.createUserWithEmailAndPassword(email, pass);
   promise.catch(e => console.log(e.message));
-
-
 });  
 
 
@@ -199,7 +202,6 @@ trackProgressMenuOption.addEventListener("click", e => {
   printIt.printGraphData();
   graphUserInfo.graphTest();
 });
-
 
 document.addEventListener("click", function(e){
   if(e.target.id === "back-btn") {
@@ -231,11 +233,6 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     // Add function that is called that then looks to see if the alarm cycle finished while the user was logged in. If so, run a function that pushes that data up to firebase with the associated uid.
 
 
-
-    
-
-
-
     let getFBdetails = (user) => {
       return $.ajax({
         url: `${firebase.getFBsettings().databaseURL}/users.json?orderBy="uid"&equalTo="${user}"`
@@ -245,10 +242,6 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         return error;
       });
     };
-
-
-
-
 
 
   } else {
@@ -536,8 +529,6 @@ let $ = require("jquery");
 var Timer = require('easytimer');
 var userSliderValue = require("./readSliderValue");
 let soundAlert = require("./playAudio");
-
-
 let timerDiv = document.getElementById("countdownString");
 
 // Main alarm slider settings
@@ -548,9 +539,10 @@ let printIt = require("./printToDom");
 
 $(document).on("change", "#slider1", ()=>{
     let newVal = $("#slider1").val();
+    $("#slider1").attr("value", newVal);
     console.log(durationValues[newVal]);
     newDuration = durationValues[newVal];
-    
+
 });   
 
 // Interval Slider Settings
@@ -560,6 +552,7 @@ let newIntervalDuration;
 
 $(document).on("change", "#slider2", ()=>{
     let newVal = $("#slider2").val();
+    $("#slider2").attr("value", newVal);
     console.log(intervalDurationValues[newVal]);
     newIntervalDuration = intervalDurationValues[newVal];
     
@@ -575,6 +568,8 @@ let newAlarmSound;
 
 $(document).on("change", "#slider3", ()=>{
     let newVal = $("#slider3").val();
+    $("#slider3").attr("value", newVal);
+
     newAlarmSound = alarmSoundValues[newVal];
     newIntervalSound = intervalSoundValues[newVal];
     
@@ -667,14 +662,25 @@ function timerInitialize() {
 
 let fbInteraction = require("./interaction");
 
-
-function makeUserObject(id, email) {
-    let userObject = {
-      uid: id,
-      userEmail: email
-    };
+//  Values for firebase here:
+function makeUserObject(id, email, date, duration) {
+  let userObject = {
+    uid: id,
+    userEmail: email,
+    currentDate: date,
+    sessionDuration: duration 
+  };
     return userObject;
 }
+
+
+// function makeUserObject(id, email) {
+//     let userObject = {
+//       uid: id,
+//       userEmail: email
+//     };
+//     return userObject;
+// }
 
 
 // let checkForUser = (uid) => {

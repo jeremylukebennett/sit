@@ -2,14 +2,25 @@
 
 let fbInteraction = require("./interaction");
 
-
-function makeUserObject(id, email) {
-    let userObject = {
-      uid: id,
-      userEmail: email
-    };
+//  Values for firebase here:
+function makeUserObject(id, email, date, duration) {
+  let userObject = {
+    uid: id,
+    userEmail: email,
+    currentDate: date,
+    sessionDuration: duration 
+  };
     return userObject;
 }
+
+
+// function makeUserObject(id, email) {
+//     let userObject = {
+//       uid: id,
+//       userEmail: email
+//     };
+//     return userObject;
+// }
 
 
 // let checkForUser = (uid) => {

@@ -32,7 +32,7 @@ function makeUserObject(id, email, date, duration) {
 //         if (data.length === 0) {
 //             console.log('need to create user');
 //             console.log('creating profile for', uid);
-//             fbInteraction.addUserFB(makeNewUser(uid)) //making new user in firebase
+//             fbInteraction.addUserFB(makeNewUser(uid)) //making new user in firebase. CURRENTLY UNDEFINED?
 //             .then((result) => {
 //                 console.log('new user added to firebase', result);
 //                 document.location.replace('edit-profile.html');
@@ -54,3 +54,4 @@ function makeUserObject(id, email, date, duration) {
 
 
 // module.exports = {makeUserObject, checkForUser};
+module.exports = {makeUserObject};

@@ -30,45 +30,53 @@ module.exports = {pushUserAlarmDataToFB};
 },{}],3:[function(require,module,exports){
 "use strict";
 
-let firebase = require("firebase/app");
 let $ = require("jquery");
-let userDuration = require("./timer")
-;require("firebase/auth");
+// let userDuration = require("./timer");
+let firebase = require("firebase/app");
+require("firebase/auth");
 require("firebase/database");
 
+console.log('fbCreds',fbCreds);
+// Initialize Firebase
+var fbCreds = {
+  apiKey: "AIzaSyAymRtacZFQpkjgbUEaVYcatZxchVj85Yc",
+  authDomain: "sit-web-app.firebaseapp.com",
+  databaseURL: "https://sit-web-app.firebaseio.com",
+  projectId: "sit-web-app",
+  storageBucket: "",
+  messagingSenderId: "982048149294"
+};
 
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyAymRtacZFQpkjgbUEaVYcatZxchVj85Yc",
-    authDomain: "sit-web-app.firebaseapp.com",
-    databaseURL: "https://sit-web-app.firebaseio.com",
-    projectId: "sit-web-app",
-    storageBucket: "",
-    messagingSenderId: "982048149294"
+console.log('fbCreds',fbCreds);
+firebase.initializeApp(fbCreds);
+let database = firebase.database();
+
+  firebase.config = function() {
+    console.log('fbCreds',fbCreds);
+    return fbCreds;
   };
 
-
-  firebase.initializeApp(config);
-  let database = firebase.database();
-
+  // firebase.initializeApp(config);
+  // let database = firebase.database();
 
 
-  function addUserSessionLength(durVal) {
-    // console.log(durVal);
-    // let tempObject = {
-    //   duration: durVal,
-    //   uid : 
-    // }
-  }
+
+  // function addUserSessionLength(durVal) {
+  //   // console.log(durVal);
+  //   // let tempObject = {
+  //   //   duration: durVal,
+  //   //   uid : 
+  //   // }
+  // }
 
   console.log("is fb-config connected?");
-  console.log(userDuration.newDuration);
-  addUserSessionLength(userDuration.newDuration);
+  // console.log(userDuration.newDuration);
+  // addUserSessionLength(userDuration.newDuration);
 
-  module.exports = {firebase, config};
+  module.exports = firebase;
 
 
-},{"./timer":11,"firebase/app":122,"firebase/auth":123,"firebase/database":124,"jquery":126}],4:[function(require,module,exports){
+},{"firebase/app":122,"firebase/auth":123,"firebase/database":124,"jquery":126}],4:[function(require,module,exports){
 "use strict";
 
 function graphTest() {
@@ -100,14 +108,23 @@ module.exports = {graphTest};
 },{}],5:[function(require,module,exports){
 "use strict";
 
-let firebase = require("firebase/app");
+// let firebase = require("firebase/app");
+// require("firebase/auth");
+// require("firebase/database");
+
 let userData = require("./userData");
+
 let fbConfig = require("./fb-config");
+// let firebase = require("./")
+
 let printIt = require("./printToDom");
 let graphUserInfo = require('./graphData.js');
 let alarmData = require('./alarmDataCapture');
 let $ = require("jquery");
-
+// console.log('fbConfig', fbConfig());
+// firebase.initializeApp(fbConfig.config);
+// let database = firebase.database();
+console.log('userData',userData);
 let userObject;
 
 const userEmail = document.getElementById("user-email");
@@ -124,32 +141,35 @@ const today = new Date();
 let durationValues = [5, 10, 15, 20, 25, 30];
 
 
+// Firebase Stuff..............
 
-userLogin.addEventListener("click", e => {
-  // get email and pass
+
+// START
+userLogin.addEventListener("click", e => {       // get email and pass
   const email = userEmail.value;
   const pass = userPassword.value;
-  const auth = firebase.auth();
-  // const userID = firebase
-
-  // Sign in
-  auth.signInWithEmailAndPassword(email, pass)
-  .then((response)=>{
+  const auth = fbConfig.auth();  
+  
+  auth.signInWithEmailAndPassword(email, pass)     // Sign in
+  .then((response)=>{       //The 'response' variable here is the giant object containing uid among other things
     console.log("response", response);
 
     let userID = response.uid;
     let userEmail = response.email;
     let currentDate = today;
-    let sessionDuration = durationValues[$("#slider1").val];
+    let sessionDuration = durationValues[$("#slider1").val()];
     console.log('sessionDuration', durationValues[$("#slider1").val()]);
-    let idAndEmail = userData.makeUserObject(userID, userEmail); //Need to include duration and date values to pass to firebase
+    console.log('firebase.auth().currentUser;',fbConfig.auth().currentUser);
+    let allUserInfo = userData.makeUserObject(userID, userEmail, currentDate, sessionDuration); //Need to include duration and date values to pass to firebase
 
-    console.log('idAndEmail', idAndEmail);    
+    console.log('allUserInfo', allUserInfo);    
+    console.log('fbConfig.config.databaseURL',fbConfig.config().databaseURL);
+    // console.log('fbConfig.databaseURL',fbConfig.databaseURL);
 
-    // add user object to firebase
-    function addUser(value) {
+
+    function addUser(value) {    // add user object to firebase
         return $.ajax({
-        url: `${fbConfig.config.databaseURL}/user.json`, // "user" can be anything even if it hasn't be added in firebase yet
+        url: `${fbConfig.config().databaseURL}/user.json`, // "user" can be anything even if it hasn't be added in firebase yet
         type: 'POST',
         data: JSON.stringify(value),
         dataType: 'json'
@@ -158,12 +178,36 @@ userLogin.addEventListener("click", e => {
       });
     }
 
-    addUser(idAndEmail);
+    addUser(allUserInfo);
     
   }).catch(e => console.log(e.message));
   document.getElementById("loginModalBox").innerHTML = `<p id="loginSuccess">You're logged in :D</p>`;
-
 });  
+// END
+
+
+
+
+
+// Try writing function to push user duration to FB to be called when when times up
+function sendUserDurationAndDate(value) {
+  return $.ajax({
+    url: `${fbConfig.config().databaseURL}/progress.json`, // "user" can be anything even if it hasn't be added in firebase yet
+    type: 'POST',
+    data: JSON.stringify(value),
+    dataType: 'json'
+  }).done((valueID) => {
+    return valueID;
+  });
+
+}
+
+
+
+
+
+
+
 
 
 // USER SIGN UP
@@ -173,7 +217,7 @@ userSignUp.addEventListener("click", e => {
 //   Make suer you check that this is a valid email...
   const email = userEmail.value;
   const pass = userPassword.value;
-  const auth = firebase.auth();
+  const auth = fbConfig.auth();
   // Sign in
   const promise = auth.createUserWithEmailAndPassword(email, pass);
   promise.catch(e => console.log(e.message));
@@ -183,14 +227,14 @@ userSignUp.addEventListener("click", e => {
 userLogOut.addEventListener("click", e => {
   console.log("you logged out");
   printIt.refillLoginModal();
-  firebase.auth().signOut();
+  fbConfig.auth().signOut();
 });
 
 userLogOutMenuOption.addEventListener("click", e => {
   console.log("you logged out, now you need to figure out how to get the graph to go away");
   console.log("did it go away?");
   printIt.refillLoginModal();
-  firebase.auth().signOut();
+  fbConfig.auth().signOut();
 });
 
 trackProgress.addEventListener("click", e => {
@@ -212,15 +256,14 @@ document.addEventListener("click", function(e){
 });
 
 
-
-
-firebase.auth().onAuthStateChanged(firebaseUser => {
+console.log('fbConfig',fbConfig);
+// 
+fbConfig.auth().onAuthStateChanged(firebaseUser => {
   if(firebaseUser) {
     // User logged in
     console.log(firebaseUser);
-    console.log("is there anything being logged here??");
+    console.log("FB state change");
     console.log('firebaseUser',firebaseUser);
-    console.log("need uid here");
     console.log('firebaseUser.uid',firebaseUser.uid);
     trackProgress.classList.remove('hide');
     trackProgressMenuOption.classList.remove('hide');
@@ -235,7 +278,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 
     let getFBdetails = (user) => {
       return $.ajax({
-        url: `${firebase.getFBsettings().databaseURL}/users.json?orderBy="uid"&equalTo="${user}"`
+        url: `${fbConfig.config().databaseURL}/users.json?orderBy="uid"&equalTo="${user}"`
       }).done((resolve) => {
         return resolve;
       }).fail((error) => {
@@ -247,8 +290,9 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
   } else {
     // User not logged in
     console.log("not logged in");
+    console.log("FB state change");
+
     printIt.printMainScreen();
-    console.log("not logged in again");
 
     trackProgress.classList.add('hide');
     trackProgressMenuOption.classList.add('hide');
@@ -260,7 +304,9 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     userSignUp.classList.remove('hide');
   }
 });
-},{"./alarmDataCapture":2,"./fb-config":3,"./graphData.js":4,"./printToDom":9,"./userData":12,"firebase/app":122,"jquery":126}],6:[function(require,module,exports){
+
+module.exports = {sendUserDurationAndDate};
+},{"./alarmDataCapture":2,"./fb-config":3,"./graphData.js":4,"./printToDom":9,"./userData":12,"jquery":126}],6:[function(require,module,exports){
 "use strict";
 
 // let $ = require("jquery");   
@@ -295,7 +341,7 @@ let sliders = require("./readSliderValue");
 let soundAlerts = require("./playAudio");
 var Timer = require('easytimer');
 let timerTools = require('./timer');
-require("./fb-config");
+// require("./fb-config");
 require("./interaction");
 require("./addToFB");
 let graphUserInfo = require('./graphData.js');
@@ -315,7 +361,7 @@ document.addEventListener("click", function(e){
 });
 
 
-},{"./addToFB":1,"./fb-config":3,"./graphData.js":4,"./interaction":5,"./launchSit":6,"./playAudio":8,"./printToDom":9,"./readSliderValue":10,"./timer":11,"easytimer":121,"jquery":126}],8:[function(require,module,exports){
+},{"./addToFB":1,"./graphData.js":4,"./interaction":5,"./launchSit":6,"./playAudio":8,"./printToDom":9,"./readSliderValue":10,"./timer":11,"easytimer":121,"jquery":126}],8:[function(require,module,exports){
 "use strict";
 
 let printIt = require("./printToDom");
@@ -526,6 +572,9 @@ console.log("hi");
 // console.log("printIt before timeerInititalize", printIt);
 
 let $ = require("jquery");
+let firebase = require("firebase/app");
+let fbConfig = require("./fb-config");
+let fbInteractions = require("./interaction");
 var Timer = require('easytimer');
 var userSliderValue = require("./readSliderValue");
 let soundAlert = require("./playAudio");
@@ -542,7 +591,6 @@ $(document).on("change", "#slider1", ()=>{
     $("#slider1").attr("value", newVal);
     console.log(durationValues[newVal]);
     newDuration = durationValues[newVal];
-
 });   
 
 // Interval Slider Settings
@@ -555,9 +603,7 @@ $(document).on("change", "#slider2", ()=>{
     $("#slider2").attr("value", newVal);
     console.log(intervalDurationValues[newVal]);
     newIntervalDuration = intervalDurationValues[newVal];
-    
 });  
-
 
 // Sound Slider Settings
 
@@ -577,13 +623,15 @@ $(document).on("change", "#slider3", ()=>{
     $("#alertSource").attr("src", newAlarmSound);
     $("#intervalSource").attr("src", newIntervalSound);
 
-
-
-
     console.log(alarmSoundValues[newVal]);
     console.log(intervalSoundValues[newVal]);
 });  
     
+
+
+
+
+
 
 // Countdown timer 
 function timerInitialize() {
@@ -607,6 +655,23 @@ function timerInitialize() {
             soundAlert.alertLaunch();
             console.log("this is the value of the alarm that just completed: ", newDuration);
 
+            // Add functionality here that checks if user is logged in. If so, add the date and duration of completed session to users progress
+
+            firebase.auth().onAuthStateChanged(firebaseUser => {
+                if(firebaseUser) {
+                  console.log("yer users logged in and times up");
+                // Now I need to add the users progress to the proper node.
+
+                fbInteractions.sendUserDurationAndDate(newDuration);
+
+
+                
+                  
+                } else {
+                  // User not logged in
+                  console.log("yer users NOT logged in and times up");
+                }
+              });
         });
 
         // This is a Pause function. Still need a back to home function.
@@ -622,7 +687,6 @@ function timerInitialize() {
         document.addEventListener("click", function(e){
             if(e.target.id === "resume-btn") {
                 timer.start();
-                // printIt.printMainScreen();
             }
         });
 
@@ -657,7 +721,7 @@ function timerInitialize() {
 }
 
     module.exports = {timerInitialize, newDuration};
-},{"./playAudio":8,"./printToDom":9,"./readSliderValue":10,"easytimer":121,"jquery":126}],12:[function(require,module,exports){
+},{"./fb-config":3,"./interaction":5,"./playAudio":8,"./printToDom":9,"./readSliderValue":10,"easytimer":121,"firebase/app":122,"jquery":126}],12:[function(require,module,exports){
 "use strict";
 
 let fbInteraction = require("./interaction");
@@ -692,7 +756,7 @@ function makeUserObject(id, email, date, duration) {
 //         if (data.length === 0) {
 //             console.log('need to create user');
 //             console.log('creating profile for', uid);
-//             fbInteraction.addUserFB(makeNewUser(uid)) //making new user in firebase
+//             fbInteraction.addUserFB(makeNewUser(uid)) //making new user in firebase. CURRENTLY UNDEFINED?
 //             .then((result) => {
 //                 console.log('new user added to firebase', result);
 //                 document.location.replace('edit-profile.html');
@@ -714,6 +778,7 @@ function makeUserObject(id, email, date, duration) {
 
 
 // module.exports = {makeUserObject, checkForUser};
+module.exports = {makeUserObject};
 },{"./interaction":5}],13:[function(require,module,exports){
 "use strict";
 /**

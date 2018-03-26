@@ -2,6 +2,9 @@
 // console.log("printIt before timeerInititalize", printIt);
 
 let $ = require("jquery");
+let firebase = require("firebase/app");
+let fbConfig = require("./fb-config");
+let fbInteractions = require("./interaction");
 var Timer = require('easytimer');
 var userSliderValue = require("./readSliderValue");
 let soundAlert = require("./playAudio");
@@ -18,7 +21,6 @@ $(document).on("change", "#slider1", ()=>{
     $("#slider1").attr("value", newVal);
     console.log(durationValues[newVal]);
     newDuration = durationValues[newVal];
-
 });   
 
 // Interval Slider Settings
@@ -31,9 +33,7 @@ $(document).on("change", "#slider2", ()=>{
     $("#slider2").attr("value", newVal);
     console.log(intervalDurationValues[newVal]);
     newIntervalDuration = intervalDurationValues[newVal];
-    
 });  
-
 
 // Sound Slider Settings
 
@@ -53,13 +53,15 @@ $(document).on("change", "#slider3", ()=>{
     $("#alertSource").attr("src", newAlarmSound);
     $("#intervalSource").attr("src", newIntervalSound);
 
-
-
-
     console.log(alarmSoundValues[newVal]);
     console.log(intervalSoundValues[newVal]);
 });  
     
+
+
+
+
+
 
 // Countdown timer 
 function timerInitialize() {
@@ -83,6 +85,23 @@ function timerInitialize() {
             soundAlert.alertLaunch();
             console.log("this is the value of the alarm that just completed: ", newDuration);
 
+            // Add functionality here that checks if user is logged in. If so, add the date and duration of completed session to users progress
+
+            firebase.auth().onAuthStateChanged(firebaseUser => {
+                if(firebaseUser) {
+                  console.log("yer users logged in and times up");
+                // Now I need to add the users progress to the proper node.
+
+                fbInteractions.sendUserDurationAndDate(newDuration);
+
+
+                
+                  
+                } else {
+                  // User not logged in
+                  console.log("yer users NOT logged in and times up");
+                }
+              });
         });
 
         // This is a Pause function. Still need a back to home function.
@@ -98,7 +117,6 @@ function timerInitialize() {
         document.addEventListener("click", function(e){
             if(e.target.id === "resume-btn") {
                 timer.start();
-                // printIt.printMainScreen();
             }
         });
 

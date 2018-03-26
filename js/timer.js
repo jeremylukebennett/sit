@@ -91,8 +91,14 @@ function timerInitialize() {
                 if(firebaseUser) {
                   console.log("yer users logged in and times up");
                 // Now I need to add the users progress to the proper node.
-
-                fbInteractions.sendUserDurationAndDate(newDuration);
+// console.log('newDuration',newDuration);
+                    let todaysDate = new Date();
+                    let progressToLog = {
+                        sessionDate : todaysDate,
+                        sessionDuration : newDuration,
+                        user : firebaseUser.uid
+                    };
+                fbInteractions.sendUserDurationAndDate(progressToLog);
 
 
                 

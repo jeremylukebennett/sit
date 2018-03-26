@@ -1,13 +1,22 @@
 "use strict";
 
-let firebase = require("firebase/app");
+// let firebase = require("firebase/app");
+// require("firebase/auth");
+// require("firebase/database");
+
 let userData = require("./userData");
+
 let fbConfig = require("./fb-config");
+// let firebase = require("./")
+
 let printIt = require("./printToDom");
 let graphUserInfo = require('./graphData.js');
 let alarmData = require('./alarmDataCapture');
 let $ = require("jquery");
-
+// console.log('fbConfig', fbConfig());
+// firebase.initializeApp(fbConfig.config);
+// let database = firebase.database();
+console.log('userData',userData);
 let userObject;
 
 const userEmail = document.getElementById("user-email");
@@ -20,30 +29,39 @@ const trackProgressMenuOption = document.getElementById("menuProgress");
 const userLogOutMenuOption = document.getElementById("menuLogOutOption");
 const userLoginMenuOption = document.getElementById("menu3");
 const backButton = document.getElementById("back-btn");
+const today = new Date();
+let durationValues = [5, 10, 15, 20, 25, 30];
 
 
-userLogin.addEventListener("click", e => {
-  // get email and pass
+// Firebase Stuff..............
+
+
+// START
+userLogin.addEventListener("click", e => {       // get email and pass
   const email = userEmail.value;
   const pass = userPassword.value;
-  const auth = firebase.auth();
-  // const userID = firebase
-
-  // Sign in
-  auth.signInWithEmailAndPassword(email, pass)
-  .then((response)=>{
+  const auth = fbConfig.auth();  
+  
+  auth.signInWithEmailAndPassword(email, pass)     // Sign in
+  .then((response)=>{       //The 'response' variable here is the giant object containing uid among other things
     console.log("response", response);
 
     let userID = response.uid;
     let userEmail = response.email;
-    let idAndEmail = userData.makeUserObject(userID, userEmail);
+    let currentDate = today;
+    let sessionDuration = durationValues[$("#slider1").val()];
+    console.log('sessionDuration', durationValues[$("#slider1").val()]);
+    console.log('firebase.auth().currentUser;',fbConfig.auth().currentUser);
+    let allUserInfo = userData.makeUserObject(userID, userEmail, currentDate, sessionDuration); //Need to include duration and date values to pass to firebase
 
-    console.log('idAndEmail', idAndEmail);    
+    console.log('allUserInfo', allUserInfo);    
+    console.log('fbConfig.config.databaseURL',fbConfig.config().databaseURL);
+    // console.log('fbConfig.databaseURL',fbConfig.databaseURL);
 
-    // add user object to firebase
-    function addUser(value) {
+
+    function addUser(value) {    // add user object to firebase
         return $.ajax({
-        url: `${fbConfig.config.databaseURL}/user.json`, // "user" can be anything even if it hasn't be added in firebase yet
+        url: `${fbConfig.config().databaseURL}/user.json`, // "user" can be anything even if it hasn't be added in firebase yet
         type: 'POST',
         data: JSON.stringify(value),
         dataType: 'json'
@@ -52,13 +70,36 @@ userLogin.addEventListener("click", e => {
       });
     }
 
-    addUser(idAndEmail);
-  
+    addUser(allUserInfo);
     
   }).catch(e => console.log(e.message));
-  document.getElementById("loginModalBox").innerHTML = `<p>You're logged in :D</p>`;
-
+  document.getElementById("loginModalBox").innerHTML = `<p id="loginSuccess">You're logged in :D</p>`;
 });  
+// END
+
+
+
+
+
+// Try writing function to push user duration to FB to be called when when times up
+function sendUserDurationAndDate(value) {
+  return $.ajax({
+    url: `${fbConfig.config().databaseURL}/progress.json`, // "user" can be anything even if it hasn't be added in firebase yet
+    type: 'POST',
+    data: JSON.stringify(value),
+    dataType: 'json'
+  }).done((valueID) => {
+    return valueID;
+  });
+
+}
+
+
+
+
+
+
+
 
 
 // USER SIGN UP
@@ -68,26 +109,24 @@ userSignUp.addEventListener("click", e => {
 //   Make suer you check that this is a valid email...
   const email = userEmail.value;
   const pass = userPassword.value;
-  const auth = firebase.auth();
+  const auth = fbConfig.auth();
   // Sign in
   const promise = auth.createUserWithEmailAndPassword(email, pass);
   promise.catch(e => console.log(e.message));
-
-
 });  
 
 
 userLogOut.addEventListener("click", e => {
   console.log("you logged out");
   printIt.refillLoginModal();
-  firebase.auth().signOut();
+  fbConfig.auth().signOut();
 });
 
 userLogOutMenuOption.addEventListener("click", e => {
   console.log("you logged out, now you need to figure out how to get the graph to go away");
   console.log("did it go away?");
   printIt.refillLoginModal();
-  firebase.auth().signOut();
+  fbConfig.auth().signOut();
 });
 
 trackProgress.addEventListener("click", e => {
@@ -100,7 +139,6 @@ trackProgressMenuOption.addEventListener("click", e => {
   graphUserInfo.graphTest();
 });
 
-
 document.addEventListener("click", function(e){
   if(e.target.id === "back-btn") {
     console.log("go back??");
@@ -110,15 +148,14 @@ document.addEventListener("click", function(e){
 });
 
 
-
-
-firebase.auth().onAuthStateChanged(firebaseUser => {
+console.log('fbConfig',fbConfig);
+// 
+fbConfig.auth().onAuthStateChanged(firebaseUser => {
   if(firebaseUser) {
     // User logged in
     console.log(firebaseUser);
-    console.log("is there anything being logged here??");
+    console.log("FB state change");
     console.log('firebaseUser',firebaseUser);
-    console.log("need uid here");
     console.log('firebaseUser.uid',firebaseUser.uid);
     trackProgress.classList.remove('hide');
     trackProgressMenuOption.classList.remove('hide');
@@ -131,14 +168,9 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     // Add function that is called that then looks to see if the alarm cycle finished while the user was logged in. If so, run a function that pushes that data up to firebase with the associated uid.
 
 
-
-    
-
-
-
     let getFBdetails = (user) => {
       return $.ajax({
-        url: `${firebase.getFBsettings().databaseURL}/users.json?orderBy="uid"&equalTo="${user}"`
+        url: `${fbConfig.config().databaseURL}/users.json?orderBy="uid"&equalTo="${user}"`
       }).done((resolve) => {
         return resolve;
       }).fail((error) => {
@@ -147,15 +179,12 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     };
 
 
-
-
-
-
   } else {
     // User not logged in
     console.log("not logged in");
+    console.log("FB state change");
+
     printIt.printMainScreen();
-    console.log("not logged in again");
 
     trackProgress.classList.add('hide');
     trackProgressMenuOption.classList.add('hide');
@@ -167,3 +196,5 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     userSignUp.classList.remove('hide');
   }
 });
+
+module.exports = {sendUserDurationAndDate};

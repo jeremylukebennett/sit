@@ -31,12 +31,18 @@ body {
     font-family: $font-stack;
     font-weight: 200;
     background-color: $color-theme;
-    color: #D5D5D5;
+    // color: #D5D5D5;
+    color: white;
 }
 
 
 
 // ID Selectors ========================================================================================
+#myChart {
+    // background-color: #ffffffb5;
+    margin-top: 6em;
+}
+
 #main-header {
     font-weight: 400;
     border-bottom: solid grey 1px;
@@ -71,8 +77,29 @@ body {
 
 #sit-btn {
     background-color: $main-button-color;
-    // border: solid gray 2px;
+    border: solid #00000054 2px;
     color: #DDE1E1;
+}
+
+#back-btn {
+    background-color: #716259;
+    border: solid #00000054 2px;
+
+    margin-top: 5em;
+}
+
+#user-login, #user-sign-up {
+    background-color: #716259;
+    border: none;
+    border: solid #00000054 2px;
+}
+
+#user-progress {
+    background-color: #1484A4;
+}
+
+#user-logout {
+    background-color: #716259;
 }
 
 #duration-label {
@@ -164,6 +191,7 @@ h1#sit-header-title {
     font-weight: 200;
     margin-bottom: auto;
     font-family: 'Mada', sans-serif;
+    color: white;
 }
 
 #menu1, #menu2, #menu3, #menuProgress, #menuLogOutOption {
@@ -172,19 +200,26 @@ h1#sit-header-title {
     border: solid #979797 1px;
     background-color: #1F6FA3;
     color: white;
+    text-shadow: -1px 2px #00000069;
+}
+
+#menu1:hover, #menu2:hover, #menu3:hover, #menuProgress:hover, #menuLogOutOption:hover, {
+    // font-weight: 400;
+    background-color: rgb(27, 90, 133);
+    transition: background-color .1s ease-in;
 }
 
 #stop-btn {
     background-color: #da3d3d;
     border: none;
-    animation-duration: 1s;
+    animation-duration: .5s;
     animation-name: slideInFromRight;
 }
 
 #pause-btn {
     // background-color: #FF0068;
     border: none;
-    animation-duration: 1s;
+    animation-duration: .5s;
     animation-name: slideInFromLeft;
     background-color: white;
     color: black;
@@ -194,14 +229,26 @@ h1#sit-header-title {
     font-size: 6em;
     margin: 1em 0 0 0;
     color: white;
+    animation-duration: .5s;
+    animation-name: slideInFromLeft;
+
 }
 
 #menu-options {
     padding: 0;
+    box-shadow: 1px 14px 72px #333d4e, 13px 3px 25px #0d0d0d;
 }
 
 #user-login, #user-sign-up, #user-logout {
     width: auto;
+}
+
+#nav-bar-container {
+    box-shadow: -1px 2px #00000033;
+}
+
+#slider1, #slider2, #slider3 {
+    box-shadow: -1px 1.5px #00000033;
 }
 
 // Class Selectors ========================================================================================
@@ -265,10 +312,13 @@ h1#sit-header-title {
     font-weight: 700;
     font-size: 14px;
     padding-bottom: 0em;
+    text-shadow: -2px 2px #00000033;
 }
 
 .closeBtn {
     font-weight: 200;
+    border: solid #00000054 2px;
+
 }
 
 .modal-content {
@@ -278,7 +328,7 @@ h1#sit-header-title {
 .modal-body {
     border-bottom: solid black 1px;
     border-top: solid black 1px;
-    font-size: 1.5em;
+    font-size: 1.2em;
 }
 
 .hide {
@@ -409,26 +459,29 @@ input[type=range]::-webkit-slider-runnable-track {
 @keyframes slideInFromRight {
     from {
       margin-left: 100%;
-      width: 30%; 
+    //   width: 30%; 
     }
   
     to {
       margin-left: 0%;
-      width: 13em;
+    //   width: 13em;
     }
   }
 
-  @keyframes slideInFromLeft {
-    from {
-      margin-right: 100%;
-      width: 30%; 
-    }
+ 
+
+// Make countdown timer slide in
+//   @keyframes slideInFromLeft {
+//     from {
+//       margin-left: 100%;
+//     //   width: 30%; 
+//     }
   
-    to {
-      margin-right: 0%;
-      width: 13em;
-    }
-  }
+//     to {
+//       margin-left: 0%;
+//     //   width: 13em;
+//     }
+//   }
 
 
 
@@ -470,7 +523,7 @@ input[type=range]::-webkit-slider-runnable-track {
     }
 
     #dropdownMenu2 {
-        display: none;
+        // display: none;
     }
 }
 
@@ -498,7 +551,7 @@ input[type=range]::-webkit-slider-runnable-track {
     }
 
     #dropdownMenu2 {
-        display: none;
+        // display: none;
     }
 
 }

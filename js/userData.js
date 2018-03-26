@@ -2,14 +2,25 @@
 
 let fbInteraction = require("./interaction");
 
-
-function makeUserObject(id, email) {
-    let userObject = {
-      uid: id,
-      userEmail: email
-    };
+//  Values for firebase here:
+function makeUserObject(id, email, date, duration) {
+  let userObject = {
+    uid: id,
+    userEmail: email,
+    currentDate: date,
+    sessionDuration: duration 
+  };
     return userObject;
 }
+
+
+// function makeUserObject(id, email) {
+//     let userObject = {
+//       uid: id,
+//       userEmail: email
+//     };
+//     return userObject;
+// }
 
 
 // let checkForUser = (uid) => {
@@ -21,7 +32,7 @@ function makeUserObject(id, email) {
 //         if (data.length === 0) {
 //             console.log('need to create user');
 //             console.log('creating profile for', uid);
-//             fbInteraction.addUserFB(makeNewUser(uid)) //making new user in firebase
+//             fbInteraction.addUserFB(makeNewUser(uid)) //making new user in firebase. CURRENTLY UNDEFINED?
 //             .then((result) => {
 //                 console.log('new user added to firebase', result);
 //                 document.location.replace('edit-profile.html');
@@ -43,3 +54,4 @@ function makeUserObject(id, email) {
 
 
 // module.exports = {makeUserObject, checkForUser};
+module.exports = {makeUserObject};

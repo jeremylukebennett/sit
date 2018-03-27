@@ -173,8 +173,8 @@ let fbConfig = require("./fb-config");
 // let firebase = require("./")
 
 let printIt = require("./printToDom");  // printIt is console.logging empty....
-console.log("IS THERE ANYTHING PRINTING HEREEEEE");
 console.log('printIt',printIt);
+// printIt.
 // window.printIt = printIt;
 // console.log(printIt);
 let graphUserInfo = require('./graphData.js');
@@ -190,7 +190,7 @@ const userLogin = document.getElementById("user-login");
 const userSignUp = document.getElementById("user-sign-up");
 const userLogOut = document.getElementById("user-logout");
 const trackProgress = document.getElementById("user-progress");
-const trackProgressMenuOption = document.getElementById("menuProgress");
+const trackProgressMenuOption = document.getElementById("menuProgress"); //This is going to the MAIN
 const userLogOutMenuOption = document.getElementById("menuLogOutOption");
 const userLoginMenuOption = document.getElementById("menu3");
 const backButton = document.getElementById("back-btn");
@@ -224,20 +224,22 @@ userLogin.addEventListener("click", e => {       // get email and pass
     // console.log('fbConfig.databaseURL',fbConfig.databaseURL);
 
 
-    function addUser(value) {    // add user object to firebase
-        return $.ajax({
-        url: `${fbConfig.config().databaseURL}/user.json`, // "user" can be anything even if it hasn't be added in firebase yet
-        type: 'POST',
-        data: JSON.stringify(value),
-        dataType: 'json'
-      }).done((valueID) => {
-        return valueID;
-      });
-    }
+    // function addUser(value) {    // add user object to firebase
+    //     return $.ajax({
+    //     url: `${fbConfig.config().databaseURL}/user.json`, // "user" can be anything even if it hasn't be added in firebase yet
+    //     type: 'POST',
+    //     data: JSON.stringify(value),
+    //     dataType: 'json'
+    //   }).done((valueID) => {
+    //     return valueID;
+    //   });
+    // }
 
-    addUser(allUserInfo);
+    // addUser(allUserInfo);
     
   }).catch(e => console.log(e.message));
+
+
   document.getElementById("loginModalBox").innerHTML = `<p id="loginSuccess">You're logged in :D</p>`;
 });  
 // END
@@ -263,20 +265,90 @@ function sendUserDurationAndDate(value) {
 
 // Write a function that will retrieve information from Firebase:
 
-function retrieveUserProgress(value) {
-  return $.ajax({
-    url: `${fbConfig.config().databaseURL}/progress.json`, // "user" can be anything even if it hasn't be added in firebase yet
-    type: 'GET',
-    data: JSON.stringify(value),
-    dataType: 'json'
-  }).done((valueID) => {
-    console.log('OVER HEEEERRRRREEE: valueID',valueID);
-    return valueID;
-  });
+// function retrieveUserProgress(value) {
+//   return $.ajax({
+//     url: `${fbConfig.config().databaseURL}/progress.json`, // "user" can be anything even if it hasn't be added in firebase yet
+//     type: 'GET',
+//     data: JSON.stringify(value),
+//     dataType: 'json'
+//   }).done((valueID) => {
+//     console.log('User Progress Object: ',valueID);
+//     getFBDetails(valueID);
+//     return valueID;
+//   });
+// }
 
+
+
+// This should index through the collections and give 
+
+function retrieveUserProgress(user){
+  console.log("This is the user that's being passed: ", user);
+  return $.ajax({
+      url: `${fbConfig.config().databaseURL}//progress.json?orderBy="user"&equalTo="${user}"`
+   }).done((resolve) => {
+     console.log("from retrieve user progress function: ", resolve);
+      return resolve;
+   }).fail((error) => {
+      return error;
+   });
 }
 
-retrieveUserProgress();
+
+
+
+
+
+
+// This function is meant to sort through the user progress object and giv back only the objects with the current uid:
+
+// Currently its working. Need to get it to read the uid for the current user only.
+
+              // function sortUserProgressObjects(dataObj) {
+              //   console.log("This is the user object from the sortUserProgressObjects function: ", dataObj);
+
+              //   // This 'results' array is what is ultimately going to be listed on the 'Track Progress' section.
+              //   // Should this really be an object? If I want to add edit functionality then I'd need to edit this and re-up it to Firebase later, and that's gonna need to go up as an object.
+
+              //   let results = [];
+              //   // let currentUser = "";
+
+              //   for(let fbID in dataObj) {
+              //     console.log("key (fbID)", fbID);
+              //     console.log("value (uid)", dataObj[fbID].user);
+
+              //     let uid = dataObj[fbID].user;
+              //     if(uid === "6WlGBEdDmEcYgH9bFrJyBq4LmtN2") {
+              //       results.push(dataObj[fbID]);
+              //     }
+              //   }
+
+              //   console.log("This is the sorted object of objects (user progress info): ", results);
+              //   // dataObj.forEach(function(data) {
+              //   //   if(data.user == "wF64Mz2fMGUekTXkdZY4EeEmxpF3") {
+              //   //     results.push(data);
+              //   //   }
+              //   // });
+
+              // console.log("This is the sorted results object: ", results);
+              // }
+
+              // fbConfig.auth().onAuthStateChanged((user) => {
+              //   console.log("onAuthStateChanged, user: ", user.uid);
+              //   let currentUser = user;
+              // });
+
+// console.log("I want this to be the current user pleasssseee: ",currentUser);
+
+
+
+// function filterIt(event) {
+//   return event.user == "wF64Mz2fMGUekTXkdZY4EeEmxpF3";
+// }
+
+// retrieveUserProgress();
+// let userProgressObject = retrieveUserProgress();
+// console.log("Here's the userProgressObject: ", userProgressObject.responseJSON);
 
 
 
@@ -304,31 +376,35 @@ userLogOut.addEventListener("click", e => {
   fbConfig.auth().signOut();
 });
 
-userLogOutMenuOption.addEventListener("click", e => {
-  console.log("you logged out, now you need to figure out how to get the graph to go away");
-  console.log("did it go away?");
-  printIt.refillLoginModal();
-  fbConfig.auth().signOut();
-});
 
-trackProgress.addEventListener("click", e => {
-  console.log("clicked track progress");
-  printIt.printGraphData();
-  graphUserInfo.graphTest();
-});
+// userLogOutMenuOption.addEventListener("click", e => {
+//   console.log("you logged out, now you need to figure out how to get the graph to go away");
+//   console.log("did it go away?");
+//   console.log("Interaction.userLogOutMenuOption.printIt.refillLoginModal", printIt);
+  
+//   fbConfig.auth().signOut().then((result)=>{
+//     printIt.refillLoginModal();
+//   });
+// });
+
+// trackProgress.addEventListener("click", e => {
+//   console.log("clicked track progress");
+//   printIt.printGraphData();
+//   graphUserInfo.graphTest();
+// });
 
 // trackProgressMenuOption.addEventListener("click", e => {
 //   printIt.printGraphData();
 //   graphUserInfo.graphTest();
 // });
 
-document.addEventListener("click", function(e){
-  if(e.target.id === "back-btn") {
-    console.log("go back??");
-    console.log('printIt',printIt);
-    printIt.printMainScreen();
-  }
-});
+// document.addEventListener("click", function(e){
+//   if(e.target.id === "back-btn") {
+//     console.log("go back??");
+//     console.log('printIt',printIt);
+//     printIt.printMainScreen();
+//   }
+// });
 
 
 console.log('fbConfig',fbConfig);
@@ -366,7 +442,7 @@ fbConfig.auth().onAuthStateChanged(firebaseUser => {
     console.log("not logged in");
     console.log("FB state change");
 
-    printIt.printMainScreen();
+    // printIt.printMainScreen();
 
     trackProgress.classList.add('hide');
     trackProgressMenuOption.classList.add('hide');
@@ -409,7 +485,7 @@ module.exports = {countdownScreen};
 "use strict";
 let $ = require("jquery");    
 let printIt = require("./printToDom");
-window.printIt = printIt;
+// window.printIt = printIt;
 let startSit = require("./launchSit");
 let sliders = require("./readSliderValue");
 let soundAlerts = require("./playAudio");
@@ -418,6 +494,8 @@ let timerTools = require('./timer');
 require("./interaction");
 require("./addToFB");
 let graphUserInfo = require('./graphData.js');
+let fbConfig = require("./fb-config");
+
 
 // Main Sit button at bottom of Home Page
 let sitButton = document.getElementById("sit-btn");
@@ -434,11 +512,64 @@ document.addEventListener("click", function(e){
 });
 
 
-},{"./addToFB":1,"./graphData.js":4,"./interaction":5,"./launchSit":6,"./playAudio":8,"./printToDom":9,"./readSliderValue":10,"./timer":11,"easytimer":121,"jquery":126}],8:[function(require,module,exports){
+
+
+
+
+// Beginning here are event listeners migrated from interaction.js whenever they stopped responding in that file... Trying to see if they respond here instead:
+
+const trackProgressMenuOption = document.getElementById("menuProgress");
+
+trackProgressMenuOption.addEventListener("click", e => {
+    printIt.printGraphData();
+    graphUserInfo.graphTest();
+  });
+
+
+  const trackProgress = document.getElementById("user-progress");
+
+
+  trackProgress.addEventListener("click", e => {
+    console.log("clicked track progress");
+    printIt.printGraphData();
+    graphUserInfo.graphTest();
+  });
+
+
+
+  const userLogOutMenuOption = document.getElementById("menuLogOutOption");
+
+
+  userLogOutMenuOption.addEventListener("click", e => {
+    console.log("you logged out, now you need to figure out how to get the graph to go away");
+    console.log("did it go away?");
+    console.log("Interaction.userLogOutMenuOption.printIt.refillLoginModal", printIt);
+    
+    printIt.refillLoginModal();
+    fbConfig.auth().signOut().then((result)=>{
+    });
+  });
+
+
+
+
+
+  document.addEventListener("click", function(e){
+    if(e.target.id === "back-btn") {
+      console.log("go back??");
+      console.log('printIt',printIt);
+      printIt.printMainScreen();
+    }
+  });
+},{"./addToFB":1,"./fb-config":3,"./graphData.js":4,"./interaction":5,"./launchSit":6,"./playAudio":8,"./printToDom":9,"./readSliderValue":10,"./timer":11,"easytimer":121,"jquery":126}],8:[function(require,module,exports){
 "use strict";
 
 let printIt = require("./printToDom");
 let $ = require("jquery");
+
+
+
+// I think if you want this to play separate files relative to the slider value you're gonna have to write a switch statement that checks the value of the slider and plays a divverent audio element with a particular id depending on the slider value...
 
 function alertLaunch() {
     console.log("play audio");
@@ -583,16 +714,16 @@ function printHowToUse() {
   mainContainer.innerHTML = ``;
 }
 
-firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    // User is signed in.
-    mainContainer.innerHTML += `<p>You're signed in!</p>`;
+// firebase.auth().onAuthStateChanged(function(user) {
+//   if (user) {
+//     // User is signed in.
+//     mainContainer.innerHTML += `<p>You're signed in!</p>`;
     
-  } else {
-    // No user is signed in.
-    mainContainer.innerHTML += `<p>You're NOT signed in!</p>`;
-  }
-});
+//   } else {
+//     // No user is signed in.
+//     mainContainer.innerHTML += `<p>You're NOT signed in!</p>`;
+//   }
+// });
 
 
 function printGraphData() {
@@ -744,6 +875,11 @@ function timerInitialize() {
                         user : firebaseUser.uid
                     };
                 fbInteractions.sendUserDurationAndDate(progressToLog);
+                // console.log("firebaseUser.uid: ", firebaseUser.uid);
+
+                
+                fbInteractions.retrieveUserProgress(firebaseUser.uid);
+                // console.log();
 
 
                 
@@ -758,7 +894,7 @@ function timerInitialize() {
         // This is a Pause function. Still need a back to home function.
         document.addEventListener("click", function(e){
             if(e.target.id === "pause-btn") {
-                window.printIt.printResumeButtonToPage();
+                printIt.printResumeButtonToPage();
 
                 timer.pause();
                 intervalFlag = false;
@@ -778,12 +914,15 @@ function timerInitialize() {
                 intervalFlag = false;
                 console.log("you clicked stop");
 
-                window.printIt.printMainScreen();
+                printIt.printMainScreen();
             }
         });
+
+
+
+
+
 // Interval Timer
-
-
 
     function runInterval() {
         if(intervalFlag) {

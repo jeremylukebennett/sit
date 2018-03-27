@@ -99,6 +99,11 @@ function timerInitialize() {
                         user : firebaseUser.uid
                     };
                 fbInteractions.sendUserDurationAndDate(progressToLog);
+                // console.log("firebaseUser.uid: ", firebaseUser.uid);
+
+                
+                fbInteractions.retrieveUserProgress(firebaseUser.uid);
+                // console.log();
 
 
                 
@@ -113,7 +118,7 @@ function timerInitialize() {
         // This is a Pause function. Still need a back to home function.
         document.addEventListener("click", function(e){
             if(e.target.id === "pause-btn") {
-                window.printIt.printResumeButtonToPage();
+                printIt.printResumeButtonToPage();
 
                 timer.pause();
                 intervalFlag = false;
@@ -133,12 +138,15 @@ function timerInitialize() {
                 intervalFlag = false;
                 console.log("you clicked stop");
 
-                window.printIt.printMainScreen();
+                printIt.printMainScreen();
             }
         });
+
+
+
+
+
 // Interval Timer
-
-
 
     function runInterval() {
         if(intervalFlag) {

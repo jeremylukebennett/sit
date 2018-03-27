@@ -120,16 +120,16 @@ function printHowToUse() {
   mainContainer.innerHTML = ``;
 }
 
-firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    // User is signed in.
-    mainContainer.innerHTML += `<p>You're signed in!</p>`;
+// firebase.auth().onAuthStateChanged(function(user) {
+//   if (user) {
+//     // User is signed in.
+//     mainContainer.innerHTML += `<p>You're signed in!</p>`;
     
-  } else {
-    // No user is signed in.
-    mainContainer.innerHTML += `<p>You're NOT signed in!</p>`;
-  }
-});
+//   } else {
+//     // No user is signed in.
+//     mainContainer.innerHTML += `<p>You're NOT signed in!</p>`;
+//   }
+// });
 
 
 function printGraphData() {

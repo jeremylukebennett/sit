@@ -91,8 +91,19 @@ function timerInitialize() {
                 if(firebaseUser) {
                   console.log("yer users logged in and times up");
                 // Now I need to add the users progress to the proper node.
+// console.log('newDuration',newDuration);
+                    let todaysDate = new Date();
+                    let progressToLog = {
+                        sessionDate : todaysDate,
+                        sessionDuration : newDuration,
+                        user : firebaseUser.uid
+                    };
+                fbInteractions.sendUserDurationAndDate(progressToLog);
+                // console.log("firebaseUser.uid: ", firebaseUser.uid);
 
-                fbInteractions.sendUserDurationAndDate(newDuration);
+                
+                fbInteractions.retrieveUserProgress(firebaseUser.uid);
+                // console.log();
 
 
                 
@@ -107,7 +118,7 @@ function timerInitialize() {
         // This is a Pause function. Still need a back to home function.
         document.addEventListener("click", function(e){
             if(e.target.id === "pause-btn") {
-                window.printIt.printResumeButtonToPage();
+                printIt.printResumeButtonToPage();
 
                 timer.pause();
                 intervalFlag = false;
@@ -127,12 +138,15 @@ function timerInitialize() {
                 intervalFlag = false;
                 console.log("you clicked stop");
 
-                window.printIt.printMainScreen();
+                printIt.printMainScreen();
             }
         });
+
+
+
+
+
 // Interval Timer
-
-
 
     function runInterval() {
         if(intervalFlag) {

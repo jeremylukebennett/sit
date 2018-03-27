@@ -120,21 +120,23 @@ function printHowToUse() {
   mainContainer.innerHTML = ``;
 }
 
-firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    // User is signed in.
-    mainContainer.innerHTML += `<p>You're signed in!</p>`;
+// firebase.auth().onAuthStateChanged(function(user) {
+//   if (user) {
+//     // User is signed in.
+//     mainContainer.innerHTML += `<p>You're signed in!</p>`;
     
-  } else {
-    // No user is signed in.
-    mainContainer.innerHTML += `<p>You're NOT signed in!</p>`;
-  }
-});
+//   } else {
+//     // No user is signed in.
+//     mainContainer.innerHTML += `<p>You're NOT signed in!</p>`;
+//   }
+// });
 
 
 function printGraphData() {
   mainContainer.innerHTML = ``;
   mainContainer.innerHTML += `<canvas class="hide" id="myChart"></canvas>`;
+  // mainContainer.innerHTML += `<canvas id="line-chart" width="800" height="450"></canvas>
+  // `;
   console.log("should make button and should be below");
   
   

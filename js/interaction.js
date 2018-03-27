@@ -10,6 +10,7 @@ let fbConfig = require("./fb-config");
 // let firebase = require("./")
 
 let printIt = require("./printToDom");
+// console.log(printIt);
 let graphUserInfo = require('./graphData.js');
 let alarmData = require('./alarmDataCapture');
 let $ = require("jquery");
@@ -96,6 +97,23 @@ function sendUserDurationAndDate(value) {
 
 
 
+// Write a function that will retrieve information from Firebase:
+
+function retrieveUserProgress(value) {
+  return $.ajax({
+    url: `${fbConfig.config().databaseURL}/progress.json`, // "user" can be anything even if it hasn't be added in firebase yet
+    type: 'GET',
+    data: JSON.stringify(value),
+    dataType: 'json'
+  }).done((valueID) => {
+    console.log('OVER HEEEERRRRREEE: valueID',valueID);
+    return valueID;
+  });
+
+}
+
+retrieveUserProgress();
+
 
 
 
@@ -134,10 +152,10 @@ trackProgress.addEventListener("click", e => {
   graphUserInfo.graphTest();
 });
 
-trackProgressMenuOption.addEventListener("click", e => {
-  printIt.printGraphData();
-  graphUserInfo.graphTest();
-});
+// trackProgressMenuOption.addEventListener("click", e => {
+//   printIt.printGraphData();
+//   graphUserInfo.graphTest();
+// });
 
 document.addEventListener("click", function(e){
   if(e.target.id === "back-btn") {
@@ -149,7 +167,7 @@ document.addEventListener("click", function(e){
 
 
 console.log('fbConfig',fbConfig);
-// 
+// This detects whetheer the user is logged in or not. 
 fbConfig.auth().onAuthStateChanged(firebaseUser => {
   if(firebaseUser) {
     // User logged in
@@ -165,18 +183,17 @@ fbConfig.auth().onAuthStateChanged(firebaseUser => {
     userLoginMenuOption.classList.add('hide');
     userSignUp.classList.add('hide');
 
-    // Add function that is called that then looks to see if the alarm cycle finished while the user was logged in. If so, run a function that pushes that data up to firebase with the associated uid.
+    // Add function that is called that then looks to see if the alarm cycle finished while the user was logged in. If so, run a function that pushes that data up to firebase with the associated uid:
 
-
-    let getFBdetails = (user) => {
-      return $.ajax({
-        url: `${fbConfig.config().databaseURL}/users.json?orderBy="uid"&equalTo="${user}"`
-      }).done((resolve) => {
-        return resolve;
-      }).fail((error) => {
-        return error;
-      });
-    };
+    // let getFBdetails = (user) => {
+    //   return $.ajax({
+    //     url: `${fbConfig.config().databaseURL}/users.json?orderBy="uid"&equalTo="${user}"`
+    //   }).done((resolve) => {
+    //     return resolve;
+    //   }).fail((error) => {
+    //     return error;
+    //   });
+    // };
 
 
   } else {
@@ -197,4 +214,4 @@ fbConfig.auth().onAuthStateChanged(firebaseUser => {
   }
 });
 
-module.exports = {sendUserDurationAndDate};
+module.exports = {sendUserDurationAndDate, retrieveUserProgress};

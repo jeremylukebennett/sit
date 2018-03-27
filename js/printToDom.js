@@ -135,6 +135,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 function printGraphData() {
   mainContainer.innerHTML = ``;
   mainContainer.innerHTML += `<canvas class="hide" id="myChart"></canvas>`;
+  // mainContainer.innerHTML += `<canvas id="line-chart" width="800" height="450"></canvas>
+  // `;
   console.log("should make button and should be below");
   
   

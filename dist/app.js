@@ -79,6 +79,13 @@ let database = firebase.database();
 },{"firebase/app":122,"firebase/auth":123,"firebase/database":124,"jquery":126}],4:[function(require,module,exports){
 "use strict";
 
+let fbInteraction = require("./interaction");
+
+
+let userProgressObj = fbInteraction.retrieveUserProgress();
+console.log('userProgressObj',userProgressObj);
+console.log('userProgressObj.responseJSON',userProgressObj.responseText);
+
 function graphTest() {
 
     document.getElementById("myChart").classList.remove('hide');
@@ -95,17 +102,66 @@ function graphTest() {
                 label: "",
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'black',
-                data: [0, 10, 5, 2, 20, 30, 15],
+                data: [20, 30, 15],
             }]
         },
     
         // Configuration options go here
         options: {}
     });
+
+
+
+    new Chart(document.getElementById("line-chart"), {
+        type: 'line',
+        data: {
+          labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
+          datasets: [{ 
+              data: [86,114,106,106,107,111,133,221,783,2478],
+              label: "Africa",
+              borderColor: "black",
+              fill: false
+            }, { 
+              data: [282,350,411,502,635,809,947,1402,3700,5267],
+              label: "Asia",
+              borderColor: "#8e5ea2",
+              fill: false
+            }, { 
+              data: [168,170,178,190,203,276,408,547,675,734],
+              label: "Europe",
+              borderColor: "#3cba9f",
+              fill: false
+            }, { 
+              data: [40,20,10,16,24,38,74,167,508,784],
+              label: "Latin America",
+              borderColor: "#e8c3b9",
+              fill: false
+            }, { 
+              data: [6,3,2,2,7,26,82,172,312,433],
+              label: "North America",
+              borderColor: "#c45850",
+              fill: false
+            }
+          ]
+        },
+        options: {
+          title: {
+            display: false,
+            text: 'World population per region (in millions)'
+          }
+        }
+      });
+
+
+
+
+
+
+
 }
 
 module.exports = {graphTest};
-},{}],5:[function(require,module,exports){
+},{"./interaction":5}],5:[function(require,module,exports){
 "use strict";
 
 // let firebase = require("firebase/app");
@@ -204,6 +260,23 @@ function sendUserDurationAndDate(value) {
 
 
 
+// Write a function that will retrieve information from Firebase:
+
+function retrieveUserProgress(value) {
+  return $.ajax({
+    url: `${fbConfig.config().databaseURL}/progress.json`, // "user" can be anything even if it hasn't be added in firebase yet
+    type: 'GET',
+    data: JSON.stringify(value),
+    dataType: 'json'
+  }).done((valueID) => {
+    console.log('OVER HEEEERRRRREEE: valueID',valueID);
+    return valueID;
+  });
+
+}
+
+retrieveUserProgress();
+
 
 
 
@@ -257,7 +330,7 @@ document.addEventListener("click", function(e){
 
 
 console.log('fbConfig',fbConfig);
-// 
+// This detects whetheer the user is logged in or not. 
 fbConfig.auth().onAuthStateChanged(firebaseUser => {
   if(firebaseUser) {
     // User logged in
@@ -273,18 +346,17 @@ fbConfig.auth().onAuthStateChanged(firebaseUser => {
     userLoginMenuOption.classList.add('hide');
     userSignUp.classList.add('hide');
 
-    // Add function that is called that then looks to see if the alarm cycle finished while the user was logged in. If so, run a function that pushes that data up to firebase with the associated uid.
+    // Add function that is called that then looks to see if the alarm cycle finished while the user was logged in. If so, run a function that pushes that data up to firebase with the associated uid:
 
-
-    let getFBdetails = (user) => {
-      return $.ajax({
-        url: `${fbConfig.config().databaseURL}/users.json?orderBy="uid"&equalTo="${user}"`
-      }).done((resolve) => {
-        return resolve;
-      }).fail((error) => {
-        return error;
-      });
-    };
+    // let getFBdetails = (user) => {
+    //   return $.ajax({
+    //     url: `${fbConfig.config().databaseURL}/users.json?orderBy="uid"&equalTo="${user}"`
+    //   }).done((resolve) => {
+    //     return resolve;
+    //   }).fail((error) => {
+    //     return error;
+    //   });
+    // };
 
 
   } else {
@@ -305,7 +377,7 @@ fbConfig.auth().onAuthStateChanged(firebaseUser => {
   }
 });
 
-module.exports = {sendUserDurationAndDate};
+module.exports = {sendUserDurationAndDate, retrieveUserProgress};
 },{"./alarmDataCapture":2,"./fb-config":3,"./graphData.js":4,"./printToDom":9,"./userData":12,"jquery":126}],6:[function(require,module,exports){
 "use strict";
 
@@ -525,6 +597,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 function printGraphData() {
   mainContainer.innerHTML = ``;
   mainContainer.innerHTML += `<canvas class="hide" id="myChart"></canvas>`;
+  // mainContainer.innerHTML += `<canvas id="line-chart" width="800" height="450"></canvas>
+  // `;
   console.log("should make button and should be below");
   
   

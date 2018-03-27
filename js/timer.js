@@ -99,9 +99,9 @@ function timerInitialize() {
                         user : firebaseUser.uid
                     };
                 fbInteractions.sendUserDurationAndDate(progressToLog);
-                // console.log("firebaseUser.uid: ", firebaseUser.uid);
-
                 
+                
+                console.log("firebaseUser.uid. Is this sending in the current users uid?: ", firebaseUser.uid);
                 fbInteractions.retrieveUserProgress(firebaseUser.uid);
                 // console.log();
 

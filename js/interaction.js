@@ -10,9 +10,6 @@ let fbConfig = require("./fb-config");
 
 let printIt = require("./printToDom");  // printIt is console.logging empty....
 console.log('printIt',printIt);
-// printIt.
-// window.printIt = printIt;
-// console.log(printIt);
 let graphUserInfo = require('./graphData.js');
 let alarmData = require('./alarmDataCapture');
 let $ = require("jquery");
@@ -123,9 +120,10 @@ function retrieveUserProgress(user){
   return $.ajax({
       url: `${fbConfig.config().databaseURL}//progress.json?orderBy="user"&equalTo="${user}"`
    }).done((resolve) => {
-     console.log("from retrieve user progress function: ", resolve);
+     console.log("from retrieve user progress function. This should index through the collections and give: ", resolve);
       return resolve;
    }).fail((error) => {
+     console.log("there was an error");
       return error;
    });
 }

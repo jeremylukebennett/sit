@@ -5,18 +5,18 @@
 // require("firebase/database");
 
 let userData = require("./userData");
-
 let fbConfig = require("./fb-config");
 // let firebase = require("./")
 
-let printIt = require("./printToDom");
+let printIt = require("./printToDom");  // printIt is console.logging empty....
+console.log("IS THERE ANYTHING PRINTING HEREEEEE");
+console.log('printIt',printIt);
+// window.printIt = printIt;
 // console.log(printIt);
 let graphUserInfo = require('./graphData.js');
 let alarmData = require('./alarmDataCapture');
 let $ = require("jquery");
-// console.log('fbConfig', fbConfig());
-// firebase.initializeApp(fbConfig.config);
-// let database = firebase.database();
+
 console.log('userData',userData);
 let userObject;
 
@@ -148,6 +148,7 @@ userLogOutMenuOption.addEventListener("click", e => {
 });
 
 trackProgress.addEventListener("click", e => {
+  console.log("clicked track progress");
   printIt.printGraphData();
   graphUserInfo.graphTest();
 });

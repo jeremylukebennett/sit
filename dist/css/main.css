@@ -236,6 +236,10 @@ h1#sit-header-title {
 .hide {
   display: none; }
 
+.user-progress {
+  font-size: 2em;
+  text-align: center; }
+
 input[type=range] {
   -webkit-appearance: none;
   /* Hides the slider so that custom slider can be made */

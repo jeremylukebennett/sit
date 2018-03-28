@@ -6,13 +6,14 @@
 
 let userData = require("./userData");
 let fbConfig = require("./fb-config");
-// let firebase = require("./")
-
+let firebase = require("firebase/app");
+let graphIt = require("./graphData");
 let printIt = require("./printToDom");  // printIt is console.logging empty....
 console.log('printIt',printIt);
 let graphUserInfo = require('./graphData.js');
 let alarmData = require('./alarmDataCapture');
 let $ = require("jquery");
+// let fbInteraction = require("./interaction");
 
 console.log('userData',userData);
 let userObject;
@@ -33,7 +34,6 @@ let durationValues = [5, 10, 15, 20, 25, 30];
 
 // Firebase Stuff..............
 
-
 // START
 userLogin.addEventListener("click", e => {       // get email and pass
   const email = userEmail.value;
@@ -43,6 +43,7 @@ userLogin.addEventListener("click", e => {       // get email and pass
   auth.signInWithEmailAndPassword(email, pass)     // Sign in
   .then((response)=>{       //The 'response' variable here is the giant object containing uid among other things
     console.log("response", response);
+    console.log("YOU JUST LOGGED IN. NOW IS WHEN YOU SHOULD GRAB THE USER PROGRESS INFO");
 
     let userID = response.uid;
     let userEmail = response.email;
@@ -54,31 +55,12 @@ userLogin.addEventListener("click", e => {       // get email and pass
 
     console.log('allUserInfo', allUserInfo);    
     console.log('fbConfig.config.databaseURL',fbConfig.config().databaseURL);
-    // console.log('fbConfig.databaseURL',fbConfig.databaseURL);
-
-
-    // function addUser(value) {    // add user object to firebase
-    //     return $.ajax({
-    //     url: `${fbConfig.config().databaseURL}/user.json`, // "user" can be anything even if it hasn't be added in firebase yet
-    //     type: 'POST',
-    //     data: JSON.stringify(value),
-    //     dataType: 'json'
-    //   }).done((valueID) => {
-    //     return valueID;
-    //   });
-    // }
-
-    // addUser(allUserInfo);
-    
   }).catch(e => console.log(e.message));
 
 
   document.getElementById("loginModalBox").innerHTML = `<p id="loginSuccess">You're logged in :D</p>`;
 });  
 // END
-
-
-
 
 
 // Try writing function to push user duration to FB to be called when when times up
@@ -95,32 +77,15 @@ function sendUserDurationAndDate(value) {
 }
 
 
-
-// Write a function that will retrieve information from Firebase:
-
-// function retrieveUserProgress(value) {
-//   return $.ajax({
-//     url: `${fbConfig.config().databaseURL}/progress.json`, // "user" can be anything even if it hasn't be added in firebase yet
-//     type: 'GET',
-//     data: JSON.stringify(value),
-//     dataType: 'json'
-//   }).done((valueID) => {
-//     console.log('User Progress Object: ',valueID);
-//     getFBDetails(valueID);
-//     return valueID;
-//   });
-// }
-
-
-
-// This should index through the collections and give 
-
+// This is being called in the timer.js file and being passed the uid of current user only when alarm goes off
 function retrieveUserProgress(user){
   console.log("This is the user that's being passed: ", user);
   return $.ajax({
       url: `${fbConfig.config().databaseURL}//progress.json?orderBy="user"&equalTo="${user}"`
    }).done((resolve) => {
      console.log("from retrieve user progress function. This should index through the collections and give: ", resolve);
+    //  Call function here to display data on screen and pass the 'resolve' inside
+    // graphIt.consoleUserData(resolve);
       return resolve;
    }).fail((error) => {
      console.log("there was an error");
@@ -131,59 +96,41 @@ function retrieveUserProgress(user){
 
 
 
+function deleteProgressEntry(songId) {
+	return new Promise((resolve, reject) => {
+		$.ajax({
+			url: `${fbConfig.config().databaseURL}/progress/${songId}.json`,
+			method: "DELETE"
+		}).done(() => {
+      // console.log('data',data);
+			resolve();
+		});
+	});
+}
+
+
+// document.addEventListener("click", e => {
+  
+  //   if(e.target.classname === "user-progress-deletes") {
+    //     console.log("You Deleted a progress log!");
+    //   }
+    
+    // });
+    
 
 
 
-// This function is meant to sort through the user progress object and giv back only the objects with the current uid:
-
-// Currently its working. Need to get it to read the uid for the current user only.
-
-              // function sortUserProgressObjects(dataObj) {
-              //   console.log("This is the user object from the sortUserProgressObjects function: ", dataObj);
-
-              //   // This 'results' array is what is ultimately going to be listed on the 'Track Progress' section.
-              //   // Should this really be an object? If I want to add edit functionality then I'd need to edit this and re-up it to Firebase later, and that's gonna need to go up as an object.
-
-              //   let results = [];
-              //   // let currentUser = "";
-
-              //   for(let fbID in dataObj) {
-              //     console.log("key (fbID)", fbID);
-              //     console.log("value (uid)", dataObj[fbID].user);
-
-              //     let uid = dataObj[fbID].user;
-              //     if(uid === "6WlGBEdDmEcYgH9bFrJyBq4LmtN2") {
-              //       results.push(dataObj[fbID]);
-              //     }
-              //   }
-
-              //   console.log("This is the sorted object of objects (user progress info): ", results);
-              //   // dataObj.forEach(function(data) {
-              //   //   if(data.user == "wF64Mz2fMGUekTXkdZY4EeEmxpF3") {
-              //   //     results.push(data);
-              //   //   }
-              //   // });
-
-              // console.log("This is the sorted results object: ", results);
-              // }
-
-              // fbConfig.auth().onAuthStateChanged((user) => {
-              //   console.log("onAuthStateChanged, user: ", user.uid);
-              //   let currentUser = user;
-              // });
-
-// console.log("I want this to be the current user pleasssseee: ",currentUser);
-
-
-
-// function filterIt(event) {
-//   return event.user == "wF64Mz2fMGUekTXkdZY4EeEmxpF3";
+// function editProgress(songFormObj, songId) {
+// 	return new Promise((resolve, reject) => {
+// 		$.ajax({
+// 			url: `${fbConfig.config().databaseURL}/progress/${songId}.json`,
+// 			type: 'PUT',
+// 			data: JSON.stringify(songFormObj)
+// 		}).done((data) => {
+// 			resolve(data);
+// 		});
+// 	});
 // }
-
-// retrieveUserProgress();
-// let userProgressObject = retrieveUserProgress();
-// console.log("Here's the userProgressObject: ", userProgressObject.responseJSON);
-
 
 
 
@@ -211,36 +158,6 @@ userLogOut.addEventListener("click", e => {
 });
 
 
-// userLogOutMenuOption.addEventListener("click", e => {
-//   console.log("you logged out, now you need to figure out how to get the graph to go away");
-//   console.log("did it go away?");
-//   console.log("Interaction.userLogOutMenuOption.printIt.refillLoginModal", printIt);
-  
-//   fbConfig.auth().signOut().then((result)=>{
-//     printIt.refillLoginModal();
-//   });
-// });
-
-// trackProgress.addEventListener("click", e => {
-//   console.log("clicked track progress");
-//   printIt.printGraphData();
-//   graphUserInfo.graphTest();
-// });
-
-// trackProgressMenuOption.addEventListener("click", e => {
-//   printIt.printGraphData();
-//   graphUserInfo.graphTest();
-// });
-
-// document.addEventListener("click", function(e){
-//   if(e.target.id === "back-btn") {
-//     console.log("go back??");
-//     console.log('printIt',printIt);
-//     printIt.printMainScreen();
-//   }
-// });
-
-
 console.log('fbConfig',fbConfig);
 // This detects whetheer the user is logged in or not. 
 fbConfig.auth().onAuthStateChanged(firebaseUser => {
@@ -257,18 +174,6 @@ fbConfig.auth().onAuthStateChanged(firebaseUser => {
     userLogin.classList.add('hide');
     userLoginMenuOption.classList.add('hide');
     userSignUp.classList.add('hide');
-
-    // Add function that is called that then looks to see if the alarm cycle finished while the user was logged in. If so, run a function that pushes that data up to firebase with the associated uid:
-
-    // let getFBdetails = (user) => {
-    //   return $.ajax({
-    //     url: `${fbConfig.config().databaseURL}/users.json?orderBy="uid"&equalTo="${user}"`
-    //   }).done((resolve) => {
-    //     return resolve;
-    //   }).fail((error) => {
-    //     return error;
-    //   });
-    // };
 
 
   } else {
@@ -289,4 +194,13 @@ fbConfig.auth().onAuthStateChanged(firebaseUser => {
   }
 });
 
-module.exports = {sendUserDurationAndDate, retrieveUserProgress};
+
+
+
+
+
+
+
+
+// deleteProgressEntry, editProgress
+module.exports = {sendUserDurationAndDate, retrieveUserProgress, deleteProgressEntry};

@@ -137,20 +137,29 @@ function printGraphData() {
   mainContainer.innerHTML += `<canvas class="hide" id="myChart"></canvas>`;
   // mainContainer.innerHTML += `<canvas id="line-chart" width="800" height="450"></canvas>
   // `;
-  console.log("should make button and should be below");
-  
-  
-  
-  
-  
-
-
+  // console.log("should make button and should be below");
 
   	
-$( "#myChart" ).after( "<div class='text-center'><button class='btn btn-primary' id='back-btn'>Back</button></div>" );
+// $( "#myChart" ).after( "<div class='text-center'><button class='btn btn-primary' id='back-btn'>Back</button></div>" );
   // mainContainer.innerHTML += `<button>Back</button>`;
 
 }
+
+function printUserData(idNum, day, month, date, year, duration, key) {
+  // mainContainer.innerHTML += `<div>${date} - ${duration} minutes</div>`;
+  mainContainer.innerHTML += `<div class="user-progress">
+                                  ${year} - ${duration} minutes
+                              </div>
+                              <button class="user-progress-deletes btn btn-primary" id="delete-btn-${idNum}" data-delete-id="${key}">Delete</button>
+                              <button class="user-progress-edits btn btn-primary" id="edit-btn-${idNum}" data-edit-id="${key}" data-toggle="modal" data-target="#editModal" data-whatever="edit">Edit</button>`;
+}
+
+function printTrackerButtons() {
+  mainContainer.innerHTML += `<div class='text-center'><button class='btn btn-primary' id='back-btn'>Back</button></div>`;
+}
+
+
+
 
 function refillLoginModal() {
   document.getElementById("loginModalBox").innerHTML = `<form>
@@ -166,8 +175,13 @@ function refillLoginModal() {
 
 }
 
+
+
+// function printUserData(data) {
+//   console.log(data);
+// }
 // function testOfPrintModule() {
 //   console.log("does the print module work???");
 // }
 
-module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage, printHowToUse, printGraphData, refillLoginModal};
+module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage, printHowToUse, printGraphData, printUserData, refillLoginModal, printTrackerButtons};

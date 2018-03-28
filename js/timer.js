@@ -9,6 +9,7 @@ var Timer = require('easytimer');
 var userSliderValue = require("./readSliderValue");
 let soundAlert = require("./playAudio");
 let timerDiv = document.getElementById("countdownString");
+let graphIt = require("./graphData");
 
 // Main alarm slider settings
 let intervalFlag = true;
@@ -102,7 +103,14 @@ function timerInitialize() {
                 
                 
                 console.log("firebaseUser.uid. Is this sending in the current users uid?: ", firebaseUser.uid);
-                fbInteractions.retrieveUserProgress(firebaseUser.uid);
+                fbInteractions.retrieveUserProgress(firebaseUser.uid)
+                .then((result) => {
+
+                    console.log("please god let this be the result I want: ", result);
+                    graphIt.consoleUserData(result);
+
+
+                });
                 // console.log();
 
 

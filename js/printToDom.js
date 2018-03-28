@@ -166,6 +166,11 @@ function refillLoginModal() {
 
 }
 
+
+
+// function printUserData(data) {
+//   console.log(data);
+// }
 // function testOfPrintModule() {
 //   console.log("does the print module work???");
 // }

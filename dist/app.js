@@ -160,7 +160,25 @@ function graphTest() {
 
 }
 
-module.exports = {graphTest};
+
+function consoleUserData(data) {
+  console.log("This is the users data in the graphIt module please: ", data);
+
+  for(let key in data) {
+    console.log("data[key].sessionDate", data[key].sessionDate);
+    console.log("data[key].sessionDuration", data[key].sessionDuration);
+    // Push this data to 
+
+
+
+
+  }
+}
+
+
+
+
+module.exports = {graphTest, consoleUserData};
 },{"./interaction":5}],5:[function(require,module,exports){
 "use strict";
 
@@ -171,7 +189,7 @@ module.exports = {graphTest};
 let userData = require("./userData");
 let fbConfig = require("./fb-config");
 // let firebase = require("./")
-
+let graphIt = require("./graphData");
 let printIt = require("./printToDom");  // printIt is console.logging empty....
 console.log('printIt',printIt);
 let graphUserInfo = require('./graphData.js');
@@ -277,14 +295,20 @@ function sendUserDurationAndDate(value) {
 
 
 
+// function printUserData(data) {
+//   console.log(data);
+// }
 // This should index through the collections and give 
 
+// This is being called in the timer.js file and being passed the uid of current user only when alarm goes off
 function retrieveUserProgress(user){
   console.log("This is the user that's being passed: ", user);
   return $.ajax({
       url: `${fbConfig.config().databaseURL}//progress.json?orderBy="user"&equalTo="${user}"`
    }).done((resolve) => {
      console.log("from retrieve user progress function. This should index through the collections and give: ", resolve);
+    //  Call function here to display data on screen and pass the 'resolve' inside
+    // graphIt.consoleUserData(resolve);
       return resolve;
    }).fail((error) => {
      console.log("there was an error");
@@ -454,7 +478,7 @@ fbConfig.auth().onAuthStateChanged(firebaseUser => {
 });
 
 module.exports = {sendUserDurationAndDate, retrieveUserProgress};
-},{"./alarmDataCapture":2,"./fb-config":3,"./graphData.js":4,"./printToDom":9,"./userData":12,"jquery":126}],6:[function(require,module,exports){
+},{"./alarmDataCapture":2,"./fb-config":3,"./graphData":4,"./graphData.js":4,"./printToDom":9,"./userData":12,"jquery":126}],6:[function(require,module,exports){
 "use strict";
 
 // let $ = require("jquery");   
@@ -489,7 +513,7 @@ let sliders = require("./readSliderValue");
 let soundAlerts = require("./playAudio");
 var Timer = require('easytimer');
 let timerTools = require('./timer');
-require("./interaction");
+let fbInteraction = require("./interaction");
 require("./addToFB");
 let graphUserInfo = require('./graphData.js');
 let fbConfig = require("./fb-config");
@@ -520,7 +544,20 @@ const trackProgressMenuOption = document.getElementById("menuProgress");
 
 trackProgressMenuOption.addEventListener("click", e => {
     printIt.printGraphData();
-    graphUserInfo.graphTest();
+    // graphUserInfo.graphTest();
+    fbInteraction.retrieveUserProgress();
+
+
+
+
+
+
+
+
+
+
+    
+
   });
 
 
@@ -559,6 +596,20 @@ trackProgressMenuOption.addEventListener("click", e => {
       printIt.printMainScreen();
     }
   });
+
+
+
+
+//   function printUserData(data) {
+//     console.log("This is from the main: ", data);
+//   }
+
+
+//   module.exports = {printUserData};
+
+
+
+//   fbInteraction.retrieveUserProgress()
 },{"./addToFB":1,"./fb-config":3,"./graphData.js":4,"./interaction":5,"./launchSit":6,"./playAudio":8,"./printToDom":9,"./readSliderValue":10,"./timer":11,"easytimer":121,"jquery":126}],8:[function(require,module,exports){
 "use strict";
 
@@ -758,6 +809,11 @@ function refillLoginModal() {
 
 }
 
+
+
+// function printUserData(data) {
+//   console.log(data);
+// }
 // function testOfPrintModule() {
 //   console.log("does the print module work???");
 // }
@@ -783,6 +839,7 @@ var Timer = require('easytimer');
 var userSliderValue = require("./readSliderValue");
 let soundAlert = require("./playAudio");
 let timerDiv = document.getElementById("countdownString");
+let graphIt = require("./graphData");
 
 // Main alarm slider settings
 let intervalFlag = true;
@@ -876,7 +933,14 @@ function timerInitialize() {
                 
                 
                 console.log("firebaseUser.uid. Is this sending in the current users uid?: ", firebaseUser.uid);
-                fbInteractions.retrieveUserProgress(firebaseUser.uid);
+                fbInteractions.retrieveUserProgress(firebaseUser.uid)
+                .then((result) => {
+
+                    console.log("please god let this be the result I want: ", result);
+                    graphIt.consoleUserData(result);
+
+
+                });
                 // console.log();
 
 
@@ -939,7 +1003,7 @@ function timerInitialize() {
 }
 
     module.exports = {timerInitialize, newDuration};
-},{"./fb-config":3,"./interaction":5,"./playAudio":8,"./printToDom":9,"./readSliderValue":10,"easytimer":121,"firebase/app":122,"jquery":126}],12:[function(require,module,exports){
+},{"./fb-config":3,"./graphData":4,"./interaction":5,"./playAudio":8,"./printToDom":9,"./readSliderValue":10,"easytimer":121,"firebase/app":122,"jquery":126}],12:[function(require,module,exports){
 "use strict";
 
 let fbInteraction = require("./interaction");

@@ -81,4 +81,22 @@ function graphTest() {
 
 }
 
-module.exports = {graphTest};
+
+function consoleUserData(data) {
+  console.log("This is the users data in the graphIt module please: ", data);
+
+  for(let key in data) {
+    console.log("data[key].sessionDate", data[key].sessionDate);
+    console.log("data[key].sessionDuration", data[key].sessionDuration);
+    // Push this data to 
+
+
+
+
+  }
+}
+
+
+
+
+module.exports = {graphTest, consoleUserData};

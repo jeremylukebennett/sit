@@ -7,7 +7,7 @@ let sliders = require("./readSliderValue");
 let soundAlerts = require("./playAudio");
 var Timer = require('easytimer');
 let timerTools = require('./timer');
-require("./interaction");
+let fbInteraction = require("./interaction");
 require("./addToFB");
 let graphUserInfo = require('./graphData.js');
 let fbConfig = require("./fb-config");
@@ -38,7 +38,20 @@ const trackProgressMenuOption = document.getElementById("menuProgress");
 
 trackProgressMenuOption.addEventListener("click", e => {
     printIt.printGraphData();
-    graphUserInfo.graphTest();
+    // graphUserInfo.graphTest();
+    fbInteraction.retrieveUserProgress();
+
+
+
+
+
+
+
+
+
+
+    
+
   });
 
 
@@ -77,3 +90,17 @@ trackProgressMenuOption.addEventListener("click", e => {
       printIt.printMainScreen();
     }
   });
+
+
+
+
+//   function printUserData(data) {
+//     console.log("This is from the main: ", data);
+//   }
+
+
+//   module.exports = {printUserData};
+
+
+
+//   fbInteraction.retrieveUserProgress()

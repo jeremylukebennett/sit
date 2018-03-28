@@ -7,7 +7,7 @@
 let userData = require("./userData");
 let fbConfig = require("./fb-config");
 // let firebase = require("./")
-
+let graphIt = require("./graphData");
 let printIt = require("./printToDom");  // printIt is console.logging empty....
 console.log('printIt',printIt);
 let graphUserInfo = require('./graphData.js');
@@ -113,14 +113,20 @@ function sendUserDurationAndDate(value) {
 
 
 
+// function printUserData(data) {
+//   console.log(data);
+// }
 // This should index through the collections and give 
 
+// This is being called in the timer.js file and being passed the uid of current user only when alarm goes off
 function retrieveUserProgress(user){
   console.log("This is the user that's being passed: ", user);
   return $.ajax({
       url: `${fbConfig.config().databaseURL}//progress.json?orderBy="user"&equalTo="${user}"`
    }).done((resolve) => {
      console.log("from retrieve user progress function. This should index through the collections and give: ", resolve);
+    //  Call function here to display data on screen and pass the 'resolve' inside
+    // graphIt.consoleUserData(resolve);
       return resolve;
    }).fail((error) => {
      console.log("there was an error");

@@ -188,13 +188,14 @@ module.exports = {graphTest, consoleUserData};
 
 let userData = require("./userData");
 let fbConfig = require("./fb-config");
-// let firebase = require("./")
+let firebase = require("firebase/app");
 let graphIt = require("./graphData");
 let printIt = require("./printToDom");  // printIt is console.logging empty....
 console.log('printIt',printIt);
 let graphUserInfo = require('./graphData.js');
 let alarmData = require('./alarmDataCapture');
 let $ = require("jquery");
+// let fbInteraction = require("./interaction");
 
 console.log('userData',userData);
 let userObject;
@@ -215,7 +216,6 @@ let durationValues = [5, 10, 15, 20, 25, 30];
 
 // Firebase Stuff..............
 
-
 // START
 userLogin.addEventListener("click", e => {       // get email and pass
   const email = userEmail.value;
@@ -225,6 +225,7 @@ userLogin.addEventListener("click", e => {       // get email and pass
   auth.signInWithEmailAndPassword(email, pass)     // Sign in
   .then((response)=>{       //The 'response' variable here is the giant object containing uid among other things
     console.log("response", response);
+    console.log("YOU JUST LOGGED IN. NOW IS WHEN YOU SHOULD GRAB THE USER PROGRESS INFO");
 
     let userID = response.uid;
     let userEmail = response.email;
@@ -236,31 +237,12 @@ userLogin.addEventListener("click", e => {       // get email and pass
 
     console.log('allUserInfo', allUserInfo);    
     console.log('fbConfig.config.databaseURL',fbConfig.config().databaseURL);
-    // console.log('fbConfig.databaseURL',fbConfig.databaseURL);
-
-
-    // function addUser(value) {    // add user object to firebase
-    //     return $.ajax({
-    //     url: `${fbConfig.config().databaseURL}/user.json`, // "user" can be anything even if it hasn't be added in firebase yet
-    //     type: 'POST',
-    //     data: JSON.stringify(value),
-    //     dataType: 'json'
-    //   }).done((valueID) => {
-    //     return valueID;
-    //   });
-    // }
-
-    // addUser(allUserInfo);
-    
   }).catch(e => console.log(e.message));
 
 
   document.getElementById("loginModalBox").innerHTML = `<p id="loginSuccess">You're logged in :D</p>`;
 });  
 // END
-
-
-
 
 
 // Try writing function to push user duration to FB to be called when when times up
@@ -276,29 +258,6 @@ function sendUserDurationAndDate(value) {
 
 }
 
-
-
-// Write a function that will retrieve information from Firebase:
-
-// function retrieveUserProgress(value) {
-//   return $.ajax({
-//     url: `${fbConfig.config().databaseURL}/progress.json`, // "user" can be anything even if it hasn't be added in firebase yet
-//     type: 'GET',
-//     data: JSON.stringify(value),
-//     dataType: 'json'
-//   }).done((valueID) => {
-//     console.log('User Progress Object: ',valueID);
-//     getFBDetails(valueID);
-//     return valueID;
-//   });
-// }
-
-
-
-// function printUserData(data) {
-//   console.log(data);
-// }
-// This should index through the collections and give 
 
 // This is being called in the timer.js file and being passed the uid of current user only when alarm goes off
 function retrieveUserProgress(user){
@@ -319,59 +278,41 @@ function retrieveUserProgress(user){
 
 
 
+function deleteProgressEntry(songId) {
+	return new Promise((resolve, reject) => {
+		$.ajax({
+			url: `${fbConfig.config().databaseURL}/progress/${songId}.json`,
+			method: "DELETE"
+		}).done(() => {
+      // console.log('data',data);
+			resolve();
+		});
+	});
+}
+
+
+// document.addEventListener("click", e => {
+  
+  //   if(e.target.classname === "user-progress-deletes") {
+    //     console.log("You Deleted a progress log!");
+    //   }
+    
+    // });
+    
 
 
 
-// This function is meant to sort through the user progress object and giv back only the objects with the current uid:
-
-// Currently its working. Need to get it to read the uid for the current user only.
-
-              // function sortUserProgressObjects(dataObj) {
-              //   console.log("This is the user object from the sortUserProgressObjects function: ", dataObj);
-
-              //   // This 'results' array is what is ultimately going to be listed on the 'Track Progress' section.
-              //   // Should this really be an object? If I want to add edit functionality then I'd need to edit this and re-up it to Firebase later, and that's gonna need to go up as an object.
-
-              //   let results = [];
-              //   // let currentUser = "";
-
-              //   for(let fbID in dataObj) {
-              //     console.log("key (fbID)", fbID);
-              //     console.log("value (uid)", dataObj[fbID].user);
-
-              //     let uid = dataObj[fbID].user;
-              //     if(uid === "6WlGBEdDmEcYgH9bFrJyBq4LmtN2") {
-              //       results.push(dataObj[fbID]);
-              //     }
-              //   }
-
-              //   console.log("This is the sorted object of objects (user progress info): ", results);
-              //   // dataObj.forEach(function(data) {
-              //   //   if(data.user == "wF64Mz2fMGUekTXkdZY4EeEmxpF3") {
-              //   //     results.push(data);
-              //   //   }
-              //   // });
-
-              // console.log("This is the sorted results object: ", results);
-              // }
-
-              // fbConfig.auth().onAuthStateChanged((user) => {
-              //   console.log("onAuthStateChanged, user: ", user.uid);
-              //   let currentUser = user;
-              // });
-
-// console.log("I want this to be the current user pleasssseee: ",currentUser);
-
-
-
-// function filterIt(event) {
-//   return event.user == "wF64Mz2fMGUekTXkdZY4EeEmxpF3";
+// function editProgress(songFormObj, songId) {
+// 	return new Promise((resolve, reject) => {
+// 		$.ajax({
+// 			url: `${fbConfig.config().databaseURL}/progress/${songId}.json`,
+// 			type: 'PUT',
+// 			data: JSON.stringify(songFormObj)
+// 		}).done((data) => {
+// 			resolve(data);
+// 		});
+// 	});
 // }
-
-// retrieveUserProgress();
-// let userProgressObject = retrieveUserProgress();
-// console.log("Here's the userProgressObject: ", userProgressObject.responseJSON);
-
 
 
 
@@ -399,36 +340,6 @@ userLogOut.addEventListener("click", e => {
 });
 
 
-// userLogOutMenuOption.addEventListener("click", e => {
-//   console.log("you logged out, now you need to figure out how to get the graph to go away");
-//   console.log("did it go away?");
-//   console.log("Interaction.userLogOutMenuOption.printIt.refillLoginModal", printIt);
-  
-//   fbConfig.auth().signOut().then((result)=>{
-//     printIt.refillLoginModal();
-//   });
-// });
-
-// trackProgress.addEventListener("click", e => {
-//   console.log("clicked track progress");
-//   printIt.printGraphData();
-//   graphUserInfo.graphTest();
-// });
-
-// trackProgressMenuOption.addEventListener("click", e => {
-//   printIt.printGraphData();
-//   graphUserInfo.graphTest();
-// });
-
-// document.addEventListener("click", function(e){
-//   if(e.target.id === "back-btn") {
-//     console.log("go back??");
-//     console.log('printIt',printIt);
-//     printIt.printMainScreen();
-//   }
-// });
-
-
 console.log('fbConfig',fbConfig);
 // This detects whetheer the user is logged in or not. 
 fbConfig.auth().onAuthStateChanged(firebaseUser => {
@@ -445,18 +356,6 @@ fbConfig.auth().onAuthStateChanged(firebaseUser => {
     userLogin.classList.add('hide');
     userLoginMenuOption.classList.add('hide');
     userSignUp.classList.add('hide');
-
-    // Add function that is called that then looks to see if the alarm cycle finished while the user was logged in. If so, run a function that pushes that data up to firebase with the associated uid:
-
-    // let getFBdetails = (user) => {
-    //   return $.ajax({
-    //     url: `${fbConfig.config().databaseURL}/users.json?orderBy="uid"&equalTo="${user}"`
-    //   }).done((resolve) => {
-    //     return resolve;
-    //   }).fail((error) => {
-    //     return error;
-    //   });
-    // };
 
 
   } else {
@@ -477,8 +376,17 @@ fbConfig.auth().onAuthStateChanged(firebaseUser => {
   }
 });
 
-module.exports = {sendUserDurationAndDate, retrieveUserProgress};
-},{"./alarmDataCapture":2,"./fb-config":3,"./graphData":4,"./graphData.js":4,"./printToDom":9,"./userData":12,"jquery":126}],6:[function(require,module,exports){
+
+
+
+
+
+
+
+
+// deleteProgressEntry, editProgress
+module.exports = {sendUserDurationAndDate, retrieveUserProgress, deleteProgressEntry};
+},{"./alarmDataCapture":2,"./fb-config":3,"./graphData":4,"./graphData.js":4,"./printToDom":9,"./userData":12,"firebase/app":122,"jquery":126}],6:[function(require,module,exports){
 "use strict";
 
 // let $ = require("jquery");   
@@ -516,47 +424,57 @@ let timerTools = require('./timer');
 let fbInteraction = require("./interaction");
 require("./addToFB");
 let graphUserInfo = require('./graphData.js');
+let firebase = require("firebase/app");
 let fbConfig = require("./fb-config");
-
-
 // Main Sit button at bottom of Home Page
 let sitButton = document.getElementById("sit-btn");
 
+let entryToEdit = null;
 
 printIt.printMainScreen();
-
-
 // Launch Sit Button function
 document.addEventListener("click", function(e){
     if(e.target.id === "sit-btn") {
         startSit.countdownScreen();
     }
 });
-
-
-
-
-
-
 // Beginning here are event listeners migrated from interaction.js whenever they stopped responding in that file... Trying to see if they respond here instead:
 
 const trackProgressMenuOption = document.getElementById("menuProgress");
 
 trackProgressMenuOption.addEventListener("click", e => {
-    printIt.printGraphData();
+    // printIt.printGraphData();
     // graphUserInfo.graphTest();
-    fbInteraction.retrieveUserProgress();
-
-
-
-
-
-
-
-
-
-
+    printIt.printGraphData();
     
+    // Need to check user and retrieve user's data:
+    
+    firebase.auth().onAuthStateChanged(firebaseUser => {
+        if(firebaseUser) {
+            
+            fbInteraction.retrieveUserProgress(firebaseUser.uid)
+            .then((data) => {
+                let i = 0;
+                
+                for(let key in data) {
+                    let userDay = new Date(data[key].sessionDate).getDay();
+                    let userMonth = new Date(data[key].sessionDate).getMonth();
+                    let userDate = new Date(data[key].sessionDate).getDate();
+                    let userYear = new Date(data[key].sessionDate).getFullYear();
+                    console.log("NUMBER", i);
+                    console.log("data[key].sessionDate", data[key].sessionDate);
+                    console.log("data[key].sessionDuration", data[key].sessionDuration);
+                    
+                    printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
+                    
+                    i++;
+                }
+                printIt.printTrackerButtons();
+            });  
+        } else {
+            console.log("IMPOSSIBLE!");
+        }
+      });
 
   });
 
@@ -592,25 +510,91 @@ trackProgressMenuOption.addEventListener("click", e => {
   document.addEventListener("click", function(e){
     if(e.target.id === "back-btn") {
       console.log("go back??");
-      console.log('printIt',printIt);
+      console.log('printIt', printIt);
       printIt.printMainScreen();
     }
   });
 
 
 
+// DELETE USER PROGRESS ENTRY
+  $(document).on("click", ".user-progress-deletes", function () {
+    console.log("clicked delete song", $(this).data("delete-id"));
+    // let progressID = $(this).data("delete-id");
+    // deleteSong(songID)
+    // .then(() => {
+      fbInteraction.deleteProgressEntry($(this).data("delete-id"));
+      // printIt.printGraphData();
+      printIt.printGraphData();
+  
+      // Need to check user and retrieve user's data:
+      
+      firebase.auth().onAuthStateChanged(firebaseUser => {
+          if(firebaseUser) {
+              
+              fbInteraction.retrieveUserProgress(firebaseUser.uid)
+              .then((data) => {
+                  let i = 0;
+                  
+                  for(let key in data) {
+                      let userDay = new Date(data[key].sessionDate).getDay();
+                      let userMonth = new Date(data[key].sessionDate).getMonth();
+                      let userDate = new Date(data[key].sessionDate).getDate();
+                      let userYear = new Date(data[key].sessionDate).getFullYear();
+                      console.log("NUMBER", i);
+                      console.log("data[key].sessionDate", data[key].sessionDate);
+                      console.log("data[key].sessionDuration", data[key].sessionDuration);
+                      
+                      printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
+                      
+                      i++;
+                  }
+                  printIt.printTrackerButtons();
+              });  
+          } else {
+              console.log("IMPOSSIBLE!");
+          }
+        });
+});
 
-//   function printUserData(data) {
-//     console.log("This is from the main: ", data);
-//   }
-
-
-//   module.exports = {printUserData};
 
 
 
-//   fbInteraction.retrieveUserProgress()
-},{"./addToFB":1,"./fb-config":3,"./graphData.js":4,"./interaction":5,"./launchSit":6,"./playAudio":8,"./printToDom":9,"./readSliderValue":10,"./timer":11,"easytimer":121,"jquery":126}],8:[function(require,module,exports){
+
+
+
+// CAPTURE THE FB ID for THE EDIT BUTTON CLICKED
+$(document).on("click", ".user-progress-edits", function () {
+    console.log("clicked edit song", $(this).data("edit-id"));
+    entryToEdit = $(this).data("edit-id");
+    console.log('entryToEdit', entryToEdit);
+});
+
+
+
+// EDIT USER PROGRESS ENTRY (VIA THE SAVE BUTTON)
+$(document).on("click", "#save-edit-btn", function () {
+    console.log("you clicked save for :", entryToEdit);
+    // CALL FUNCTION THAT 'PUT'S UP TO FIREBASE
+
+    fbInteraction.editProgress();
+
+});
+
+
+
+// function editSong(songFormObj, songId) {
+// 	return new Promise((resolve, reject) => {
+// 		$.ajax({
+// 			url: `${firebase.getFBsettings().databaseURL}/songs/${songId}.json`,
+// 			type: 'PUT',
+// 			data: JSON.stringify(songFormObj)
+// 		}).done((data) => {
+// 			resolve(data);
+// 		});
+// 	});
+// }
+},{"./addToFB":1,"./fb-config":3,"./graphData.js":4,"./interaction":5,"./launchSit":6,"./playAudio":8,"./printToDom":9,"./readSliderValue":10,"./timer":11,"easytimer":121,"firebase/app":122,"jquery":126}],8:[function(require,module,exports){
 "use strict";
 
 let printIt = require("./printToDom");
@@ -780,20 +764,29 @@ function printGraphData() {
   mainContainer.innerHTML += `<canvas class="hide" id="myChart"></canvas>`;
   // mainContainer.innerHTML += `<canvas id="line-chart" width="800" height="450"></canvas>
   // `;
-  console.log("should make button and should be below");
-  
-  
-  
-  
-  
-
-
+  // console.log("should make button and should be below");
 
   	
-$( "#myChart" ).after( "<div class='text-center'><button class='btn btn-primary' id='back-btn'>Back</button></div>" );
+// $( "#myChart" ).after( "<div class='text-center'><button class='btn btn-primary' id='back-btn'>Back</button></div>" );
   // mainContainer.innerHTML += `<button>Back</button>`;
 
 }
+
+function printUserData(idNum, day, month, date, year, duration, key) {
+  // mainContainer.innerHTML += `<div>${date} - ${duration} minutes</div>`;
+  mainContainer.innerHTML += `<div class="user-progress">
+                                  ${year} - ${duration} minutes
+                              </div>
+                              <button class="user-progress-deletes btn btn-primary" id="delete-btn-${idNum}" data-delete-id="${key}">Delete</button>
+                              <button class="user-progress-edits btn btn-primary" id="edit-btn-${idNum}" data-edit-id="${key}" data-toggle="modal" data-target="#editModal" data-whatever="edit">Edit</button>`;
+}
+
+function printTrackerButtons() {
+  mainContainer.innerHTML += `<div class='text-center'><button class='btn btn-primary' id='back-btn'>Back</button></div>`;
+}
+
+
+
 
 function refillLoginModal() {
   document.getElementById("loginModalBox").innerHTML = `<form>
@@ -818,7 +811,7 @@ function refillLoginModal() {
 //   console.log("does the print module work???");
 // }
 
-module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage, printHowToUse, printGraphData, refillLoginModal};
+module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage, printHowToUse, printGraphData, printUserData, refillLoginModal, printTrackerButtons};
 },{"./fb-config":3,"./graphData":4,"firebase/app":122,"jquery":126}],10:[function(require,module,exports){
 "use strict";
 
@@ -922,7 +915,7 @@ function timerInitialize() {
                 if(firebaseUser) {
                   console.log("yer users logged in and times up");
                 // Now I need to add the users progress to the proper node.
-// console.log('newDuration',newDuration);
+                // console.log('newDuration',newDuration);
                     let todaysDate = new Date();
                     let progressToLog = {
                         sessionDate : todaysDate,

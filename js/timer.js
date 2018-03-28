@@ -92,7 +92,7 @@ function timerInitialize() {
                 if(firebaseUser) {
                   console.log("yer users logged in and times up");
                 // Now I need to add the users progress to the proper node.
-// console.log('newDuration',newDuration);
+                // console.log('newDuration',newDuration);
                     let todaysDate = new Date();
                     let progressToLog = {
                         sessionDate : todaysDate,

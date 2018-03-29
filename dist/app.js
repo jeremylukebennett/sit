@@ -575,6 +575,11 @@ $(document).on("click", ".user-progress-edits", function () {
 // EDIT USER PROGRESS ENTRY (VIA THE SAVE BUTTON)
 $(document).on("click", "#save-edit-btn", function () {
     console.log("you clicked save for :", entryToEdit);
+// Get the text input of the Duration filed and put it into a variable
+let revisedDuration = $("#editDurationInput").val();
+
+
+
     // CALL FUNCTION THAT 'PUT'S UP TO FIREBASE
 
     firebase.auth().onAuthStateChanged(firebaseUser => {
@@ -590,7 +595,7 @@ $(document).on("click", "#save-edit-btn", function () {
                         console.log("This is the KEY to edit after SAVE ", data[key]);
                         // That data[key] is the exact object you want to edit. SO alter that object to equal the new values, then pass it on into the editProgress function. I guess use if statements to pull out the info from the text input fields of the edit modal. Only pick them out if they don't equal zero.
 
-                        data[key].sessionDuration = 222;
+                        data[key].sessionDuration = revisedDuration;
                         console.log("revised: ", data[key]);
                         
                         

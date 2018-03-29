@@ -135,6 +135,7 @@ function printHowToUse() {
 function printGraphData() {
   mainContainer.innerHTML = ``;
   mainContainer.innerHTML += `<canvas class="hide" id="myChart"></canvas>`;
+  console.log("Am I hitting the printGraphData function?");
   // mainContainer.innerHTML += `<canvas id="line-chart" width="800" height="450"></canvas>
   // `;
   // console.log("should make button and should be below");

@@ -291,17 +291,6 @@ function deleteProgressEntry(songId) {
 }
 
 
-// document.addEventListener("click", e => {
-  
-  //   if(e.target.classname === "user-progress-deletes") {
-    //     console.log("You Deleted a progress log!");
-    //   }
-    
-    // });
-    
-
-
-
 function editProgress(songFormObj, songId) {
 	return new Promise((resolve, reject) => {
 		$.ajax({
@@ -415,36 +404,33 @@ module.exports = {countdownScreen};
 "use strict";
 let $ = require("jquery");    
 let printIt = require("./printToDom");
-// window.printIt = printIt;
 let startSit = require("./launchSit");
 let sliders = require("./readSliderValue");
 let soundAlerts = require("./playAudio");
 var Timer = require('easytimer');
 let timerTools = require('./timer');
 let fbInteraction = require("./interaction");
-require("./addToFB");
 let graphUserInfo = require('./graphData.js');
 let firebase = require("firebase/app");
 let fbConfig = require("./fb-config");
-// Main Sit button at bottom of Home Page
-let sitButton = document.getElementById("sit-btn");
+require("./addToFB");
 
+let sitButton = document.getElementById("sit-btn");
 let entryToEdit = null;
 
 printIt.printMainScreen();
+
 // Launch Sit Button function
 document.addEventListener("click", function(e){
     if(e.target.id === "sit-btn") {
         startSit.countdownScreen();
     }
 });
-// Beginning here are event listeners migrated from interaction.js whenever they stopped responding in that file... Trying to see if they respond here instead:
 
+// CLICK 'TRACK PROGRESS' from the MENU:
 const trackProgressMenuOption = document.getElementById("menuProgress");
 
 trackProgressMenuOption.addEventListener("click", e => {
-    // printIt.printGraphData();
-    // graphUserInfo.graphTest();
     printIt.printGraphData();
     
     // Need to check user and retrieve user's data:
@@ -475,7 +461,6 @@ trackProgressMenuOption.addEventListener("click", e => {
             console.log("IMPOSSIBLE!");
         }
       });
-
   });
 
 
@@ -503,10 +488,6 @@ trackProgressMenuOption.addEventListener("click", e => {
     });
   });
 
-
-
-
-
   document.addEventListener("click", function(e){
     if(e.target.id === "back-btn") {
       console.log("go back??");
@@ -519,22 +500,25 @@ trackProgressMenuOption.addEventListener("click", e => {
 
 // DELETE USER PROGRESS ENTRY
   $(document).on("click", ".user-progress-deletes", function () {
-    console.log("clicked delete song", $(this).data("delete-id"));
-    // let progressID = $(this).data("delete-id");
-    // deleteSong(songID)
-    // .then(() => {
-      fbInteraction.deleteProgressEntry($(this).data("delete-id"));
-      // printIt.printGraphData();
-      printIt.printGraphData();
-  
-      // Need to check user and retrieve user's data:
+    console.log("clicked delete progress", $(this).data("delete-id"));
+    
+    fbInteraction.deleteProgressEntry($(this).data("delete-id")).then(
+    
+    
+    // Need to check user and retrieve user's data:
       
       firebase.auth().onAuthStateChanged(firebaseUser => {
           if(firebaseUser) {
+            //   console.log("What is in the firebaseUser var? ", firebaseUser);
               
+            console.log("What is in the firebaseUser var? ", firebaseUser);
               fbInteraction.retrieveUserProgress(firebaseUser.uid)
               .then((data) => {
                   let i = 0;
+
+
+                //   At this point the 'data' variable is still displaying the same user info including the deleted item... So that's why its not getting removed from the DOM.
+                  console.log("WHEN YOU Click DELETE THIS IS THE REMAINING USER DATA: ", data);
                   
                   for(let key in data) {
                       let userDay = new Date(data[key].sessionDate).getDay();
@@ -554,12 +538,14 @@ trackProgressMenuOption.addEventListener("click", e => {
           } else {
               console.log("IMPOSSIBLE!");
           }
-        });
+        })
+    );
+
+        printIt.printGraphData();
+        // printIt.printGraphData();
+
+
 });
-
-
-
-
 
 
 
@@ -599,15 +585,6 @@ let revisedDuration = $("#editDurationInput").val();
                         console.log("revised: ", data[key]);
                         
                         
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
                         fbInteraction.editProgress(data[key], entryToEdit);
                     }
                 }
@@ -617,27 +594,8 @@ let revisedDuration = $("#editDurationInput").val();
             console.log("IMPOSSIBLE!");
         }
       });
-
-
-
-// This is where you'll want to plug in the newly formed object, as revised in the edit section:
-    // fbInteraction.editProgress();
-
 });
 
-
-
-// function editSong(songFormObj, songId) {
-// 	return new Promise((resolve, reject) => {
-// 		$.ajax({
-// 			url: `${firebase.getFBsettings().databaseURL}/songs/${songId}.json`,
-// 			type: 'PUT',
-// 			data: JSON.stringify(songFormObj)
-// 		}).done((data) => {
-// 			resolve(data);
-// 		});
-// 	});
-// }
 },{"./addToFB":1,"./fb-config":3,"./graphData.js":4,"./interaction":5,"./launchSit":6,"./playAudio":8,"./printToDom":9,"./readSliderValue":10,"./timer":11,"easytimer":121,"firebase/app":122,"jquery":126}],8:[function(require,module,exports){
 "use strict";
 
@@ -806,6 +764,7 @@ function printHowToUse() {
 function printGraphData() {
   mainContainer.innerHTML = ``;
   mainContainer.innerHTML += `<canvas class="hide" id="myChart"></canvas>`;
+  console.log("Am I hitting the printGraphData function?");
   // mainContainer.innerHTML += `<canvas id="line-chart" width="800" height="450"></canvas>
   // `;
   // console.log("should make button and should be below");

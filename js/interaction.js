@@ -109,17 +109,6 @@ function deleteProgressEntry(songId) {
 }
 
 
-// document.addEventListener("click", e => {
-  
-  //   if(e.target.classname === "user-progress-deletes") {
-    //     console.log("You Deleted a progress log!");
-    //   }
-    
-    // });
-    
-
-
-
 function editProgress(songFormObj, songId) {
 	return new Promise((resolve, reject) => {
 		$.ajax({

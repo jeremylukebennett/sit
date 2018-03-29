@@ -587,6 +587,23 @@ $(document).on("click", "#save-edit-btn", function () {
                 for(let key in data) {
                     if(key === entryToEdit) {
                         console.log("This is the entry to edit after SAVE ", entryToEdit);
+                        console.log("This is the KEY to edit after SAVE ", data[key]);
+                        // That data[key] is the exact object you want to edit. SO alter that object to equal the new values, then pass it on into the editProgress function. I guess use if statements to pull out the info from the text input fields of the edit modal. Only pick them out if they don't equal zero.
+
+                        data[key].sessionDuration = 222;
+                        console.log("revised: ", data[key]);
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        fbInteraction.editProgress(data[key], entryToEdit);
                     }
                 }
                 // printIt.printTrackerButtons();

@@ -302,17 +302,17 @@ function deleteProgressEntry(songId) {
 
 
 
-// function editProgress(songFormObj, songId) {
-// 	return new Promise((resolve, reject) => {
-// 		$.ajax({
-// 			url: `${fbConfig.config().databaseURL}/progress/${songId}.json`,
-// 			type: 'PUT',
-// 			data: JSON.stringify(songFormObj)
-// 		}).done((data) => {
-// 			resolve(data);
-// 		});
-// 	});
-// }
+function editProgress(songFormObj, songId) {
+	return new Promise((resolve, reject) => {
+		$.ajax({
+			url: `${fbConfig.config().databaseURL}/progress/${songId}.json`,
+			type: 'PUT',
+			data: JSON.stringify(songFormObj)   // This is the object that will go into the FB ID object. So when you edit data, reload it into this object and then reup *that* object to firebase here. So you'll need the FB id, which yo've got, and the reformed obj which you don't yet. But that will be the same as 'songFormObj' in this context.
+		}).done((data) => {
+			resolve(data);
+		});
+	});
+}
 
 
 
@@ -385,7 +385,7 @@ fbConfig.auth().onAuthStateChanged(firebaseUser => {
 
 
 // deleteProgressEntry, editProgress
-module.exports = {sendUserDurationAndDate, retrieveUserProgress, deleteProgressEntry};
+module.exports = {sendUserDurationAndDate, retrieveUserProgress, deleteProgressEntry, editProgress};
 },{"./alarmDataCapture":2,"./fb-config":3,"./graphData":4,"./graphData.js":4,"./printToDom":9,"./userData":12,"firebase/app":122,"jquery":126}],6:[function(require,module,exports){
 "use strict";
 
@@ -577,7 +577,29 @@ $(document).on("click", "#save-edit-btn", function () {
     console.log("you clicked save for :", entryToEdit);
     // CALL FUNCTION THAT 'PUT'S UP TO FIREBASE
 
-    fbInteraction.editProgress();
+    firebase.auth().onAuthStateChanged(firebaseUser => {
+        if(firebaseUser) {
+            
+            fbInteraction.retrieveUserProgress(firebaseUser.uid)
+            .then((data) => {
+                console.log("This is the data from clicking the 'SAVE' button on the edit page: ", data);
+                // You've got the users data object now, so filter through that to pull out the one that has the firebase id in question, and replace that with the new object.
+                for(let key in data) {
+                    if(key === entryToEdit) {
+                        console.log("This is the entry to edit after SAVE ", entryToEdit);
+                    }
+                }
+                // printIt.printTrackerButtons();
+            });  
+        } else {
+            console.log("IMPOSSIBLE!");
+        }
+      });
+
+
+
+// This is where you'll want to plug in the newly formed object, as revised in the edit section:
+    // fbInteraction.editProgress();
 
 });
 

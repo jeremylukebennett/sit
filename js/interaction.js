@@ -120,17 +120,17 @@ function deleteProgressEntry(songId) {
 
 
 
-// function editProgress(songFormObj, songId) {
-// 	return new Promise((resolve, reject) => {
-// 		$.ajax({
-// 			url: `${fbConfig.config().databaseURL}/progress/${songId}.json`,
-// 			type: 'PUT',
-// 			data: JSON.stringify(songFormObj)
-// 		}).done((data) => {
-// 			resolve(data);
-// 		});
-// 	});
-// }
+function editProgress(songFormObj, songId) {
+	return new Promise((resolve, reject) => {
+		$.ajax({
+			url: `${fbConfig.config().databaseURL}/progress/${songId}.json`,
+			type: 'PUT',
+			data: JSON.stringify(songFormObj)   // This is the object that will go into the FB ID object. So when you edit data, reload it into this object and then reup *that* object to firebase here. So you'll need the FB id, which yo've got, and the reformed obj which you don't yet. But that will be the same as 'songFormObj' in this context.
+		}).done((data) => {
+			resolve(data);
+		});
+	});
+}
 
 
 
@@ -203,4 +203,4 @@ fbConfig.auth().onAuthStateChanged(firebaseUser => {
 
 
 // deleteProgressEntry, editProgress
-module.exports = {sendUserDurationAndDate, retrieveUserProgress, deleteProgressEntry};
+module.exports = {sendUserDurationAndDate, retrieveUserProgress, deleteProgressEntry, editProgress};

@@ -163,7 +163,29 @@ $(document).on("click", "#save-edit-btn", function () {
     console.log("you clicked save for :", entryToEdit);
     // CALL FUNCTION THAT 'PUT'S UP TO FIREBASE
 
-    fbInteraction.editProgress();
+    firebase.auth().onAuthStateChanged(firebaseUser => {
+        if(firebaseUser) {
+            
+            fbInteraction.retrieveUserProgress(firebaseUser.uid)
+            .then((data) => {
+                console.log("This is the data from clicking the 'SAVE' button on the edit page: ", data);
+                // You've got the users data object now, so filter through that to pull out the one that has the firebase id in question, and replace that with the new object.
+                for(let key in data) {
+                    if(key === entryToEdit) {
+                        console.log("This is the entry to edit after SAVE ", entryToEdit);
+                    }
+                }
+                // printIt.printTrackerButtons();
+            });  
+        } else {
+            console.log("IMPOSSIBLE!");
+        }
+      });
+
+
+
+// This is where you'll want to plug in the newly formed object, as revised in the edit section:
+    // fbInteraction.editProgress();
 
 });
 

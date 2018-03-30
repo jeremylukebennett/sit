@@ -499,17 +499,25 @@ trackProgressMenuOption.addEventListener("click", e => {
 
 
 // DELETE USER PROGRESS ENTRY
-$(document).on("click", ".user-progress-deletes", function (e) {
+$(document).on("click", ".user-progress-deletes", function () {
     console.log("clicked delete progress", $(this).data("delete-id"));
-    console.log("EEEEEEEE", e);
     
-    fbInteraction.deleteProgressEntry($(this).data("delete-id")).then(()=>{
+    fbInteraction.deleteProgressEntry($(this).data("delete-id")).then(
+    
+    
+    // Need to check user and retrieve user's data:
+      
       firebase.auth().onAuthStateChanged(firebaseUser => {
           if(firebaseUser) {
+            //   console.log("What is in the firebaseUser var? ", firebaseUser);
+              
             console.log("What is in the firebaseUser var? ", firebaseUser);
               fbInteraction.retrieveUserProgress(firebaseUser.uid)
               .then((data) => {
                   let i = 0;
+
+
+                //   At this point the 'data' variable is still displaying the same user info including the deleted item... So that's why its not getting removed from the DOM.
                   console.log("WHEN YOU Click DELETE THIS IS THE REMAINING USER DATA: ", data);
                   
                   for(let key in data) {
@@ -530,12 +538,14 @@ $(document).on("click", ".user-progress-deletes", function (e) {
           } else {
               console.log("IMPOSSIBLE!");
           }
-        });
-    });
+        })
+    );
 
-           printIt.printGraphData();
-    //     // printIt.printGraphData();
-    }); 
+        printIt.printGraphData();
+        // printIt.printGraphData();
+
+
+});
     
 
 

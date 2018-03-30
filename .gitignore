@@ -1,2 +1,4 @@
-lib
 fb-config.js
+lib/node_modules
+dist
+css

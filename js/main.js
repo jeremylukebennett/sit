@@ -95,71 +95,26 @@ trackProgressMenuOption.addEventListener("click", e => {
 
 
 
-// DELETE USER PROGRESS ENTRY
-$(document).on("click", ".user-progress-deletes", function () {
-    console.log("clicked delete progress", $(this).data("delete-id"));
-    
-    fbInteraction.deleteProgressEntry($(this).data("delete-id")).then(
-    
-    
-    // Need to check user and retrieve user's data:
-      
-      firebase.auth().onAuthStateChanged(firebaseUser => {
-          if(firebaseUser) {
-            //   console.log("What is in the firebaseUser var? ", firebaseUser);
-              
-            console.log("What is in the firebaseUser var? ", firebaseUser);
-              fbInteraction.retrieveUserProgress(firebaseUser.uid)
-              .then((data) => {
-                  let i = 0;
-
-
-                //   At this point the 'data' variable is still displaying the same user info including the deleted item... So that's why its not getting removed from the DOM.
-                  console.log("WHEN YOU Click DELETE THIS IS THE REMAINING USER DATA: ", data);
-                  
-                  for(let key in data) {
-                      let userDay = new Date(data[key].sessionDate).getDay();
-                      let userMonth = new Date(data[key].sessionDate).getMonth();
-                      let userDate = new Date(data[key].sessionDate).getDate();
-                      let userYear = new Date(data[key].sessionDate).getFullYear();
-                      console.log("NUMBER", i);
-                      console.log("data[key].sessionDate", data[key].sessionDate);
-                      console.log("data[key].sessionDuration", data[key].sessionDuration);
-                      
-                      printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
-                      
-                      i++;
-                  }
-                  printIt.printTrackerButtons();
-              });  
-          } else {
-              console.log("IMPOSSIBLE!");
-          }
-        })
-    );
-
-        printIt.printGraphData();
-        // printIt.printGraphData();
-
-
-});
-    
-
-
-
-// DR. Ts Delete Code:
-// DELETE USER PROGRESS ENTRY
-// $(document).on("click", ".user-progress-deletes", function (e) {
+// DELETE USER PROGRESS ENTRY ============================================================================================================
+// $(document).on("click", ".user-progress-deletes", function () {
 //     console.log("clicked delete progress", $(this).data("delete-id"));
-//     console.log("EEEEEEEE", e);
     
-//     fbInteraction.deleteProgressEntry($(this).data("delete-id")).then(()=>{
+//     fbInteraction.deleteProgressEntry($(this).data("delete-id")).then(
+    
+    
+//     // Need to check user and retrieve user's data:
+      
 //       firebase.auth().onAuthStateChanged(firebaseUser => {
 //           if(firebaseUser) {
+//             //   console.log("What is in the firebaseUser var? ", firebaseUser);
+              
 //             console.log("What is in the firebaseUser var? ", firebaseUser);
 //               fbInteraction.retrieveUserProgress(firebaseUser.uid)
 //               .then((data) => {
 //                   let i = 0;
+
+
+//                 //   At this point the 'data' variable is still displaying the same user info including the deleted item... So that's why its not getting removed from the DOM.
 //                   console.log("WHEN YOU Click DELETE THIS IS THE REMAINING USER DATA: ", data);
                   
 //                   for(let key in data) {
@@ -180,14 +135,59 @@ $(document).on("click", ".user-progress-deletes", function () {
 //           } else {
 //               console.log("IMPOSSIBLE!");
 //           }
-//         });
-//     });
+//         })
+//     );
 
-//            printIt.printGraphData();
-//     //     // printIt.printGraphData();
-//     });
+//         printIt.printGraphData();
+//         // printIt.printGraphData();
 
 
+// });
+    
+
+
+// ============================================================================================================
+// DR. Ts Delete Code:
+// DELETE USER PROGRESS ENTRY
+$(document).on("click", ".user-progress-deletes", function (e) {
+    console.log("clicked delete progress", $(this).data("delete-id"));
+    console.log("EEEEEEEE", e);
+    
+    fbInteraction.deleteProgressEntry($(this).data("delete-id")).then(()=>{
+      firebase.auth().onAuthStateChanged(firebaseUser => {
+          if(firebaseUser) {
+            console.log("What is in the firebaseUser var? ", firebaseUser);
+              fbInteraction.retrieveUserProgress(firebaseUser.uid)
+              .then((data) => {
+                  let i = 0;
+                  console.log("WHEN YOU Click DELETE THIS IS THE REMAINING USER DATA: ", data);
+                  
+                  for(let key in data) {
+                      let userDay = new Date(data[key].sessionDate).getDay();
+                      let userMonth = new Date(data[key].sessionDate).getMonth();
+                      let userDate = new Date(data[key].sessionDate).getDate();
+                      let userYear = new Date(data[key].sessionDate).getFullYear();
+                      console.log("NUMBER", i);
+                      console.log("data[key].sessionDate", data[key].sessionDate);
+                      console.log("data[key].sessionDuration", data[key].sessionDuration);
+                      
+                      printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
+                      
+                      i++;
+                  }
+                  printIt.printTrackerButtons();
+              });  
+          } else {
+              console.log("IMPOSSIBLE!");
+          }
+        });
+    });
+
+           printIt.printGraphData();
+    //     // printIt.printGraphData();
+    });
+
+// ============================================================================================================
 
 
 

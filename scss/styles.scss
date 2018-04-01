@@ -35,6 +35,10 @@ body {
     color: white;
 }
 
+[class^="svg"] {
+    font-size: 2em;
+}
+
 
 
 // ID Selectors ========================================================================================
@@ -97,6 +101,7 @@ body {
 #user-progress {
     background-color: #1484A4;
 }
+
 
 #user-logout {
     background-color: #716259;
@@ -343,6 +348,46 @@ h1#sit-header-title {
 
 .dateOfSession {
     font-size: 0.5em;
+}
+
+// .user-progress-text {
+//     margin: 0 0 0 3em;
+// }
+
+// [id^="delete-btn-"] {
+//     width: 56px;
+// }
+
+.user-progress-deletes, .user-progress-edits {
+    width: 1em;
+    background-color: rgba(0, 128, 0, 0);
+    border: none;
+}
+
+section.delete-edit-btns {
+    // border: solid;
+    width: 141px;
+    position: relative;
+    right: -7em;
+    top: -2em;
+}
+
+// button#edit-btn-0, button#delete-btn-0 {
+//     // border: solid black;
+//     width: 4em;
+// }
+
+// button[id*='edit-btn'], button[id*='delete-btn'] {
+//     width: 4em;
+// }
+
+.user-progress-text {
+    margin: 0 0 0 0em;
+    position: relative;
+    left: 1em;
+    width: 52%;
+    /* display: inline; */
+    // border: solid;
 }
 
 // Range Slider Stylings ========================================================================================

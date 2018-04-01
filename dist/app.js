@@ -464,6 +464,49 @@ trackProgressMenuOption.addEventListener("click", e => {
   });
 
 
+// MAKE SAVE BUTTON LAUNCH TRACK PROGRESS REFRESH
+
+let saveEdit = document.getElementById("save-edit-btn");
+
+saveEdit.addEventListener("click", e => {
+    printIt.printGraphData();
+    console.log("You clicked save");
+    
+    // Need to check user and retrieve user's data:
+    
+    firebase.auth().onAuthStateChanged(firebaseUser => {
+        if(firebaseUser) {
+            
+            fbInteraction.retrieveUserProgress(firebaseUser.uid)
+            .then((data) => {
+                let i = 0;
+                
+                for(let key in data) {
+                    let userDay = new Date(data[key].sessionDate).getDay();
+                    let userMonth = new Date(data[key].sessionDate).getMonth();
+                    let userDate = new Date(data[key].sessionDate).getDate();
+                    let userYear = new Date(data[key].sessionDate).getFullYear();
+                    console.log("NUMBER", i);
+                    console.log("data[key].sessionDate", data[key].sessionDate);
+                    console.log("data[key].sessionDuration", data[key].sessionDuration);
+                    
+                    printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
+                    
+                    i++;
+                }
+                printIt.printTrackerButtons();
+            });  
+        } else {
+            console.log("IMPOSSIBLE!");
+        }
+      });
+  });
+// 
+
+
+
+
+
   const trackProgress = document.getElementById("user-progress");
 
 
@@ -610,6 +653,9 @@ $(document).on("click", "#save-edit-btn", function () {
     console.log("you clicked save for :", entryToEdit);
 // Get the text input of the Duration filed and put it into a variable
 let revisedDuration = $("#editDurationInput").val();
+let revisedDate = $("editDateField").val();
+console.log("The Date: ", revisedDate);
+console.log("The Duration: ", revisedDuration);
 
 
 

@@ -147,12 +147,28 @@ function printGraphData() {
 }
 
 function printUserData(idNum, day, month, date, year, duration, key) {
+  let weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+  let monthName = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   // mainContainer.innerHTML += `<div>${date} - ${duration} minutes</div>`;
   mainContainer.innerHTML += `<div class="user-progress">
-                                  ${year} - ${duration} minutes
-                              </div>
-                              <button class="user-progress-deletes btn btn-primary" id="delete-btn-${idNum}" data-delete-id="${key}">Delete</button>
-                              <button class="user-progress-edits btn btn-primary" id="edit-btn-${idNum}" data-edit-id="${key}" data-toggle="modal" data-target="#editModal" data-whatever="edit">Edit</button>`;
+
+                                <section class="user-progress-text">           
+                                  <div class="minutes">${duration} minutes</div> <div class="dateOfSession">${weekday[day]} ${monthName[month]} ${date} ${year}</div>
+                                </section>
+
+                                <section class="delete-edit-btns">
+
+                                  <button class="user-progress-deletes btn btn-primary" data-delete-id="${key}">
+                                    <i class="far fa-times-circle"></i>
+                                  </button>
+
+                                  <button class="user-progress-edits btn btn-primary" data-edit-id="${key}" data-toggle="modal" data-target="#editModal" data-whatever="edit">
+                                    <i class="far fa-edit"></i>
+                                  </button>
+
+                                </section> 
+
+                              </div>`;
 }
 
 function printTrackerButtons() {

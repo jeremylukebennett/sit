@@ -673,8 +673,6 @@ $(document).on("click", ".user-progress-edits", function () {
     console.log('entryToEdit', entryToEdit);
 });
 
-
-
 // EDIT USER PROGRESS ENTRY (VIA THE SAVE BUTTON)
 $(document).on("click", "#save-edit-btn", function () {
     console.log("you clicked save for :", entryToEdit);
@@ -764,19 +762,20 @@ console.log("THIS IS THE newVal !!!!!?: ", newVal);
         let bellAlarm = document.getElementById("myAudioBell"); 
         bellAlarm.play();
     }
+
     else if(newVal === "1") {
         // play block
         console.log("play block alarm");
 
         let blockAlarm = document.getElementById("myAudioBlock"); 
         blockAlarm.play();
-
     }
+
     else if(newVal === "2") {
         // play tone
         console.log("play tone alarm");
         let toneAlarm = document.getElementById("myAudioTone"); 
-        toneAlarm.play(); 
+        toneAlarm.play();
     }
 }
 
@@ -1077,6 +1076,7 @@ function timerInitialize() {
 // Main Timer
     var timer = new Timer();
     console.log("SHOULD RUN INTERVAL FUNCTION NOW");
+    intervalFlag = true;
     runInterval();
         timer.start({countdown: true, startValues: {seconds: newDuration}});
         $('#countdownString .values').html(timer.getTimeValues().toString());
@@ -1174,7 +1174,7 @@ function timerInitialize() {
         }
     }
 
-    runInterval();
+    // runInterval();
 
 }
 

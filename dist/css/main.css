@@ -7,6 +7,11 @@ body {
 [class^="svg"] {
   font-size: 2em; }
 
+button:hover {
+  color: #fff;
+  background-color: #5a6268;
+  border-color: #545b62; }
+
 #myChart {
   margin-top: 6em; }
 
@@ -190,7 +195,7 @@ h1#sit-header-title {
   border-radius: 50%;
   height: 4.5em;
   width: 4.5em;
-  margin: -1em 0 0 0;
+  margin: -2em 0 0 0;
   font-weight: 200; }
 
 #resume-btn {
@@ -202,7 +207,7 @@ h1#sit-header-title {
   width: 4.5em;
   font-weight: 200;
   border: solid #86c7ff 5px;
-  margin: -1em 0 0 0; }
+  margin: -2em 0 0 0; }
 
 #countdownTime {
   font-size: 6em;
@@ -285,8 +290,7 @@ h1#sit-header-title {
   margin-bottom: 1em;
   font-weight: 700;
   font-size: 14px;
-  padding-bottom: 0em;
-  /* text-shadow: -2px 2px #00000000; */ }
+  padding-bottom: 0em; }
 
 .closeBtn {
   font-weight: 200;
@@ -315,7 +319,6 @@ h1#sit-header-title {
 
 .user-progress {
   font-size: 2em;
-  /* display: inline-block; */
   width: 9em;
   text-align: center;
   margin: 0em auto;

@@ -25,19 +25,10 @@ let database = firebase.database();
     console.log('fbCreds',fbCreds);
     return fbCreds;
   };
+  // firebase.auth().onAuthStateChanged(firebaseUser => {
+    
+  // });
 
-  // firebase.initializeApp(config);
-  // let database = firebase.database();
-
-
-
-  // function addUserSessionLength(durVal) {
-  //   // console.log(durVal);
-  //   // let tempObject = {
-  //   //   duration: durVal,
-  //   //   uid : 
-  //   // }
-  // }
 
   console.log("is fb-config connected?");
   // console.log(userDuration.newDuration);

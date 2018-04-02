@@ -14,8 +14,8 @@ require("./addToFB");
 
 let sitButton = document.getElementById("sit-btn");
 let entryToEdit = null;
+var firebaseUser = firebase.auth().currentUser;
 
-// $("#pause-btn").hide();
 
 printIt.printMainScreen();
 
@@ -24,7 +24,6 @@ document.addEventListener("click", function(e){
     if(e.target.id === "sit-btn") {
         startSit.countdownScreen();
         $("#timer-buttons").show();
-
     }
 });
 
@@ -32,36 +31,32 @@ document.addEventListener("click", function(e){
 const trackProgressMenuOption = document.getElementById("menuProgress");
 
 trackProgressMenuOption.addEventListener("click", e => {
+    var firebaseUser = firebase.auth().currentUser;
+
     printIt.printGraphData();
     
     // Need to check user and retrieve user's data:
-    
-    firebase.auth().onAuthStateChanged(firebaseUser => {
-        if(firebaseUser) {
+    console.log("SURELY THIS DIDNT WORK: ", firebaseUser);
             
-            fbInteraction.retrieveUserProgress(firebaseUser.uid)
-            .then((data) => {
-                let i = 0;
+        fbInteraction.retrieveUserProgress(firebaseUser.uid)
+        .then((data) => {
+            let i = 0;
+            
+            for(let key in data) {
+                let userDay = new Date(data[key].sessionDate).getDay();
+                let userMonth = new Date(data[key].sessionDate).getMonth();
+                let userDate = new Date(data[key].sessionDate).getDate();
+                let userYear = new Date(data[key].sessionDate).getFullYear();
+                console.log("NUMBER", i);
+                console.log("data[key].sessionDate", data[key].sessionDate);
+                console.log("data[key].sessionDuration", data[key].sessionDuration);
                 
-                for(let key in data) {
-                    let userDay = new Date(data[key].sessionDate).getDay();
-                    let userMonth = new Date(data[key].sessionDate).getMonth();
-                    let userDate = new Date(data[key].sessionDate).getDate();
-                    let userYear = new Date(data[key].sessionDate).getFullYear();
-                    console.log("NUMBER", i);
-                    console.log("data[key].sessionDate", data[key].sessionDate);
-                    console.log("data[key].sessionDuration", data[key].sessionDuration);
-                    
-                    printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
-                    
-                    i++;
-                }
-                printIt.printTrackerButtons();
-            });  
-        } else {
-            console.log("IMPOSSIBLE!");
-        }
-      });
+                printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
+                
+                i++;
+            }
+            printIt.printTrackerButtons();
+        });  
   });
 
   const trackMenuProgressFromLogIn = document.getElementById("user-progress");
@@ -70,33 +65,28 @@ trackProgressMenuOption.addEventListener("click", e => {
     printIt.printGraphData();
     
     // Need to check user and retrieve user's data:
-    
-    firebase.auth().onAuthStateChanged(firebaseUser => {
-        if(firebaseUser) {
+
+    var firebaseUser = firebase.auth().currentUser;
+
+        fbInteraction.retrieveUserProgress(firebaseUser.uid)
+        .then((data) => {
+            let i = 0;
             
-            fbInteraction.retrieveUserProgress(firebaseUser.uid)
-            .then((data) => {
-                let i = 0;
+            for(let key in data) {
+                let userDay = new Date(data[key].sessionDate).getDay();
+                let userMonth = new Date(data[key].sessionDate).getMonth();
+                let userDate = new Date(data[key].sessionDate).getDate();
+                let userYear = new Date(data[key].sessionDate).getFullYear();
+                console.log("NUMBER", i);
+                console.log("data[key].sessionDate", data[key].sessionDate);
+                console.log("data[key].sessionDuration", data[key].sessionDuration);
                 
-                for(let key in data) {
-                    let userDay = new Date(data[key].sessionDate).getDay();
-                    let userMonth = new Date(data[key].sessionDate).getMonth();
-                    let userDate = new Date(data[key].sessionDate).getDate();
-                    let userYear = new Date(data[key].sessionDate).getFullYear();
-                    console.log("NUMBER", i);
-                    console.log("data[key].sessionDate", data[key].sessionDate);
-                    console.log("data[key].sessionDuration", data[key].sessionDuration);
-                    
-                    printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
-                    
-                    i++;
-                }
-                printIt.printTrackerButtons();
-            });  
-        } else {
-            console.log("IMPOSSIBLE!");
-        }
-      });
+                printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
+                
+                i++;
+            }
+            printIt.printTrackerButtons();
+        });  
   });
 
 
@@ -112,51 +102,28 @@ saveEdit.addEventListener("click", e => {
     console.log("You clicked save");
     
     // Need to check user and retrieve user's data:
-    
-    firebase.auth().onAuthStateChanged(firebaseUser => {
-        if(firebaseUser) {
+        var firebaseUser = firebase.auth().currentUser;
+
+        fbInteraction.retrieveUserProgress(firebaseUser.uid)
+        .then((data) => {
+            let i = 0;
             
-            fbInteraction.retrieveUserProgress(firebaseUser.uid)
-            .then((data) => {
-                let i = 0;
+            for(let key in data) {
+                let userDay = new Date(data[key].sessionDate).getDay();
+                let userMonth = new Date(data[key].sessionDate).getMonth();
+                let userDate = new Date(data[key].sessionDate).getDate();
+                let userYear = new Date(data[key].sessionDate).getFullYear();
+                console.log("NUMBER", i);
+                console.log("data[key].sessionDate", data[key].sessionDate);
+                console.log("data[key].sessionDuration", data[key].sessionDuration);
                 
-                for(let key in data) {
-                    let userDay = new Date(data[key].sessionDate).getDay();
-                    let userMonth = new Date(data[key].sessionDate).getMonth();
-                    let userDate = new Date(data[key].sessionDate).getDate();
-                    let userYear = new Date(data[key].sessionDate).getFullYear();
-                    console.log("NUMBER", i);
-                    console.log("data[key].sessionDate", data[key].sessionDate);
-                    console.log("data[key].sessionDuration", data[key].sessionDuration);
-                    
-                    printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
-                    
-                    i++;
-                }
-                printIt.printTrackerButtons();
-            });  
-        } else {
-            console.log("IMPOSSIBLE!");
-        }
-      });
+                printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
+                
+                i++;
+            }
+            printIt.printTrackerButtons();
+        });  
   });
-// 
-
-
-
-
-
-//   const trackProgress = document.getElementById("user-progress");
-// //   const trackProgressFromLogIn = document.getElementById("")
-
-
-//   trackProgress.addEventListener("click", e => {
-//     console.log("clicked track progress");
-//     printIt.printGraphData();
-//     graphUserInfo.graphTest();
-//   });
-
-
 
   const userLogOutMenuOption = document.getElementById("menuLogOutOption");
 
@@ -181,58 +148,6 @@ saveEdit.addEventListener("click", e => {
   });
 
 
-
-// DELETE USER PROGRESS ENTRY ============================================================================================================
-// $(document).on("click", ".user-progress-deletes", function () {
-//     console.log("clicked delete progress", $(this).data("delete-id"));
-    
-//     fbInteraction.deleteProgressEntry($(this).data("delete-id")).then(
-    
-    
-//     // Need to check user and retrieve user's data:
-      
-//       firebase.auth().onAuthStateChanged(firebaseUser => {
-//           if(firebaseUser) {
-//             //   console.log("What is in the firebaseUser var? ", firebaseUser);
-              
-//             console.log("What is in the firebaseUser var? ", firebaseUser);
-//               fbInteraction.retrieveUserProgress(firebaseUser.uid)
-//               .then((data) => {
-//                   let i = 0;
-
-
-//                 //   At this point the 'data' variable is still displaying the same user info including the deleted item... So that's why its not getting removed from the DOM.
-//                   console.log("WHEN YOU Click DELETE THIS IS THE REMAINING USER DATA: ", data);
-                  
-//                   for(let key in data) {
-//                       let userDay = new Date(data[key].sessionDate).getDay();
-//                       let userMonth = new Date(data[key].sessionDate).getMonth();
-//                       let userDate = new Date(data[key].sessionDate).getDate();
-//                       let userYear = new Date(data[key].sessionDate).getFullYear();
-//                       console.log("NUMBER", i);
-//                       console.log("data[key].sessionDate", data[key].sessionDate);
-//                       console.log("data[key].sessionDuration", data[key].sessionDuration);
-                      
-//                       printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
-                      
-//                       i++;
-//                   }
-//                   printIt.printTrackerButtons();
-//               });  
-//           } else {
-//               console.log("IMPOSSIBLE!");
-//           }
-//         })
-//     );
-
-//         printIt.printGraphData();
-//         // printIt.printGraphData();
-
-
-// });
-    
-
-
 // ============================================================================================================
 // DR. Ts Delete Code:
 // DELETE USER PROGRESS ENTRY
@@ -241,37 +156,32 @@ $(document).on("click", ".user-progress-deletes", function (e) {
     console.log("EEEEEEEE", e);
     
     fbInteraction.deleteProgressEntry($(this).data("delete-id")).then(()=>{
-      firebase.auth().onAuthStateChanged(firebaseUser => {
-          if(firebaseUser) {
-            console.log("What is in the firebaseUser var? ", firebaseUser);
-              fbInteraction.retrieveUserProgress(firebaseUser.uid)
-              .then((data) => {
-                  let i = 0;
-                  console.log("WHEN YOU Click DELETE THIS IS THE REMAINING USER DATA: ", data);
-                  
-                  for(let key in data) {
-                      let userDay = new Date(data[key].sessionDate).getDay();
-                      let userMonth = new Date(data[key].sessionDate).getMonth();
-                      let userDate = new Date(data[key].sessionDate).getDate();
-                      let userYear = new Date(data[key].sessionDate).getFullYear();
-                      console.log("NUMBER", i);
-                      console.log("data[key].sessionDate", data[key].sessionDate);
-                      console.log("data[key].sessionDuration", data[key].sessionDuration);
-                      
-                      printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
-                      
-                      i++;
-                  }
-                  printIt.printTrackerButtons();
-              });  
-          } else {
-              console.log("IMPOSSIBLE!");
-          }
-        });
+        var firebaseUser = firebase.auth().currentUser;
+
+        console.log("What is in the firebaseUser var? ", firebaseUser);
+            fbInteraction.retrieveUserProgress(firebaseUser.uid)
+            .then((data) => {
+                let i = 0;
+                console.log("WHEN YOU Click DELETE THIS IS THE REMAINING USER DATA: ", data);
+                
+                for(let key in data) {
+                    let userDay = new Date(data[key].sessionDate).getDay();
+                    let userMonth = new Date(data[key].sessionDate).getMonth();
+                    let userDate = new Date(data[key].sessionDate).getDate();
+                    let userYear = new Date(data[key].sessionDate).getFullYear();
+                    console.log("NUMBER", i);
+                    console.log("data[key].sessionDate", data[key].sessionDate);
+                    console.log("data[key].sessionDuration", data[key].sessionDuration);
+                    
+                    printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
+                    
+                    i++;
+                }
+                printIt.printTrackerButtons();
+            });  
     });
 
            printIt.printGraphData();
-    //     // printIt.printGraphData();
     });
 
 // ============================================================================================================
@@ -299,31 +209,31 @@ console.log("The Duration: ", revisedDuration);
 
 
     // CALL FUNCTION THAT 'PUT'S UP TO FIREBASE
+    var firebaseUser = firebase.auth().currentUser;
+    console.log("Did this really work??", firebaseUser);
 
-    firebase.auth().onAuthStateChanged(firebaseUser => {
-        if(firebaseUser) {
-            
-            fbInteraction.retrieveUserProgress(firebaseUser.uid)
-            .then((data) => {
-                console.log("This is the data from clicking the 'SAVE' button on the edit page: ", data);
-                // You've got the users data object now, so filter through that to pull out the one that has the firebase id in question, and replace that with the new object.
-                for(let key in data) {
-                    if(key === entryToEdit) {
-                        console.log("This is the entry to edit after SAVE ", entryToEdit);
-                        console.log("This is the KEY to edit after SAVE ", data[key]);
-                        // That data[key] is the exact object you want to edit. SO alter that object to equal the new values, then pass it on into the editProgress function. I guess use if statements to pull out the info from the text input fields of the edit modal. Only pick them out if they don't equal zero.
+    fbInteraction.retrieveUserProgress(firebaseUser.uid)
+    .then((data) => {
+        console.log("This is the data from clicking the 'SAVE' button on the edit page: ", data);
+        // You've got the users data object now, so filter through that to pull out the one that has the firebase id in question, and replace that with the new object.
+        let myObj = null;
 
-                        data[key].sessionDuration = revisedDuration;
-                        console.log("revised: ", data[key]);
-                        
-                        
-                        fbInteraction.editProgress(data[key], entryToEdit);
-                    }
-                }
-                // printIt.printTrackerButtons();
-            });  
-        } else {
-            console.log("IMPOSSIBLE!");
+        for(let key in data) {
+            if(key === entryToEdit) {
+                console.log("This is the entry to edit after SAVE ", entryToEdit);
+                console.log("This is the KEY to edit after SAVE ", data[key]);
+                myObj = data[key];
+                // That data[key] is the exact object you want to edit. SO alter that object to equal the new values, then pass it on into the editProgress function. I guess use if statements to pull out the info from the text input fields of the edit modal. Only pick them out if they don't equal zero.
+
+                data[key].sessionDuration = revisedDuration;
+                console.log("revised: ", data[key]);
+                
+                
+            }
         }
-      });
+        fbInteraction.editProgress(myObj, entryToEdit)
+        .then((data)=>{
+            
+        });
+    });  
 });

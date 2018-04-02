@@ -2,26 +2,12 @@
 $font-stack: 'Mada', sans-serif;
 $header-text: 'Mada', sans-serif;
 $main-button-color: #716259;
-// $main-button-color: #F9F1EC;
-// $main-button-color: #007AFF;
 $stop-button: #FF0068;
 $border-color: #979797;
 $border-color: #979797;
-// $color-theme: #272821;
-// $color-theme: #595756;
-// $color-theme: rgb(197, 179, 143);
-// $color-theme: #C7B6AC;
-// $color-theme: #032965;
 $color-theme: #CEE8FB;
-// $color-theme: #005cec;
-
-// $thumb-slider-color: #7B604E;
 $thumb-slider-color: white;
-// $thumb-slider-color: #E8E6E8;
 $track-slider-color: #86c7ff;
-// $track-slider-color: #707476;
-// $thumb-slider-color: #707476;
-// font-family: 'Madurai', sans-serif;
 
 %label-text-extender{
     font-family: $font-stack;
@@ -34,20 +20,22 @@ body {
     font-family: $font-stack;
     font-weight: 200;
     background-color: $color-theme;
-    // color: #D5D5D5;
     color: #375972;
-    // color: white;
 }
 
 [class^="svg"] {
     font-size: 2em;
 }
 
+button:hover {
+    color: #fff;
+    background-color: #5a6268;
+    border-color: #545b62;
+}
 
 
 // ID Selectors ========================================================================================
 #myChart {
-    // background-color: #ffffffb5;
     margin-top: 6em;
 }
 
@@ -254,8 +242,6 @@ h1#sit-header-title {
 #stop-btn {
     background-color: #da3d3d;
     border: none;
-    // animation-duration: .5s;
-    // animation-name: slideInFromRight;
     border: solid #86c7ff 5px;
     color: #f8f9fa;
     font-size: 2em;
@@ -269,14 +255,12 @@ h1#sit-header-title {
 #pause-btn {
     background-color: white;
     color: black;
-    // animation-duration: .7s;
-    // animation-name: slideInFromRight;
     border: solid #86c7ff 5px;
     font-size: 2em;
     border-radius: 50%;
     height: 4.5em;
     width: 4.5em;
-    margin: -1em 0 0 0;
+    margin: -2em 0 0 0;
     font-weight: 200;
 }
 
@@ -289,7 +273,7 @@ h1#sit-header-title {
     width: 4.5em;
     font-weight: 200;
     border: solid #86c7ff 5px;
-    margin: -1em 0 0 0;
+    margin: -2em 0 0 0;
 }
 
 
@@ -297,8 +281,6 @@ h1#sit-header-title {
     font-size: 6em;
     margin: 1em 0 0 0;
     color: #223e52;
-    // animation-name: slideInFromLeft;
-    // animation-duration: .5s;
 }
 
 #menu-options {
@@ -306,16 +288,8 @@ h1#sit-header-title {
     box-shadow: -3px 9px 68px #333d4e9e, 17px 3px 25px #0d0d0d47;
 }
 
-// #user-login, #user-sign-up, #user-logout {
-//     width: auto;
-// }
-
 #nav-bar-container {
     box-shadow: -1px 2px #00000033;
-}
-
-#slider1, #slider2, #slider3 {
-    // box-shadow: -1px 1.5px #00000033;
 }
 
 #save-edit-btn {
@@ -375,7 +349,6 @@ h1#sit-header-title {
     flex-direction: row;
     justify-content: space-between;
     color: #375972;
-    // color: white;
 }
 
 .sliderListItemsDuration {
@@ -401,7 +374,6 @@ h1#sit-header-title {
     font-weight: 700;
     font-size: 14px;
     padding-bottom: 0em;
-    /* text-shadow: -2px 2px #00000000; */
 }
 
 .closeBtn {
@@ -437,7 +409,6 @@ h1#sit-header-title {
 
 .user-progress {
     font-size: 2em;
-    /* display: inline-block; */
     width: 9em;
     text-align: center;
     margin: 0em auto;
@@ -449,14 +420,6 @@ h1#sit-header-title {
 .dateOfSession {
     font-size: 0.64em;
 }
-
-// .user-progress-text {
-//     margin: 0 0 0 3em;
-// }
-
-// [id^="delete-btn-"] {
-//     width: 56px;
-// }
 
 .user-progress-deletes, .user-progress-edits {
     width: 1em;
@@ -475,15 +438,6 @@ section.delete-edit-btns {
     color: #254052;
 }
 
-// button#edit-btn-0, button#delete-btn-0 {
-//     // border: solid black;
-//     width: 4em;
-// }
-
-// button[id*='edit-btn'], button[id*='delete-btn'] {
-//     width: 4em;
-// }
-
 .user-progress-text {
     margin: 0 0 0 0em;
     /* position: relative; */
@@ -493,14 +447,8 @@ section.delete-edit-btns {
 }
 
 button.user-progress-edits.btn.btn-primary, button.user-progress-deletes.btn.btn-primary {
-    // border: solid;
     width: 4em;
 }
-
-// button.user-progress-deletes.btn.btn-primary {
-//     // border: solid;
-//     width: 4em;
-// }
 
 // Range Slider Stylings ========================================================================================
 
@@ -541,12 +489,10 @@ input[type=range]::-webkit-slider-thumb {
     background: $thumb-slider-color;
     cursor: pointer;
     margin-top: -11px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
-    // box-shadow: 1px 1px 10px #333d4e, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
   }
   
   /* All the same stuff for Firefox */
   input[type=range]::-moz-range-thumb {
-    // box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
     border: 1px solid #000000;
     height: 26px;
     width: 26px;
@@ -557,7 +503,6 @@ input[type=range]::-webkit-slider-thumb {
   
   /* All the same stuff for IE */
   input[type=range]::-ms-thumb {
-    // box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
     border: 1px solid #000000;
     height: 26px;
     width: 26px;
@@ -571,7 +516,6 @@ input[type=range]::-webkit-slider-thumb {
 input[type=range]::-webkit-slider-runnable-track {
     width: 80%;
     height: 7px;
-    // border-radius: 20px;
     cursor: pointer;
     box-shadow: 1px 1px 9px #0000001c, 0px 0px 1px #0d0d0d42;
     background: $track-slider-color;
@@ -587,7 +531,6 @@ input[type=range]::-webkit-slider-runnable-track {
     width: 80%;
     height: 3px;
     cursor: pointer;
-    // box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
     background: $track-slider-color;
     border-radius: 1.3px;
     border: 0.2px solid #010101;
@@ -606,7 +549,6 @@ input[type=range]::-webkit-slider-runnable-track {
     background: #2a6495;
     border: 0.2px solid #010101;
     border-radius: 2.6px;
-    // box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
   }
   input[type=range]:focus::-ms-fill-lower {
     background: $track-slider-color;
@@ -615,7 +557,6 @@ input[type=range]::-webkit-slider-runnable-track {
     background: $track-slider-color;
     border: 0.2px solid #010101;
     border-radius: 2.6px;
-    // box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
   }
   input[type=range]:focus::-ms-fill-upper {
     background: #367ebd;
@@ -626,29 +567,12 @@ input[type=range]::-webkit-slider-runnable-track {
 @keyframes slideInFromRight {
     from {
       margin-left: 100%;
-    //   width: 30%; 
     }
   
     to {
       margin-left: 0%;
-    //   width: 13em;
     }
   }
-
- 
-
-// Make countdown timer slide in
-//   @keyframes slideInFromLeft {
-//     from {
-//       margin-left: 100%;
-//     //   width: 30%; 
-//     }
-  
-//     to {
-//       margin-left: 0%;
-//     //   width: 13em;
-//     }
-//   }
 
 
 
@@ -660,7 +584,6 @@ input[type=range]::-webkit-slider-runnable-track {
 @media (min-width: 576px) {
     #main-header {
         font-weight: 400;
-        // margin: 0 0 0 1%;
     }
 }
 
@@ -688,10 +611,6 @@ input[type=range]::-webkit-slider-runnable-track {
     #sit-btn {
         font-size: 1.3em;
     }
-
-    #dropdownMenu2 {
-        // display: none;
-    }
 }
 
 
@@ -718,10 +637,6 @@ input[type=range]::-webkit-slider-runnable-track {
         width: 4em;
         height: 4em;
         margin: 0em 0 0 0;
-    }
-
-    #dropdownMenu2 {
-        // display: none;
     }
 
 }

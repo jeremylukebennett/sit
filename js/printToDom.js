@@ -134,8 +134,9 @@ function printHowToUse() {
 
 
 function printGraphData() {
+  timerButtons.innerHTML = ``;
   mainContainer.innerHTML = ``;
-  mainContainer.innerHTML += `<canvas class="hide" id="myChart"></canvas>`;
+  // mainContainer.innerHTML += `<canvas class="hide" id="myChart"></canvas>`;
   console.log("Am I hitting the printGraphData function?");
 
 }

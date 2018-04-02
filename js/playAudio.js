@@ -45,19 +45,20 @@ console.log("THIS IS THE newVal !!!!!?: ", newVal);
         let bellAlarm = document.getElementById("myAudioBell"); 
         bellAlarm.play();
     }
+
     else if(newVal === "1") {
         // play block
         console.log("play block alarm");
 
         let blockAlarm = document.getElementById("myAudioBlock"); 
         blockAlarm.play();
-
     }
+
     else if(newVal === "2") {
         // play tone
         console.log("play tone alarm");
         let toneAlarm = document.getElementById("myAudioTone"); 
-        toneAlarm.play(); 
+        toneAlarm.play();
     }
 }
 

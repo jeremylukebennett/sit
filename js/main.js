@@ -282,8 +282,6 @@ $(document).on("click", ".user-progress-edits", function () {
     console.log('entryToEdit', entryToEdit);
 });
 
-
-
 // EDIT USER PROGRESS ENTRY (VIA THE SAVE BUTTON)
 $(document).on("click", "#save-edit-btn", function () {
     console.log("you clicked save for :", entryToEdit);

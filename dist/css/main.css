@@ -1,8 +1,8 @@
 body {
   font-family: "Mada", sans-serif;
   font-weight: 200;
-  background-color: #005cec;
-  color: white; }
+  background-color: #CEE8FB;
+  color: #375972; }
 
 [class^="svg"] {
   font-size: 2em; }
@@ -12,16 +12,18 @@ body {
 
 #main-header {
   font-weight: 400;
-  border-bottom: solid grey 1px; }
+  border-bottom: solid #375972 1px; }
 
 #dropdownMenu2 {
-  color: white;
-  background-color: #005cec;
+  color: #375972;
+  background-color: #CEE8FB;
   border: none;
   position: absolute;
   right: 10%;
   padding-bottom: 0em;
-  top: -1.2em; }
+  top: -1.2em;
+  font-size: 1.2em;
+  margin: 0.16em 0 0 0; }
 
 #dropdownMenu2:focus {
   box-shadow: none; }
@@ -36,9 +38,19 @@ body {
   margin: 5em auto 0 auto; }
 
 #sit-btn {
-  background-color: #716259;
-  border: solid #00000054 2px;
-  color: #DDE1E1; }
+  border: solid #B4D8F7 5px;
+  color: #375972;
+  font-size: 2em;
+  border-radius: 50%;
+  height: 4em;
+  width: 4em;
+  margin: -1em 0 0 0;
+  background-color: white;
+  font-weight: 200;
+  box-shadow: 1px 1px 3px #0000001f, 0px 0px 1px #0d0d0d00; }
+
+#sit-btn:active {
+  background-color: #b3b3b3; }
 
 #back-btn {
   background-color: #716259;
@@ -46,15 +58,23 @@ body {
   margin-top: 5em; }
 
 #user-login, #user-sign-up {
-  background-color: #716259;
-  border: none;
-  border: solid #00000054 2px; }
+  border-radius: 700px;
+  width: 5em;
+  height: 5em;
+  border: solid #B4D8F7 4px;
+  background-color: white;
+  color: black;
+  font-weight: 200; }
 
 #user-progress {
   background-color: #1484A4; }
 
 #user-logout {
-  background-color: #716259; }
+  background-color: white;
+  color: black;
+  border: solid #B4D8F7 4px;
+  width: 6em;
+  font-weight: 200; }
 
 #duration-label {
   display: block; }
@@ -123,52 +143,79 @@ h1#sit-header-title {
   font-weight: 200;
   margin-bottom: auto;
   font-family: 'Mada', sans-serif;
-  color: white; }
+  color: #375972; }
 
 #menu1, #menu2, #menu3, #menuProgress, #menuLogOutOption {
   padding: 1.25rem 0 1.5rem 1.5rem;
-  font-weight: 200;
-  border: solid #979797 1px;
-  background-color: #1F6FA3;
-  color: white;
-  text-shadow: -1px 2px #00000069; }
+  font-weight: 00;
+  border: solid #B4D8F7 2px;
+  background-color: #f8f9fa;
+  color: #306890;
+  /* text-shadow: -1px 2px #00000069; */ }
 
 #menu1:hover, #menu2:hover, #menu3:hover, #menuProgress:hover, #menuLogOutOption:hover {
-  background-color: #1b5a85;
-  transition: background-color .1s ease-in; }
+  background-color: #B4D8F7;
+  transition: background-color .1s ease-in;
+  color: white; }
 
 #stop-btn {
   background-color: #da3d3d;
   border: none;
   animation-duration: .5s;
-  animation-name: slideInFromRight; }
+  animation-name: slideInFromRight;
+  border: solid #B4D8F7 5px;
+  color: #f8f9fa;
+  font-size: 2em;
+  border-radius: 50%;
+  height: 4em;
+  width: 4em;
+  margin: -1em 0 0 0;
+  font-weight: 200; }
 
 #pause-btn {
-  border: none;
-  animation-duration: .5s;
-  animation-name: slideInFromLeft;
   background-color: white;
-  color: black; }
+  color: black;
+  animation-duration: .7s;
+  animation-name: slideInFromRight;
+  border: solid #B4D8F7 5px;
+  font-size: 2em;
+  border-radius: 50%;
+  height: 4em;
+  width: 4em;
+  margin: -1em 0 0 0;
+  font-weight: 200; }
 
 #countdownTime {
   font-size: 6em;
   margin: 1em 0 0 0;
-  color: white;
-  animation-duration: .5s;
-  animation-name: slideInFromLeft; }
+  color: #223e52;
+  animation-name: slideInFromLeft;
+  animation-duration: .5s; }
 
 #menu-options {
   padding: 0;
-  box-shadow: 1px 14px 72px #333d4e, 13px 3px 25px #0d0d0d; }
-
-#user-login, #user-sign-up, #user-logout {
-  width: auto; }
+  box-shadow: -3px 9px 68px #333d4e9e, 17px 3px 25px #0d0d0d47; }
 
 #nav-bar-container {
   box-shadow: -1px 2px #00000033; }
 
-#slider1, #slider2, #slider3 {
-  box-shadow: -1px 1.5px #00000033; }
+#save-edit-btn {
+  height: 5em;
+  width: 5em;
+  border-radius: 44px;
+  background-color: white;
+  color: black;
+  font-weight: 200;
+  border: solid #B4D8F7 3px; }
+
+#cancel-edit-btn {
+  height: 5em;
+  width: 5em;
+  border-radius: 44px;
+  background-color: white;
+  color: black;
+  font-weight: 200;
+  border: solid #B4D8F7 3px; }
 
 .dropdown {
   margin: 0 0 0 -9%; }
@@ -200,7 +247,7 @@ h1#sit-header-title {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  color: white; }
+  color: #375972; }
 
 .sliderListItemsDuration {
   list-style: none;
@@ -218,18 +265,22 @@ h1#sit-header-title {
   font-size: 14px; }
 
 .slider-titles {
-  margin-bottom: 0em;
+  margin-bottom: 1em;
   font-weight: 700;
   font-size: 14px;
   padding-bottom: 0em;
-  text-shadow: -2px 2px #00000033; }
+  /* text-shadow: -2px 2px #00000000; */ }
 
 .closeBtn {
   font-weight: 200;
-  border: solid #00000054 2px; }
+  border: solid #B4D8F7 3px;
+  background-color: white;
+  color: black;
+  border-radius: 36px;
+  height: 4em; }
 
 .modal-content {
-  background-color: #005cec; }
+  background-color: #CEE8FB; }
 
 .modal-title {
   margin-bottom: 0;
@@ -256,19 +307,21 @@ h1#sit-header-title {
   font-size: 1.5em; }
 
 .dateOfSession {
-  font-size: 0.5em; }
+  font-size: 0.64em; }
 
 .user-progress-deletes, .user-progress-edits {
   width: 1em;
   background-color: rgba(0, 128, 0, 0);
   border: none;
-  font-size: 0.5em; }
+  font-size: 0.5em;
+  color: #254052; }
 
 section.delete-edit-btns {
   /* width: 141px; */
   /* position: relative; */
   right: -7em;
-  top: -2em; }
+  top: -2em;
+  color: #254052; }
 
 .user-progress-text {
   margin: 0 0 0 0em;
@@ -307,15 +360,14 @@ input[type=range]::-ms-track {
 /* Special styling for WebKit/Blink */
 input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
+  border: none;
   height: 26px;
   width: 26px;
   border-radius: 40px;
-  background: #E8E6E8;
+  background: white;
   cursor: pointer;
   margin-top: -11px;
-  /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
-  box-shadow: 1px 1px 10px #333d4e, 0px 0px 1px #0d0d0d;
-  /* Add cool effects to your sliders! */ }
+  /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */ }
 
 /* All the same stuff for Firefox */
 input[type=range]::-moz-range-thumb {
@@ -323,7 +375,7 @@ input[type=range]::-moz-range-thumb {
   height: 26px;
   width: 26px;
   border-radius: 40px;
-  background: #E8E6E8;
+  background: white;
   cursor: pointer; }
 
 /* All the same stuff for IE */
@@ -332,15 +384,16 @@ input[type=range]::-ms-thumb {
   height: 26px;
   width: 26px;
   border-radius: 40px;
-  background: #E8E6E8;
+  background: white;
   cursor: pointer; }
 
 input[type=range]::-webkit-slider-runnable-track {
   width: 80%;
-  height: 3px;
+  height: 7px;
   cursor: pointer;
-  background: #707476;
-  border-radius: 1.3px;
+  box-shadow: 1px 1px 9px #0000001c, 0px 0px 1px #0d0d0d42;
+  background: #B7DAF8;
+  border-radius: 910px;
   border: 0.2px solid #010101; }
 
 input[type=range]:focus::-webkit-slider-runnable-track {
@@ -350,7 +403,7 @@ input[type=range]::-moz-range-track {
   width: 80%;
   height: 3px;
   cursor: pointer;
-  background: #707476;
+  background: #B7DAF8;
   border-radius: 1.3px;
   border: 0.2px solid #010101; }
 
@@ -369,10 +422,10 @@ input[type=range]::-ms-fill-lower {
   border-radius: 2.6px; }
 
 input[type=range]:focus::-ms-fill-lower {
-  background: #707476; }
+  background: #B7DAF8; }
 
 input[type=range]::-ms-fill-upper {
-  background: #707476;
+  background: #B7DAF8;
   border: 0.2px solid #010101;
   border-radius: 2.6px; }
 

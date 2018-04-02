@@ -304,10 +304,6 @@ function editProgress(songFormObj, songId) {
 }
 
 
-
-
-
-
 // USER SIGN UP
 
 userSignUp.addEventListener("click", e => {
@@ -364,14 +360,6 @@ fbConfig.auth().onAuthStateChanged(firebaseUser => {
     userSignUp.classList.remove('hide');
   }
 });
-
-
-
-
-
-
-
-
 
 // deleteProgressEntry, editProgress
 module.exports = {sendUserDurationAndDate, retrieveUserProgress, deleteProgressEntry, editProgress};
@@ -463,6 +451,44 @@ trackProgressMenuOption.addEventListener("click", e => {
       });
   });
 
+  const trackMenuProgressFromLogIn = document.getElementById("user-progress");
+
+  trackMenuProgressFromLogIn.addEventListener("click", e => {
+    printIt.printGraphData();
+    
+    // Need to check user and retrieve user's data:
+    
+    firebase.auth().onAuthStateChanged(firebaseUser => {
+        if(firebaseUser) {
+            
+            fbInteraction.retrieveUserProgress(firebaseUser.uid)
+            .then((data) => {
+                let i = 0;
+                
+                for(let key in data) {
+                    let userDay = new Date(data[key].sessionDate).getDay();
+                    let userMonth = new Date(data[key].sessionDate).getMonth();
+                    let userDate = new Date(data[key].sessionDate).getDate();
+                    let userYear = new Date(data[key].sessionDate).getFullYear();
+                    console.log("NUMBER", i);
+                    console.log("data[key].sessionDate", data[key].sessionDate);
+                    console.log("data[key].sessionDuration", data[key].sessionDuration);
+                    
+                    printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
+                    
+                    i++;
+                }
+                printIt.printTrackerButtons();
+            });  
+        } else {
+            console.log("IMPOSSIBLE!");
+        }
+      });
+  });
+
+
+
+
 
 // MAKE SAVE BUTTON LAUNCH TRACK PROGRESS REFRESH
 
@@ -507,14 +533,15 @@ saveEdit.addEventListener("click", e => {
 
 
 
-  const trackProgress = document.getElementById("user-progress");
+//   const trackProgress = document.getElementById("user-progress");
+// //   const trackProgressFromLogIn = document.getElementById("")
 
 
-  trackProgress.addEventListener("click", e => {
-    console.log("clicked track progress");
-    printIt.printGraphData();
-    graphUserInfo.graphTest();
-  });
+//   trackProgress.addEventListener("click", e => {
+//     console.log("clicked track progress");
+//     printIt.printGraphData();
+//     graphUserInfo.graphTest();
+//   });
 
 
 
@@ -699,21 +726,89 @@ let $ = require("jquery");
 
 // I think if you want this to play separate files relative to the slider value you're gonna have to write a switch statement that checks the value of the slider and plays a divverent audio element with a particular id depending on the slider value...
 
+
+// Sound Slider Settings
+
+let intervalSoundValues = ["audioFiles/singleBell.mp3", "audioFiles/singleBlock.mp3", "audioFiles/singleTone.mp3"];
+let alarmSoundValues = ["audioFiles/gradualBells.mp3", "audioFiles/gradualBlock.mp3", "audioFiles/gradualTone.mp3"];
+let newIntervalSound;
+let newAlarmSound;
+
+var newVal = null;
+
+$(document).on("change", "#slider3", ()=>{
+    newVal = $("#slider3").val();
+    $("#slider3").attr("value", newVal);
+
+    newAlarmSound = alarmSoundValues[newVal];
+    newIntervalSound = intervalSoundValues[newVal];
+    
+
+    $("#alertSource").attr("src", newAlarmSound);
+    $("#intervalSource").attr("src", newIntervalSound);
+
+    console.log(alarmSoundValues[newVal]);
+    console.log(intervalSoundValues[newVal]);
+});  
+    
+
+
+
+// ALARM FUNCTION:
 function alertLaunch() {
-    console.log("play audio");
+console.log("LAUNCH ALERT LAUNCH FUNCTION");
+console.log("THIS IS THE newVal !!!!!?: ", newVal);
+    if(newVal === "0") {
+        // play bell
 
-    let x = document.getElementById("myAudio"); 
-        x.play(); 
+        let bellAlarm = document.getElementById("myAudioBell"); 
+        bellAlarm.play();
     }
+    else if(newVal === "1") {
+        // play block
+        console.log("play block alarm");
 
+        let blockAlarm = document.getElementById("myAudioBlock"); 
+        blockAlarm.play();
 
+    }
+    else if(newVal === "2") {
+        // play tone
+        console.log("play tone alarm");
+        let toneAlarm = document.getElementById("myAudioTone"); 
+        toneAlarm.play(); 
+    }
+}
+
+// INTERVAL
     function intervalAlertLaunch() {
-    console.log("play audio");
 
-    let y = document.getElementById("myIntervalAudio"); 
-        
-        y.pause(); 
-        y.play(); 
+        if(newVal === "0") {
+            console.log("play bell interval");
+
+            let bellInterval = document.getElementById("myIntervalAudioBell"); 
+                
+            // bellInterval.pause(); 
+            bellInterval.play(); 
+        }
+        else if(newVal === "1") {
+            console.log("play block interval");
+
+            let blockInterval = document.getElementById("myIntervalAudioBlock"); 
+                
+            blockInterval.pause(); 
+            blockInterval.play(); 
+        }
+        else if(newVal === "2") {
+            console.log("play tone interval");
+
+            let toneInterval = document.getElementById("myIntervalAudioTone"); 
+                
+            toneInterval.pause(); 
+            toneInterval.play(); 
+        }
+    console.log("play interval audio");
+
     }
 
 
@@ -842,29 +937,11 @@ function printHowToUse() {
   mainContainer.innerHTML = ``;
 }
 
-// firebase.auth().onAuthStateChanged(function(user) {
-//   if (user) {
-//     // User is signed in.
-//     mainContainer.innerHTML += `<p>You're signed in!</p>`;
-    
-//   } else {
-//     // No user is signed in.
-//     mainContainer.innerHTML += `<p>You're NOT signed in!</p>`;
-//   }
-// });
-
 
 function printGraphData() {
   mainContainer.innerHTML = ``;
   mainContainer.innerHTML += `<canvas class="hide" id="myChart"></canvas>`;
   console.log("Am I hitting the printGraphData function?");
-  // mainContainer.innerHTML += `<canvas id="line-chart" width="800" height="450"></canvas>
-  // `;
-  // console.log("should make button and should be below");
-
-  	
-// $( "#myChart" ).after( "<div class='text-center'><button class='btn btn-primary' id='back-btn'>Back</button></div>" );
-  // mainContainer.innerHTML += `<button>Back</button>`;
 
 }
 
@@ -915,14 +992,6 @@ function refillLoginModal() {
 }
 
 
-
-// function printUserData(data) {
-//   console.log(data);
-// }
-// function testOfPrintModule() {
-//   console.log("does the print module work???");
-// }
-
 module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage, printHowToUse, printGraphData, printUserData, refillLoginModal, printTrackerButtons};
 },{"./fb-config":3,"./graphData":4,"firebase/app":122,"jquery":126}],10:[function(require,module,exports){
 "use strict";
@@ -971,27 +1040,27 @@ $(document).on("change", "#slider2", ()=>{
     newIntervalDuration = intervalDurationValues[newVal];
 });  
 
-// Sound Slider Settings
+// // Sound Slider Settings
 
-let intervalSoundValues = ["audioFiles/singleBell.mp3", "audioFiles/singleBlock.mp3", "audioFiles/singleTone.mp3"];
-let alarmSoundValues = ["audioFiles/gradualBells.mp3", "audioFiles/gradualBlock.mp3", "audioFiles/gradualTone.mp3"];
-let newIntervalSound;
-let newAlarmSound;
+// let intervalSoundValues = ["audioFiles/singleBell.mp3", "audioFiles/singleBlock.mp3", "audioFiles/singleTone.mp3"];
+// let alarmSoundValues = ["audioFiles/gradualBells.mp3", "audioFiles/gradualBlock.mp3", "audioFiles/gradualTone.mp3"];
+// let newIntervalSound;
+// let newAlarmSound;
 
-$(document).on("change", "#slider3", ()=>{
-    let newVal = $("#slider3").val();
-    $("#slider3").attr("value", newVal);
+// $(document).on("change", "#slider3", ()=>{
+//     let newVal = $("#slider3").val();
+//     $("#slider3").attr("value", newVal);
 
-    newAlarmSound = alarmSoundValues[newVal];
-    newIntervalSound = intervalSoundValues[newVal];
+//     newAlarmSound = alarmSoundValues[newVal];
+//     newIntervalSound = intervalSoundValues[newVal];
     
 
-    $("#alertSource").attr("src", newAlarmSound);
-    $("#intervalSource").attr("src", newIntervalSound);
+//     $("#alertSource").attr("src", newAlarmSound);
+//     $("#intervalSource").attr("src", newIntervalSound);
 
-    console.log(alarmSoundValues[newVal]);
-    console.log(intervalSoundValues[newVal]);
-});  
+//     console.log(alarmSoundValues[newVal]);
+//     console.log(intervalSoundValues[newVal]);
+// });  
     
 
 
@@ -1007,7 +1076,8 @@ function timerInitialize() {
 
 // Main Timer
     var timer = new Timer();
-
+    console.log("SHOULD RUN INTERVAL FUNCTION NOW");
+    runInterval();
         timer.start({countdown: true, startValues: {seconds: newDuration}});
         $('#countdownString .values').html(timer.getTimeValues().toString());
 
@@ -1078,15 +1148,15 @@ function timerInitialize() {
             
             if(e.target.id === "stop-btn") {
                 timer.stop();
+                document.getElementById("myAudioBell").pause();
+                document.getElementById("myAudioBlock").pause();
+                document.getElementById("myAudioTone").pause();
                 intervalFlag = false;
                 console.log("you clicked stop");
 
                 printIt.printMainScreen();
             }
         });
-
-
-
 
 
 // Interval Timer
@@ -1096,6 +1166,7 @@ function timerInitialize() {
             var intervalTimer = new Timer();
             intervalTimer.start({countdown: true, startValues: {seconds: newIntervalDuration}});
             intervalTimer.addEventListener('targetAchieved', function (e) {
+                // When Interval countdown ends, do this:
                 console.log("INTERVAL");
                 soundAlert.intervalAlertLaunch();
                 runInterval();

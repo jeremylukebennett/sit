@@ -122,10 +122,6 @@ function editProgress(songFormObj, songId) {
 }
 
 
-
-
-
-
 // USER SIGN UP
 
 userSignUp.addEventListener("click", e => {
@@ -182,14 +178,6 @@ fbConfig.auth().onAuthStateChanged(firebaseUser => {
     userSignUp.classList.remove('hide');
   }
 });
-
-
-
-
-
-
-
-
 
 // deleteProgressEntry, editProgress
 module.exports = {sendUserDurationAndDate, retrieveUserProgress, deleteProgressEntry, editProgress};

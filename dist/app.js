@@ -304,10 +304,6 @@ function editProgress(songFormObj, songId) {
 }
 
 
-
-
-
-
 // USER SIGN UP
 
 userSignUp.addEventListener("click", e => {
@@ -364,14 +360,6 @@ fbConfig.auth().onAuthStateChanged(firebaseUser => {
     userSignUp.classList.remove('hide');
   }
 });
-
-
-
-
-
-
-
-
 
 // deleteProgressEntry, editProgress
 module.exports = {sendUserDurationAndDate, retrieveUserProgress, deleteProgressEntry, editProgress};
@@ -766,41 +754,61 @@ $(document).on("change", "#slider3", ()=>{
 
 
 
-
+// ALARM FUNCTION:
 function alertLaunch() {
 console.log("LAUNCH ALERT LAUNCH FUNCTION");
-    // let soundValue = $("#slider3").val();
-    // console.log('soundValue',newVal);
 console.log("THIS IS THE newVal !!!!!?: ", newVal);
     if(newVal === "0") {
-// play bell
-console.log("play bell alarm PLAY ALRM ALASDLASDJAHSKDJHAKSJDHAKJSDH");
+        // play bell
+
+        let bellAlarm = document.getElementById("myAudioBell"); 
+        bellAlarm.play();
     }
-    else if(newVal === 1) {
-// play black
-console.log("play block alarm");
+    else if(newVal === "1") {
+        // play block
+        console.log("play block alarm");
+
+        let blockAlarm = document.getElementById("myAudioBlock"); 
+        blockAlarm.play();
+
     }
-    else if(newVal === 2) {
+    else if(newVal === "2") {
         // play tone
         console.log("play tone alarm");
         let toneAlarm = document.getElementById("myAudioTone"); 
         toneAlarm.play(); 
     }
+}
 
-
-
-    let toneAlarm = document.getElementById("myAudioTone"); 
-        toneAlarm.play(); 
-    }
-
-
+// INTERVAL
     function intervalAlertLaunch() {
-    console.log("play audio");
 
-    let toneInterval = document.getElementById("myIntervalAudioTone"); 
-        
-    toneInterval.pause(); 
-    toneInterval.play(); 
+        if(newVal === "0") {
+            console.log("play bell interval");
+
+            let bellInterval = document.getElementById("myIntervalAudioBell"); 
+                
+            // bellInterval.pause(); 
+            bellInterval.play(); 
+        }
+        else if(newVal === "1") {
+            console.log("play block interval");
+
+            let blockInterval = document.getElementById("myIntervalAudioBlock"); 
+                
+            blockInterval.pause(); 
+            blockInterval.play(); 
+        }
+        else if(newVal === "2") {
+            console.log("play tone interval");
+
+            let toneInterval = document.getElementById("myIntervalAudioTone"); 
+                
+            toneInterval.pause(); 
+            toneInterval.play(); 
+        }
+    console.log("play interval audio");
+
     }
 
 
@@ -929,29 +937,11 @@ function printHowToUse() {
   mainContainer.innerHTML = ``;
 }
 
-// firebase.auth().onAuthStateChanged(function(user) {
-//   if (user) {
-//     // User is signed in.
-//     mainContainer.innerHTML += `<p>You're signed in!</p>`;
-    
-//   } else {
-//     // No user is signed in.
-//     mainContainer.innerHTML += `<p>You're NOT signed in!</p>`;
-//   }
-// });
-
 
 function printGraphData() {
   mainContainer.innerHTML = ``;
   mainContainer.innerHTML += `<canvas class="hide" id="myChart"></canvas>`;
   console.log("Am I hitting the printGraphData function?");
-  // mainContainer.innerHTML += `<canvas id="line-chart" width="800" height="450"></canvas>
-  // `;
-  // console.log("should make button and should be below");
-
-  	
-// $( "#myChart" ).after( "<div class='text-center'><button class='btn btn-primary' id='back-btn'>Back</button></div>" );
-  // mainContainer.innerHTML += `<button>Back</button>`;
 
 }
 
@@ -1001,14 +991,6 @@ function refillLoginModal() {
 
 }
 
-
-
-// function printUserData(data) {
-//   console.log(data);
-// }
-// function testOfPrintModule() {
-//   console.log("does the print module work???");
-// }
 
 module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage, printHowToUse, printGraphData, printUserData, refillLoginModal, printTrackerButtons};
 },{"./fb-config":3,"./graphData":4,"firebase/app":122,"jquery":126}],10:[function(require,module,exports){
@@ -1094,6 +1076,7 @@ function timerInitialize() {
 
 // Main Timer
     var timer = new Timer();
+    console.log("SHOULD RUN INTERVAL FUNCTION NOW");
     runInterval();
         timer.start({countdown: true, startValues: {seconds: newDuration}});
         $('#countdownString .values').html(timer.getTimeValues().toString());
@@ -1165,15 +1148,15 @@ function timerInitialize() {
             
             if(e.target.id === "stop-btn") {
                 timer.stop();
+                document.getElementById("myAudioBell").pause();
+                document.getElementById("myAudioBlock").pause();
+                document.getElementById("myAudioTone").pause();
                 intervalFlag = false;
                 console.log("you clicked stop");
 
                 printIt.printMainScreen();
             }
         });
-
-
-
 
 
 // Interval Timer
@@ -1183,6 +1166,7 @@ function timerInitialize() {
             var intervalTimer = new Timer();
             intervalTimer.start({countdown: true, startValues: {seconds: newIntervalDuration}});
             intervalTimer.addEventListener('targetAchieved', function (e) {
+                // When Interval countdown ends, do this:
                 console.log("INTERVAL");
                 soundAlert.intervalAlertLaunch();
                 runInterval();

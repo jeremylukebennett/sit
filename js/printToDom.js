@@ -120,29 +120,11 @@ function printHowToUse() {
   mainContainer.innerHTML = ``;
 }
 
-// firebase.auth().onAuthStateChanged(function(user) {
-//   if (user) {
-//     // User is signed in.
-//     mainContainer.innerHTML += `<p>You're signed in!</p>`;
-    
-//   } else {
-//     // No user is signed in.
-//     mainContainer.innerHTML += `<p>You're NOT signed in!</p>`;
-//   }
-// });
-
 
 function printGraphData() {
   mainContainer.innerHTML = ``;
   mainContainer.innerHTML += `<canvas class="hide" id="myChart"></canvas>`;
   console.log("Am I hitting the printGraphData function?");
-  // mainContainer.innerHTML += `<canvas id="line-chart" width="800" height="450"></canvas>
-  // `;
-  // console.log("should make button and should be below");
-
-  	
-// $( "#myChart" ).after( "<div class='text-center'><button class='btn btn-primary' id='back-btn'>Back</button></div>" );
-  // mainContainer.innerHTML += `<button>Back</button>`;
 
 }
 
@@ -192,13 +174,5 @@ function refillLoginModal() {
 
 }
 
-
-
-// function printUserData(data) {
-//   console.log(data);
-// }
-// function testOfPrintModule() {
-//   console.log("does the print module work???");
-// }
 
 module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage, printHowToUse, printGraphData, printUserData, refillLoginModal, printTrackerButtons};

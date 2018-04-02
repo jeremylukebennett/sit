@@ -72,6 +72,7 @@ function timerInitialize() {
 
 // Main Timer
     var timer = new Timer();
+    console.log("SHOULD RUN INTERVAL FUNCTION NOW");
     runInterval();
         timer.start({countdown: true, startValues: {seconds: newDuration}});
         $('#countdownString .values').html(timer.getTimeValues().toString());
@@ -143,15 +144,15 @@ function timerInitialize() {
             
             if(e.target.id === "stop-btn") {
                 timer.stop();
+                document.getElementById("myAudioBell").pause();
+                document.getElementById("myAudioBlock").pause();
+                document.getElementById("myAudioTone").pause();
                 intervalFlag = false;
                 console.log("you clicked stop");
 
                 printIt.printMainScreen();
             }
         });
-
-
-
 
 
 // Interval Timer
@@ -161,6 +162,7 @@ function timerInitialize() {
             var intervalTimer = new Timer();
             intervalTimer.start({countdown: true, startValues: {seconds: newIntervalDuration}});
             intervalTimer.addEventListener('targetAchieved', function (e) {
+                // When Interval countdown ends, do this:
                 console.log("INTERVAL");
                 soundAlert.intervalAlertLaunch();
                 runInterval();

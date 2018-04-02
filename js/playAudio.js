@@ -35,19 +35,23 @@ $(document).on("change", "#slider3", ()=>{
 
 
 
-
+// ALARM FUNCTION:
 function alertLaunch() {
 console.log("LAUNCH ALERT LAUNCH FUNCTION");
-    // let soundValue = $("#slider3").val();
-    // console.log('soundValue',newVal);
 console.log("THIS IS THE newVal !!!!!?: ", newVal);
     if(newVal === "0") {
-// play bell
-console.log("play bell alarm PLAY ALRM ALASDLASDJAHSKDJHAKSJDHAKJSDH");
+        // play bell
+
+        let bellAlarm = document.getElementById("myAudioBell"); 
+        bellAlarm.play();
     }
     else if(newVal === "1") {
-// play black
-console.log("play block alarm");
+        // play block
+        console.log("play block alarm");
+
+        let blockAlarm = document.getElementById("myAudioBlock"); 
+        blockAlarm.play();
+
     }
     else if(newVal === "2") {
         // play tone
@@ -55,21 +59,37 @@ console.log("play block alarm");
         let toneAlarm = document.getElementById("myAudioTone"); 
         toneAlarm.play(); 
     }
+}
 
-
-
-    let toneAlarm = document.getElementById("myAudioTone"); 
-        toneAlarm.play(); 
-    }
-
-
+// INTERVAL
     function intervalAlertLaunch() {
-    console.log("play audio");
 
-    let toneInterval = document.getElementById("myIntervalAudioTone"); 
-        
-    toneInterval.pause(); 
-    toneInterval.play(); 
+        if(newVal === "0") {
+            console.log("play bell interval");
+
+            let bellInterval = document.getElementById("myIntervalAudioBell"); 
+                
+            // bellInterval.pause(); 
+            bellInterval.play(); 
+        }
+        else if(newVal === "1") {
+            console.log("play block interval");
+
+            let blockInterval = document.getElementById("myIntervalAudioBlock"); 
+                
+            blockInterval.pause(); 
+            blockInterval.play(); 
+        }
+        else if(newVal === "2") {
+            console.log("play tone interval");
+
+            let toneInterval = document.getElementById("myIntervalAudioTone"); 
+                
+            toneInterval.pause(); 
+            toneInterval.play(); 
+        }
+    console.log("play interval audio");
+
     }
 
 

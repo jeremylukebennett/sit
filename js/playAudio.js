@@ -10,7 +10,7 @@ let $ = require("jquery");
 function alertLaunch() {
     console.log("play audio");
 
-    let x = document.getElementById("myAudio"); 
+    let x = document.getElementById("myAudioTone"); 
         x.play(); 
     }
 
@@ -18,7 +18,7 @@ function alertLaunch() {
     function intervalAlertLaunch() {
     console.log("play audio");
 
-    let y = document.getElementById("myIntervalAudio"); 
+    let y = document.getElementById("myIntervalAudioTone"); 
         
         y.pause(); 
         y.play(); 

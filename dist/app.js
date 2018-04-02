@@ -463,6 +463,44 @@ trackProgressMenuOption.addEventListener("click", e => {
       });
   });
 
+  const trackMenuProgressFromLogIn = document.getElementById("user-progress");
+
+  trackMenuProgressFromLogIn.addEventListener("click", e => {
+    printIt.printGraphData();
+    
+    // Need to check user and retrieve user's data:
+    
+    firebase.auth().onAuthStateChanged(firebaseUser => {
+        if(firebaseUser) {
+            
+            fbInteraction.retrieveUserProgress(firebaseUser.uid)
+            .then((data) => {
+                let i = 0;
+                
+                for(let key in data) {
+                    let userDay = new Date(data[key].sessionDate).getDay();
+                    let userMonth = new Date(data[key].sessionDate).getMonth();
+                    let userDate = new Date(data[key].sessionDate).getDate();
+                    let userYear = new Date(data[key].sessionDate).getFullYear();
+                    console.log("NUMBER", i);
+                    console.log("data[key].sessionDate", data[key].sessionDate);
+                    console.log("data[key].sessionDuration", data[key].sessionDuration);
+                    
+                    printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
+                    
+                    i++;
+                }
+                printIt.printTrackerButtons();
+            });  
+        } else {
+            console.log("IMPOSSIBLE!");
+        }
+      });
+  });
+
+
+
+
 
 // MAKE SAVE BUTTON LAUNCH TRACK PROGRESS REFRESH
 
@@ -507,14 +545,15 @@ saveEdit.addEventListener("click", e => {
 
 
 
-  const trackProgress = document.getElementById("user-progress");
+//   const trackProgress = document.getElementById("user-progress");
+// //   const trackProgressFromLogIn = document.getElementById("")
 
 
-  trackProgress.addEventListener("click", e => {
-    console.log("clicked track progress");
-    printIt.printGraphData();
-    graphUserInfo.graphTest();
-  });
+//   trackProgress.addEventListener("click", e => {
+//     console.log("clicked track progress");
+//     printIt.printGraphData();
+//     graphUserInfo.graphTest();
+//   });
 
 
 
@@ -702,7 +741,7 @@ let $ = require("jquery");
 function alertLaunch() {
     console.log("play audio");
 
-    let x = document.getElementById("myAudio"); 
+    let x = document.getElementById("myAudioTone"); 
         x.play(); 
     }
 
@@ -710,7 +749,7 @@ function alertLaunch() {
     function intervalAlertLaunch() {
     console.log("play audio");
 
-    let y = document.getElementById("myIntervalAudio"); 
+    let y = document.getElementById("myIntervalAudioTone"); 
         
         y.pause(); 
         y.play(); 
@@ -1007,7 +1046,7 @@ function timerInitialize() {
 
 // Main Timer
     var timer = new Timer();
-
+    runInterval();
         timer.start({countdown: true, startValues: {seconds: newDuration}});
         $('#countdownString .values').html(timer.getTimeValues().toString());
 

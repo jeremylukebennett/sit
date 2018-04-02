@@ -18,7 +18,7 @@ $color-theme: #CEE8FB;
 // $thumb-slider-color: #7B604E;
 $thumb-slider-color: white;
 // $thumb-slider-color: #E8E6E8;
-$track-slider-color: #B7DAF8;
+$track-slider-color: #86c7ff;
 // $track-slider-color: #707476;
 // $thumb-slider-color: #707476;
 // font-family: 'Madurai', sans-serif;
@@ -86,7 +86,7 @@ body {
 }
 
 #sit-btn {
-    border: solid #B4D8F7 5px;
+    border: solid #86c7ff 5px;
     color: #375972;
     font-size: 2em;
     border-radius: 50%;
@@ -103,17 +103,23 @@ body {
 }
 
 #back-btn {
-    background-color: #716259;
-    border: solid #00000054 2px;
-
-    margin-top: 5em;
+    background-color: white;
+    border: solid #86c7ff 5px;
+    margin: 2em 0em 2em 0;
+    color: #375972;
+    font-size: 2em;
+    border-radius: 50%;
+    width: 4em;
+    height: 4em;
+    font-weight: 200;
+    box-shadow: 1px 1px 3px #0000001f, 0px 0px 1px #0d0d0d00;
 }
 
 #user-login, #user-sign-up {
     border-radius: 700px;
     width: 5em;
     height: 5em;
-    border: solid #B4D8F7 4px;
+    border: solid #86c7ff 4px;
     background-color: white;
     color: black;
     font-weight: 200;
@@ -127,7 +133,7 @@ body {
 #user-logout {
     background-color: white;
     color: black;
-    border: solid #B4D8F7 4px;
+    border: solid #86c7ff 4px;
     width: 6em;
     font-weight: 200;
 }
@@ -221,22 +227,22 @@ h1#sit-header-title {
     font-weight: 200;
     margin-bottom: auto;
     font-family: 'Mada', sans-serif;
-    // color: white;
+    position: relative;
+    left: -0.2em;
     color: #375972;
 }
 
 #menu1, #menu2, #menu3, #menuProgress, #menuLogOutOption {
     padding: 1.25rem 0 1.5rem 1.5rem;
     font-weight: 00;
-    border: solid #B4D8F7 2px;
+    border: solid #86c7ff 2px;
     background-color: #f8f9fa;
     color: #306890;
-    /* text-shadow: -1px 2px #00000069; */
 }
 
 #menu1:hover, #menu2:hover, #menu3:hover, #menuProgress:hover, #menuLogOutOption:hover, {
     // font-weight: 400;
-    background-color: #B4D8F7;
+    background-color: #86c7ff;
     transition: background-color .1s ease-in;
     color: white;
 }
@@ -246,7 +252,7 @@ h1#sit-header-title {
     border: none;
     animation-duration: .5s;
     animation-name: slideInFromRight;
-    border: solid #B4D8F7 5px;
+    border: solid #86c7ff 5px;
     color: #f8f9fa;
     font-size: 2em;
     border-radius: 50%;
@@ -261,7 +267,7 @@ h1#sit-header-title {
     color: black;
     animation-duration: .7s;
     animation-name: slideInFromRight;
-    border: solid #B4D8F7 5px;
+    border: solid #86c7ff 5px;
     font-size: 2em;
     border-radius: 50%;
     height: 4em;
@@ -302,7 +308,7 @@ h1#sit-header-title {
     background-color: white;
     color: black;
     font-weight: 200;
-    border: solid #B4D8F7 3px;
+    border: solid #86c7ff 3px;
 }
 
 #cancel-edit-btn {
@@ -312,7 +318,7 @@ h1#sit-header-title {
     background-color: white;
     color: black;
     font-weight: 200;
-    border: solid #B4D8F7 3px;
+    border: solid #86c7ff 3px;
 }
 
 
@@ -383,7 +389,7 @@ h1#sit-header-title {
 
 .closeBtn {
     font-weight: 200;
-    border: solid #B4D8F7 3px;
+    border: solid #86c7ff 3px;
     background-color: white;
     color: black;
     border-radius: 36px;

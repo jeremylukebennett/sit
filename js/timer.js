@@ -72,7 +72,7 @@ function timerInitialize() {
 
 // Main Timer
     var timer = new Timer();
-
+    runInterval();
         timer.start({countdown: true, startValues: {seconds: newDuration}});
         $('#countdownString .values').html(timer.getTimeValues().toString());
 

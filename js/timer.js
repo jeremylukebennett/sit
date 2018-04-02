@@ -20,6 +20,10 @@ let printIt = require("./printToDom");
 $(document).on("change", "#slider1", ()=>{
     let newVal = $("#slider1").val();
     $("#slider1").attr("value", newVal);
+// console.log($("li:contains(10)").text());
+//     if($("li:contains(10)").text() === durationValues[newVal].toString()) {
+//         console.log("MATCHED");
+//     }
     console.log(durationValues[newVal]);
     newDuration = durationValues[newVal];
 });   
@@ -114,10 +118,6 @@ function timerInitialize() {
 
                 });
                 // console.log();
-
-
-                
-                  
                 } else {
                   // User not logged in
                   console.log("yer users NOT logged in and times up");
@@ -129,14 +129,20 @@ function timerInitialize() {
         document.addEventListener("click", function(e){
             if(e.target.id === "pause-btn") {
                 printIt.printResumeButtonToPage();
+                
+
 
                 timer.pause();
+                // document.getElementById("myAudioBell").pause();
+                // document.getElementById("myAudioBlock").pause();
+                // document.getElementById("myAudioTone").pause();
                 intervalFlag = false;
             }
         });
 
         document.addEventListener("click", function(e){
             if(e.target.id === "resume-btn") {
+                printIt.reprintTimerButtons();
                 timer.start();
             }
         });
@@ -148,9 +154,17 @@ function timerInitialize() {
                 document.getElementById("myAudioBell").pause();
                 document.getElementById("myAudioBlock").pause();
                 document.getElementById("myAudioTone").pause();
+                document.getElementById("myIntervalAudioBell").pause();
+                document.getElementById("myIntervalAudioBlock").pause();
+                document.getElementById("myIntervalAudioTone").pause();
+
+
+
+
                 intervalFlag = false;
                 console.log("you clicked stop");
-
+                $("#timer-buttons").hide();
+                // document.getElementById("timer-buttons").innerHTML = ``;
                 printIt.printMainScreen();
             }
         });

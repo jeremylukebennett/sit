@@ -320,8 +320,9 @@ userSignUp.addEventListener("click", e => {
 
 userLogOut.addEventListener("click", e => {
   console.log("you logged out");
-  printIt.refillLoginModal();
+  // printIt.refillLoginModal();
   fbConfig.auth().signOut();
+  location.reload();
 });
 
 
@@ -406,12 +407,16 @@ require("./addToFB");
 let sitButton = document.getElementById("sit-btn");
 let entryToEdit = null;
 
+// $("#pause-btn").hide();
+
 printIt.printMainScreen();
 
 // Launch Sit Button function
 document.addEventListener("click", function(e){
     if(e.target.id === "sit-btn") {
         startSit.countdownScreen();
+        $("#timer-buttons").show();
+
     }
 });
 
@@ -555,6 +560,7 @@ saveEdit.addEventListener("click", e => {
     
     printIt.refillLoginModal();
     fbConfig.auth().signOut().then((result)=>{
+    location.reload();
     });
   });
 
@@ -821,12 +827,15 @@ let graphUserInfo = require("./graphData");
 require("./fb-config");
 
 let mainContainer = document.getElementById("mainContentDiv");
+let timerButtons = document.getElementById("timer-buttons");
 
 
 
 
 // This prints the main content to the screen on initial load.
 function printMainScreen() {
+
+    // timerButtons.innerHTML = ``;
 
     mainContainer.innerHTML = `    
     <form id="sliderData1">
@@ -900,21 +909,30 @@ function printTimerToPage() {
   mainContainer.innerHTML = `<div id="countdownString">
                               <div class="values text-center" id="countdownTime"></div>
                             </div>`;
-
-  mainContainer.innerHTML += `<div class="text-center" id="sit-btn-container">
+                            timerButtons.innerHTML = `<div class="text-center" id="sit-btn-container">
                                 <button class="btn btn-primary" id="pause-btn">Pause</button>
-                              </div>`;
-
-mainContainer.innerHTML += `<div class="text-center" id="sit-btn-container">
+                              </div><div class="text-center" id="sit-btn-container">
                                 <button class="btn btn-primary" id="stop-btn">Stop</button>
                             </div>`;
 }
 
 function printResumeButtonToPage() {
   console.log("resume yet?");
-  mainContainer.innerHTML += `<div class="text-center" id="sit-btn-container">
+  timerButtons.innerHTML = `<div class="text-center" id="sit-btn-container">
                                 <button class="btn btn-primary" id="resume-btn">Resume</button>
-                            </div>`;
+                            </div><div class="text-center" id="sit-btn-container">
+                            <button class="btn btn-primary" id="stop-btn">Stop</button>
+                        </div>`;
+           
+}
+
+
+function reprintTimerButtons() {
+  timerButtons.innerHTML = `<div class="text-center" id="sit-btn-container">
+  <button class="btn btn-primary" id="pause-btn">Pause</button>
+</div><div class="text-center" id="sit-btn-container">
+  <button class="btn btn-primary" id="stop-btn">Stop</button>
+</div>`;
 }
 
 function printAudioHTMLToPage() {
@@ -991,7 +1009,7 @@ function refillLoginModal() {
 }
 
 
-module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage, printHowToUse, printGraphData, printUserData, refillLoginModal, printTrackerButtons};
+module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage, printHowToUse, printGraphData, printUserData, refillLoginModal, printTrackerButtons, reprintTimerButtons};
 },{"./fb-config":3,"./graphData":4,"firebase/app":122,"jquery":126}],10:[function(require,module,exports){
 "use strict";
 
@@ -1023,6 +1041,10 @@ let printIt = require("./printToDom");
 $(document).on("change", "#slider1", ()=>{
     let newVal = $("#slider1").val();
     $("#slider1").attr("value", newVal);
+// console.log($("li:contains(10)").text());
+//     if($("li:contains(10)").text() === durationValues[newVal].toString()) {
+//         console.log("MATCHED");
+//     }
     console.log(durationValues[newVal]);
     newDuration = durationValues[newVal];
 });   
@@ -1117,10 +1139,6 @@ function timerInitialize() {
 
                 });
                 // console.log();
-
-
-                
-                  
                 } else {
                   // User not logged in
                   console.log("yer users NOT logged in and times up");
@@ -1132,14 +1150,20 @@ function timerInitialize() {
         document.addEventListener("click", function(e){
             if(e.target.id === "pause-btn") {
                 printIt.printResumeButtonToPage();
+                
+
 
                 timer.pause();
+                // document.getElementById("myAudioBell").pause();
+                // document.getElementById("myAudioBlock").pause();
+                // document.getElementById("myAudioTone").pause();
                 intervalFlag = false;
             }
         });
 
         document.addEventListener("click", function(e){
             if(e.target.id === "resume-btn") {
+                printIt.reprintTimerButtons();
                 timer.start();
             }
         });
@@ -1151,9 +1175,17 @@ function timerInitialize() {
                 document.getElementById("myAudioBell").pause();
                 document.getElementById("myAudioBlock").pause();
                 document.getElementById("myAudioTone").pause();
+                document.getElementById("myIntervalAudioBell").pause();
+                document.getElementById("myIntervalAudioBlock").pause();
+                document.getElementById("myIntervalAudioTone").pause();
+
+
+
+
                 intervalFlag = false;
                 console.log("you clicked stop");
-
+                $("#timer-buttons").hide();
+                // document.getElementById("timer-buttons").innerHTML = ``;
                 printIt.printMainScreen();
             }
         });

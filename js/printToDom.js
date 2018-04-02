@@ -5,12 +5,15 @@ let graphUserInfo = require("./graphData");
 require("./fb-config");
 
 let mainContainer = document.getElementById("mainContentDiv");
+let timerButtons = document.getElementById("timer-buttons");
 
 
 
 
 // This prints the main content to the screen on initial load.
 function printMainScreen() {
+
+    // timerButtons.innerHTML = ``;
 
     mainContainer.innerHTML = `    
     <form id="sliderData1">
@@ -84,21 +87,30 @@ function printTimerToPage() {
   mainContainer.innerHTML = `<div id="countdownString">
                               <div class="values text-center" id="countdownTime"></div>
                             </div>`;
-
-  mainContainer.innerHTML += `<div class="text-center" id="sit-btn-container">
+                            timerButtons.innerHTML = `<div class="text-center" id="sit-btn-container">
                                 <button class="btn btn-primary" id="pause-btn">Pause</button>
-                              </div>`;
-
-mainContainer.innerHTML += `<div class="text-center" id="sit-btn-container">
+                              </div><div class="text-center" id="sit-btn-container">
                                 <button class="btn btn-primary" id="stop-btn">Stop</button>
                             </div>`;
 }
 
 function printResumeButtonToPage() {
   console.log("resume yet?");
-  mainContainer.innerHTML += `<div class="text-center" id="sit-btn-container">
+  timerButtons.innerHTML = `<div class="text-center" id="sit-btn-container">
                                 <button class="btn btn-primary" id="resume-btn">Resume</button>
-                            </div>`;
+                            </div><div class="text-center" id="sit-btn-container">
+                            <button class="btn btn-primary" id="stop-btn">Stop</button>
+                        </div>`;
+           
+}
+
+
+function reprintTimerButtons() {
+  timerButtons.innerHTML = `<div class="text-center" id="sit-btn-container">
+  <button class="btn btn-primary" id="pause-btn">Pause</button>
+</div><div class="text-center" id="sit-btn-container">
+  <button class="btn btn-primary" id="stop-btn">Stop</button>
+</div>`;
 }
 
 function printAudioHTMLToPage() {
@@ -175,4 +187,4 @@ function refillLoginModal() {
 }
 
 
-module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage, printHowToUse, printGraphData, printUserData, refillLoginModal, printTrackerButtons};
+module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage, printHowToUse, printGraphData, printUserData, refillLoginModal, printTrackerButtons, reprintTimerButtons};

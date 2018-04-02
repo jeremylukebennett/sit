@@ -15,12 +15,16 @@ require("./addToFB");
 let sitButton = document.getElementById("sit-btn");
 let entryToEdit = null;
 
+// $("#pause-btn").hide();
+
 printIt.printMainScreen();
 
 // Launch Sit Button function
 document.addEventListener("click", function(e){
     if(e.target.id === "sit-btn") {
         startSit.countdownScreen();
+        $("#timer-buttons").show();
+
     }
 });
 
@@ -164,6 +168,7 @@ saveEdit.addEventListener("click", e => {
     
     printIt.refillLoginModal();
     fbConfig.auth().signOut().then((result)=>{
+    location.reload();
     });
   });
 

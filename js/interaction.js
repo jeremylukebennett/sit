@@ -138,8 +138,9 @@ userSignUp.addEventListener("click", e => {
 
 userLogOut.addEventListener("click", e => {
   console.log("you logged out");
-  printIt.refillLoginModal();
+  // printIt.refillLoginModal();
   fbConfig.auth().signOut();
+  location.reload();
 });
 
 

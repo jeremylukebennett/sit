@@ -143,10 +143,18 @@ function printGraphData() {
 
 function printUserData(idNum, day, month, date, year, duration, key) {
   console.log("start printing user data");
+  console.log('idNum',idNum);
+  console.log('day',day);
+  console.log('month',month);
+  console.log('date',date);
+  console.log('year',year);
+  console.log('duration',duration);
+  console.log('key',key);
+
+
   let weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   let monthName = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   // mainContainer.innerHTML += `<div>${date} - ${duration} minutes</div>`;
-  
   mainContainer.innerHTML += `<div class="user-progress">
 
                                 <section class="user-progress-text">           

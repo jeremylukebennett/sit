@@ -387,6 +387,7 @@ let graphUserInfo = require('./graphData.js');
 let firebase = require("firebase/app");
 let fbConfig = require("./fb-config");
 require("./addToFB");
+let mainContainer = document.getElementById("mainContentDiv");
 
 let sitButton = document.getElementById("sit-btn");
 let entryToEdit = null;
@@ -547,30 +548,57 @@ let revisedDate = $("editDateField").val();
         }
     })
     .then((data) => {
-        return fbInteraction.editProgress(data, entryToEdit);
-    }).then((data)=>{
-        console.log("GETTING THIS FAR?", data);
-
-        let i = 0;
-
-        for(let key in data) {
-            // console.log("data", data);
-            // console.log("key: ", key);
-            console.log('data[key]',data.sessionDate);
-            let userDay = new Date(data.sessionDate).getDay();
-            console.log('userDay',userDay);
-            let userMonth = new Date(data.sessionDate).getMonth();
-            console.log('userMonth',userMonth);
-            let userDate = new Date(data.sessionDate).getDate();
-            console.log('userDate',userDate);
-            let userYear = new Date(data.sessionDate).getFullYear();
-            console.log('userYear',userYear);
-            // printIt.printUserData(i, userDay, userMonth, userDate, userYear, data.sessionDuration, key);
+         return fbInteraction.editProgress(data, entryToEdit);
+        })
+    .then((data)=>{
+            console.log("passed in data", data);
+            console.log("updated user progress", fbInteraction.retrieveUserProgress(firebaseUser.uid));
+            return fbInteraction.retrieveUserProgress(firebaseUser.uid);        
+    })    
+    .then((data)=>{
+            console.log("DATA", data);
+        
+            let i = 0;
+            mainContainer.innerHTML = ``;
             
-            i++;
-        }
-        printIt.printTrackerButtons();
-    });
+            for(let key in data) {
+                console.log("lots of data", data);
+                console.log("sessionDuration", data[key].sessionDuration);
+                let sessionDate = new Date(data[key].sessionDate);
+                let userDay = sessionDate.getDay();
+                let userMonth = sessionDate.getMonth();
+                let userDate = sessionDate.getDate();
+                let userYear = sessionDate.getFullYear();
+
+                printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
+                
+                i++;
+            }
+            printIt.printTrackerButtons();
+        });  
+        // console.log("GETTING THIS FAR?", data);
+
+        // let i = 0;
+
+        // for(let key in data) {
+        //     // console.log("data", data);
+        //     // console.log("key: ", key);
+        //     console.log('data[key]',data.sessionDate);
+        //     console.log('data.sessionDuration',data.sessionDuration);
+        //     let userDay = new Date(data.sessionDate).getDay();
+        //     console.log('userDay',userDay);
+        //     let userMonth = new Date(data.sessionDate).getMonth();
+        //     console.log('userMonth',userMonth);
+        //     let userDate = new Date(data.sessionDate).getDate();
+        //     console.log('userDate',userDate);
+        //     let userYear = new Date(data.sessionDate).getFullYear();
+        //     console.log('userYear',userYear);
+        //     printIt.printUserData(i, userDay, userMonth, userDate, userYear, data.sessionDuration, key);
+            
+        //     i++;
+        // }
+        // printIt.printTrackerButtons();
+    // });
         
 
         // fbInteraction.retrieveUserProgress(firebaseUser.uid)
@@ -825,10 +853,18 @@ function printGraphData() {
 
 function printUserData(idNum, day, month, date, year, duration, key) {
   console.log("start printing user data");
+  console.log('idNum',idNum);
+  console.log('day',day);
+  console.log('month',month);
+  console.log('date',date);
+  console.log('year',year);
+  console.log('duration',duration);
+  console.log('key',key);
+
+
   let weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   let monthName = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   // mainContainer.innerHTML += `<div>${date} - ${duration} minutes</div>`;
-  
   mainContainer.innerHTML += `<div class="user-progress">
 
                                 <section class="user-progress-text">           

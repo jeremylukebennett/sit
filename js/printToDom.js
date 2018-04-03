@@ -145,6 +145,7 @@ function printUserData(idNum, day, month, date, year, duration, key) {
   let weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   let monthName = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   // mainContainer.innerHTML += `<div>${date} - ${duration} minutes</div>`;
+  
   mainContainer.innerHTML += `<div class="user-progress">
 
                                 <section class="user-progress-text">           

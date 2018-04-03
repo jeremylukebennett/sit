@@ -419,12 +419,12 @@ trackProgressMenuOption.addEventListener("click", e => {
             let i = 0;
             
             for(let key in data) {
-                let userDay = new Date(data[key].sessionDate).getDay();
-                let userMonth = new Date(data[key].sessionDate).getMonth();
-                let userDate = new Date(data[key].sessionDate).getDate();
-                let userYear = new Date(data[key].sessionDate).getFullYear();
+                let userDay = new Date(data.sessionDate).getDay();
+                let userMonth = new Date(data.sessionDate).getMonth();
+                let userDate = new Date(data.sessionDate).getDate();
+                let userYear = new Date(data.sessionDate).getFullYear();
                 console.log("NUMBER", i);
-                console.log("data[key].sessionDate", data[key].sessionDate);
+                console.log("data.sessionDate", data.sessionDate);
                 console.log("data[key].sessionDuration", data[key].sessionDuration);
                 
                 printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
@@ -449,12 +449,12 @@ trackProgressMenuOption.addEventListener("click", e => {
             let i = 0;
             
             for(let key in data) {
-                let userDay = new Date(data[key].sessionDate).getDay();
-                let userMonth = new Date(data[key].sessionDate).getMonth();
-                let userDate = new Date(data[key].sessionDate).getDate();
-                let userYear = new Date(data[key].sessionDate).getFullYear();
+                let userDay = new Date(data.sessionDate).getDay();
+                let userMonth = new Date(data.sessionDate).getMonth();
+                let userDate = new Date(data.sessionDate).getDate();
+                let userYear = new Date(data.sessionDate).getFullYear();
                 console.log("NUMBER", i);
-                console.log("data[key].sessionDate", data[key].sessionDate);
+                console.log("data.sessionDate", data.sessionDate);
                 console.log("data[key].sessionDuration", data[key].sessionDuration);
                 
                 printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
@@ -473,33 +473,33 @@ trackProgressMenuOption.addEventListener("click", e => {
 
 let saveEdit = document.getElementById("save-edit-btn");
 
-saveEdit.addEventListener("click", e => {
-    printIt.printGraphData();
-    console.log("You clicked save");
+// saveEdit.addEventListener("click", e => {
+//     printIt.printGraphData();
+//     console.log("You clicked save");
     
-    // Need to check user and retrieve user's data:
-        var firebaseUser = firebase.auth().currentUser;
+//     // Need to check user and retrieve user's data:
+//         var firebaseUser = firebase.auth().currentUser;
 
-        fbInteraction.retrieveUserProgress(firebaseUser.uid)
-        .then((data) => {
-            let i = 0;
+//         fbInteraction.retrieveUserProgress(firebaseUser.uid)
+//         .then((data) => {
+//             let i = 0;
             
-            for(let key in data) {
-                let userDay = new Date(data[key].sessionDate).getDay();
-                let userMonth = new Date(data[key].sessionDate).getMonth();
-                let userDate = new Date(data[key].sessionDate).getDate();
-                let userYear = new Date(data[key].sessionDate).getFullYear();
-                console.log("NUMBER", i);
-                console.log("data[key].sessionDate", data[key].sessionDate);
-                console.log("data[key].sessionDuration", data[key].sessionDuration);
+//             for(let key in data) {
+//                 let userDay = new Date(data.sessionDate).getDay();
+//                 let userMonth = new Date(data.sessionDate).getMonth();
+//                 let userDate = new Date(data.sessionDate).getDate();
+//                 let userYear = new Date(data.sessionDate).getFullYear();
+//                 console.log("NUMBER", i);
+//                 console.log("data.sessionDate", data.sessionDate);
+//                 console.log("data[key].sessionDuration", data[key].sessionDuration);
                 
-                printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
+//                 printIt.printUserData(i, userDay, userMonth, userDate, userYear, data.sessionDuration, key);
                 
-                i++;
-            }
-            printIt.printTrackerButtons();
-        });  
-  });
+//                 i++;
+//             }
+//             printIt.printTrackerButtons();
+//         });  
+//   });
 
   const userLogOutMenuOption = document.getElementById("menuLogOutOption");
 
@@ -541,12 +541,12 @@ $(document).on("click", ".user-progress-deletes", function (e) {
                 console.log("WHEN YOU Click DELETE THIS IS THE REMAINING USER DATA: ", data);
                 
                 for(let key in data) {
-                    let userDay = new Date(data[key].sessionDate).getDay();
-                    let userMonth = new Date(data[key].sessionDate).getMonth();
-                    let userDate = new Date(data[key].sessionDate).getDate();
-                    let userYear = new Date(data[key].sessionDate).getFullYear();
+                    let userDay = new Date(data.sessionDate).getDay();
+                    let userMonth = new Date(data.sessionDate).getMonth();
+                    let userDate = new Date(data.sessionDate).getDate();
+                    let userYear = new Date(data.sessionDate).getFullYear();
                     console.log("NUMBER", i);
-                    console.log("data[key].sessionDate", data[key].sessionDate);
+                    console.log("data.sessionDate", data.sessionDate);
                     console.log("data[key].sessionDuration", data[key].sessionDuration);
                     
                     printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
@@ -568,51 +568,68 @@ $(document).on("click", ".user-progress-deletes", function (e) {
 
 // CAPTURE THE FB ID for THE EDIT BUTTON CLICKED
 $(document).on("click", ".user-progress-edits", function () {
-    console.log("clicked edit song", $(this).data("edit-id"));
     entryToEdit = $(this).data("edit-id");
-    console.log('entryToEdit', entryToEdit);
 });
 
 // EDIT USER PROGRESS ENTRY (VIA THE SAVE BUTTON)
 $(document).on("click", "#save-edit-btn", function () {
-    console.log("you clicked save for :", entryToEdit);
 // Get the text input of the Duration filed and put it into a variable
 let revisedDuration = $("#editDurationInput").val();
 let revisedDate = $("editDateField").val();
-console.log("The Date: ", revisedDate);
-console.log("The Duration: ", revisedDuration);
 
 
 
     // CALL FUNCTION THAT 'PUT'S UP TO FIREBASE
     var firebaseUser = firebase.auth().currentUser;
-    console.log("Did this really work??", firebaseUser);
 
     fbInteraction.retrieveUserProgress(firebaseUser.uid)
     .then((data) => {
-        console.log("This is the data from clicking the 'SAVE' button on the edit page: ", data);
         // You've got the users data object now, so filter through that to pull out the one that has the firebase id in question, and replace that with the new object.
         let myObj = null;
 
         for(let key in data) {
             if(key === entryToEdit) {
-                console.log("This is the entry to edit after SAVE ", entryToEdit);
-                console.log("This is the KEY to edit after SAVE ", data[key]);
                 myObj = data[key];
                 // That data[key] is the exact object you want to edit. SO alter that object to equal the new values, then pass it on into the editProgress function. I guess use if statements to pull out the info from the text input fields of the edit modal. Only pick them out if they don't equal zero.
 
                 data[key].sessionDuration = revisedDuration;
-                console.log("revised: ", data[key]);
-                
-                
+                return data[key];  
             }
         }
-        fbInteraction.editProgress(myObj, entryToEdit)
-        .then((data)=>{
+    })
+    .then((data) => {
+        return fbInteraction.editProgress(data, entryToEdit);
+    }).then((data)=>{
+        console.log("GETTING THIS FAR?", data);
+
+        let i = 0;
+
+        for(let key in data) {
+            // console.log("data", data);
+            // console.log("key: ", key);
+            console.log('data[key]',data.sessionDate);
+            let userDay = new Date(data.sessionDate).getDay();
+            console.log('userDay',userDay);
+            let userMonth = new Date(data.sessionDate).getMonth();
+            console.log('userMonth',userMonth);
+            let userDate = new Date(data.sessionDate).getDate();
+            console.log('userDate',userDate);
+            let userYear = new Date(data.sessionDate).getFullYear();
+            console.log('userYear',userYear);
+            // printIt.printUserData(i, userDay, userMonth, userDate, userYear, data.sessionDuration, key);
             
-        });
+            i++;
+        }
+        printIt.printTrackerButtons();
+    });
+        
+
+        // fbInteraction.retrieveUserProgress(firebaseUser.uid)
+        // .then((data) => {
+        //     console.log("WHAT IS THIS DATA: ", data);
+            
+        // });  
     });  
-});
 
 },{"./addToFB":1,"./fb-config":3,"./graphData.js":4,"./interaction":5,"./launchSit":6,"./playAudio":8,"./printToDom":9,"./readSliderValue":10,"./timer":11,"easytimer":121,"firebase/app":122,"jquery":126}],8:[function(require,module,exports){
 "use strict";
@@ -861,6 +878,7 @@ function printUserData(idNum, day, month, date, year, duration, key) {
   let weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   let monthName = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   // mainContainer.innerHTML += `<div>${date} - ${duration} minutes</div>`;
+  
   mainContainer.innerHTML += `<div class="user-progress">
 
                                 <section class="user-progress-text">           

@@ -55,19 +55,10 @@ let database = firebase.database();
     console.log('fbCreds',fbCreds);
     return fbCreds;
   };
+  // firebase.auth().onAuthStateChanged(firebaseUser => {
+    
+  // });
 
-  // firebase.initializeApp(config);
-  // let database = firebase.database();
-
-
-
-  // function addUserSessionLength(durVal) {
-  //   // console.log(durVal);
-  //   // let tempObject = {
-  //   //   duration: durVal,
-  //   //   uid : 
-  //   // }
-  // }
 
   console.log("is fb-config connected?");
   // console.log(userDuration.newDuration);
@@ -151,12 +142,6 @@ function graphTest() {
           }
         }
       });
-
-
-
-
-
-
 
 }
 
@@ -290,7 +275,6 @@ function deleteProgressEntry(songId) {
 	});
 }
 
-
 function editProgress(songFormObj, songId) {
 	return new Promise((resolve, reject) => {
 		$.ajax({
@@ -298,7 +282,9 @@ function editProgress(songFormObj, songId) {
 			type: 'PUT',
 			data: JSON.stringify(songFormObj)   // This is the object that will go into the FB ID object. So when you edit data, reload it into this object and then reup *that* object to firebase here. So you'll need the FB id, which yo've got, and the reformed obj which you don't yet. But that will be the same as 'songFormObj' in this context.
 		}).done((data) => {
-			resolve(data);
+      console.log("What is data? ", data);
+      resolve(data);
+      
 		});
 	});
 }
@@ -320,8 +306,9 @@ userSignUp.addEventListener("click", e => {
 
 userLogOut.addEventListener("click", e => {
   console.log("you logged out");
-  printIt.refillLoginModal();
+  // printIt.refillLoginModal();
   fbConfig.auth().signOut();
+  location.reload();
 });
 
 
@@ -384,9 +371,6 @@ function countdownScreen() {
     sitCountdown.timerInitialize();
 }
 
-
-
-
 module.exports = {countdownScreen};
 },{"./printToDom":9,"./timer":11}],7:[function(require,module,exports){
 "use strict";
@@ -402,9 +386,12 @@ let graphUserInfo = require('./graphData.js');
 let firebase = require("firebase/app");
 let fbConfig = require("./fb-config");
 require("./addToFB");
+let mainContainer = document.getElementById("mainContentDiv");
 
 let sitButton = document.getElementById("sit-btn");
 let entryToEdit = null;
+var firebaseUser = firebase.auth().currentUser;
+
 
 printIt.printMainScreen();
 
@@ -412,6 +399,7 @@ printIt.printMainScreen();
 document.addEventListener("click", function(e){
     if(e.target.id === "sit-btn") {
         startSit.countdownScreen();
+        $("#timer-buttons").show();
     }
 });
 
@@ -419,71 +407,86 @@ document.addEventListener("click", function(e){
 const trackProgressMenuOption = document.getElementById("menuProgress");
 
 trackProgressMenuOption.addEventListener("click", e => {
+    var firebaseUser = firebase.auth().currentUser;
+
     printIt.printGraphData();
     
     // Need to check user and retrieve user's data:
-    
-    firebase.auth().onAuthStateChanged(firebaseUser => {
-        if(firebaseUser) {
+    // console.log("SURELY THIS DIDNT WORK: ", firebaseUser);
             
-            fbInteraction.retrieveUserProgress(firebaseUser.uid)
-            .then((data) => {
-                let i = 0;
+        fbInteraction.retrieveUserProgress(firebaseUser.uid)
+        .then((data) => {
+            let i = 0;
+            
+            for(let key in data) {
+                let sessionDate = new Date(data[key].sessionDate);
+                let userDay = sessionDate.getDay();
+                let userMonth = sessionDate.getMonth();
+                let userDate = sessionDate.getDate();
+                let userYear = sessionDate.getFullYear();
+
+                printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
                 
-                for(let key in data) {
-                    let userDay = new Date(data[key].sessionDate).getDay();
-                    let userMonth = new Date(data[key].sessionDate).getMonth();
-                    let userDate = new Date(data[key].sessionDate).getDate();
-                    let userYear = new Date(data[key].sessionDate).getFullYear();
-                    console.log("NUMBER", i);
-                    console.log("data[key].sessionDate", data[key].sessionDate);
-                    console.log("data[key].sessionDuration", data[key].sessionDuration);
-                    
-                    printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
-                    
-                    i++;
-                }
-                printIt.printTrackerButtons();
-            });  
-        } else {
-            console.log("IMPOSSIBLE!");
-        }
-      });
+                i++;
+            }
+            printIt.printTrackerButtons();
+        });  
   });
 
-  const trackMenuProgressFromLogIn = document.getElementById("user-progress");
+  const userLogOutMenuOption = document.getElementById("menuLogOutOption");
+
+  userLogOutMenuOption.addEventListener("click", e => {
+    console.log("you logged out, now you need to figure out how to get the graph to go away");
+    console.log("did it go away?");
+    console.log("Interaction.userLogOutMenuOption.printIt.refillLoginModal", printIt);
+    
+    printIt.refillLoginModal();
+    fbConfig.auth().signOut().then((result)=>{
+    });
+    window.location.reload();
+  });
+
+  
+  document.addEventListener("click", function(e){
+      if(e.target.id === "back-btn") {
+          console.log("go back??");
+          console.log('printIt', printIt);
+          printIt.printMainScreen();
+        }
+    });
+
+// TRACK PROGRESS FROM THE LOGIN PAGE
+    const trackMenuProgressFromLogIn = document.getElementById("user-progress");
 
   trackMenuProgressFromLogIn.addEventListener("click", e => {
     printIt.printGraphData();
     
     // Need to check user and retrieve user's data:
+
+    var firebaseUser = firebase.auth().currentUser;
+
+    printIt.printGraphData();
     
-    firebase.auth().onAuthStateChanged(firebaseUser => {
-        if(firebaseUser) {
+    // Need to check user and retrieve user's data:
+    // console.log("SURELY THIS DIDNT WORK: ", firebaseUser);
             
-            fbInteraction.retrieveUserProgress(firebaseUser.uid)
-            .then((data) => {
-                let i = 0;
+        fbInteraction.retrieveUserProgress(firebaseUser.uid)
+        .then((data) => {
+            let i = 0;
+            
+            for(let key in data) {
+                let sessionDate = new Date(data[key].sessionDate);
+                let userDay = sessionDate.getDay();
+                let userMonth = sessionDate.getMonth();
+                let userDate = sessionDate.getDate();
+                let userYear = sessionDate.getFullYear();
+
+                printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
                 
-                for(let key in data) {
-                    let userDay = new Date(data[key].sessionDate).getDay();
-                    let userMonth = new Date(data[key].sessionDate).getMonth();
-                    let userDate = new Date(data[key].sessionDate).getDate();
-                    let userYear = new Date(data[key].sessionDate).getFullYear();
-                    console.log("NUMBER", i);
-                    console.log("data[key].sessionDate", data[key].sessionDate);
-                    console.log("data[key].sessionDuration", data[key].sessionDuration);
-                    
-                    printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
-                    
-                    i++;
-                }
-                printIt.printTrackerButtons();
-            });  
-        } else {
-            console.log("IMPOSSIBLE!");
-        }
-      });
+                i++;
+            }
+            printIt.printTrackerButtons();
+        });  
   });
 
 
@@ -494,129 +497,6 @@ trackProgressMenuOption.addEventListener("click", e => {
 
 let saveEdit = document.getElementById("save-edit-btn");
 
-saveEdit.addEventListener("click", e => {
-    printIt.printGraphData();
-    console.log("You clicked save");
-    
-    // Need to check user and retrieve user's data:
-    
-    firebase.auth().onAuthStateChanged(firebaseUser => {
-        if(firebaseUser) {
-            
-            fbInteraction.retrieveUserProgress(firebaseUser.uid)
-            .then((data) => {
-                let i = 0;
-                
-                for(let key in data) {
-                    let userDay = new Date(data[key].sessionDate).getDay();
-                    let userMonth = new Date(data[key].sessionDate).getMonth();
-                    let userDate = new Date(data[key].sessionDate).getDate();
-                    let userYear = new Date(data[key].sessionDate).getFullYear();
-                    console.log("NUMBER", i);
-                    console.log("data[key].sessionDate", data[key].sessionDate);
-                    console.log("data[key].sessionDuration", data[key].sessionDuration);
-                    
-                    printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
-                    
-                    i++;
-                }
-                printIt.printTrackerButtons();
-            });  
-        } else {
-            console.log("IMPOSSIBLE!");
-        }
-      });
-  });
-// 
-
-
-
-
-
-//   const trackProgress = document.getElementById("user-progress");
-// //   const trackProgressFromLogIn = document.getElementById("")
-
-
-//   trackProgress.addEventListener("click", e => {
-//     console.log("clicked track progress");
-//     printIt.printGraphData();
-//     graphUserInfo.graphTest();
-//   });
-
-
-
-  const userLogOutMenuOption = document.getElementById("menuLogOutOption");
-
-
-  userLogOutMenuOption.addEventListener("click", e => {
-    console.log("you logged out, now you need to figure out how to get the graph to go away");
-    console.log("did it go away?");
-    console.log("Interaction.userLogOutMenuOption.printIt.refillLoginModal", printIt);
-    
-    printIt.refillLoginModal();
-    fbConfig.auth().signOut().then((result)=>{
-    });
-  });
-
-  document.addEventListener("click", function(e){
-    if(e.target.id === "back-btn") {
-      console.log("go back??");
-      console.log('printIt', printIt);
-      printIt.printMainScreen();
-    }
-  });
-
-
-
-// DELETE USER PROGRESS ENTRY ============================================================================================================
-// $(document).on("click", ".user-progress-deletes", function () {
-//     console.log("clicked delete progress", $(this).data("delete-id"));
-    
-//     fbInteraction.deleteProgressEntry($(this).data("delete-id")).then(
-    
-    
-//     // Need to check user and retrieve user's data:
-      
-//       firebase.auth().onAuthStateChanged(firebaseUser => {
-//           if(firebaseUser) {
-//             //   console.log("What is in the firebaseUser var? ", firebaseUser);
-              
-//             console.log("What is in the firebaseUser var? ", firebaseUser);
-//               fbInteraction.retrieveUserProgress(firebaseUser.uid)
-//               .then((data) => {
-//                   let i = 0;
-
-
-//                 //   At this point the 'data' variable is still displaying the same user info including the deleted item... So that's why its not getting removed from the DOM.
-//                   console.log("WHEN YOU Click DELETE THIS IS THE REMAINING USER DATA: ", data);
-                  
-//                   for(let key in data) {
-//                       let userDay = new Date(data[key].sessionDate).getDay();
-//                       let userMonth = new Date(data[key].sessionDate).getMonth();
-//                       let userDate = new Date(data[key].sessionDate).getDate();
-//                       let userYear = new Date(data[key].sessionDate).getFullYear();
-//                       console.log("NUMBER", i);
-//                       console.log("data[key].sessionDate", data[key].sessionDate);
-//                       console.log("data[key].sessionDuration", data[key].sessionDuration);
-                      
-//                       printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
-                      
-//                       i++;
-//                   }
-//                   printIt.printTrackerButtons();
-//               });  
-//           } else {
-//               console.log("IMPOSSIBLE!");
-//           }
-//         })
-//     );
-
-//         printIt.printGraphData();
-//         // printIt.printGraphData();
-
-
-// });
-    
 
 
 // ============================================================================================================
@@ -627,37 +507,38 @@ $(document).on("click", ".user-progress-deletes", function (e) {
     console.log("EEEEEEEE", e);
     
     fbInteraction.deleteProgressEntry($(this).data("delete-id")).then(()=>{
-      firebase.auth().onAuthStateChanged(firebaseUser => {
-          if(firebaseUser) {
-            console.log("What is in the firebaseUser var? ", firebaseUser);
-              fbInteraction.retrieveUserProgress(firebaseUser.uid)
-              .then((data) => {
-                  let i = 0;
-                  console.log("WHEN YOU Click DELETE THIS IS THE REMAINING USER DATA: ", data);
-                  
-                  for(let key in data) {
-                      let userDay = new Date(data[key].sessionDate).getDay();
-                      let userMonth = new Date(data[key].sessionDate).getMonth();
-                      let userDate = new Date(data[key].sessionDate).getDate();
-                      let userYear = new Date(data[key].sessionDate).getFullYear();
-                      console.log("NUMBER", i);
-                      console.log("data[key].sessionDate", data[key].sessionDate);
-                      console.log("data[key].sessionDuration", data[key].sessionDuration);
-                      
-                      printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
-                      
-                      i++;
-                  }
-                  printIt.printTrackerButtons();
-              });  
-          } else {
-              console.log("IMPOSSIBLE!");
-          }
-        });
+        var firebaseUser = firebase.auth().currentUser;
+
+        console.log("What is in the firebaseUser var? ", firebaseUser);
+            fbInteraction.retrieveUserProgress(firebaseUser.uid)
+            .then((data) => {
+                let i = 0;
+                console.log("WHEN YOU Click DELETE THIS IS THE REMAINING USER DATA: ", data);
+                
+                for(let key in data) {
+                    // let sessionDate = new Date(data[key].sessionDate);
+
+                    let userDay = new Date(data[key].sessionDate).getDay();
+                    console.log('userDay',userDay);
+                    let userMonth = new Date(data[key].sessionDate).getMonth();
+                    console.log('userMonth',userMonth);
+                    let userDate = new Date(data[key].sessionDate).getDate();
+                    console.log('userDate',userDate);
+                    let userYear = new Date(data[key].sessionDate).getFullYear();
+                    console.log('userYear',userYear);
+                    console.log("NUMBER", i);
+                    // console.log("data.sessionDate", data.sessionDate);
+                    console.log("data[key].sessionDuration", data[key].sessionDuration);
+                    
+                    printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
+                    
+                    i++;
+                }
+                printIt.printTrackerButtons();
+            });  
     });
 
            printIt.printGraphData();
-    //     // printIt.printGraphData();
     });
 
 // ============================================================================================================
@@ -668,51 +549,95 @@ $(document).on("click", ".user-progress-deletes", function (e) {
 
 // CAPTURE THE FB ID for THE EDIT BUTTON CLICKED
 $(document).on("click", ".user-progress-edits", function () {
-    console.log("clicked edit song", $(this).data("edit-id"));
     entryToEdit = $(this).data("edit-id");
-    console.log('entryToEdit', entryToEdit);
 });
 
 // EDIT USER PROGRESS ENTRY (VIA THE SAVE BUTTON)
 $(document).on("click", "#save-edit-btn", function () {
-    console.log("you clicked save for :", entryToEdit);
 // Get the text input of the Duration filed and put it into a variable
 let revisedDuration = $("#editDurationInput").val();
 let revisedDate = $("editDateField").val();
-console.log("The Date: ", revisedDate);
-console.log("The Duration: ", revisedDuration);
 
 
 
     // CALL FUNCTION THAT 'PUT'S UP TO FIREBASE
+    var firebaseUser = firebase.auth().currentUser;
 
-    firebase.auth().onAuthStateChanged(firebaseUser => {
-        if(firebaseUser) {
-            
-            fbInteraction.retrieveUserProgress(firebaseUser.uid)
-            .then((data) => {
-                console.log("This is the data from clicking the 'SAVE' button on the edit page: ", data);
-                // You've got the users data object now, so filter through that to pull out the one that has the firebase id in question, and replace that with the new object.
-                for(let key in data) {
-                    if(key === entryToEdit) {
-                        console.log("This is the entry to edit after SAVE ", entryToEdit);
-                        console.log("This is the KEY to edit after SAVE ", data[key]);
-                        // That data[key] is the exact object you want to edit. SO alter that object to equal the new values, then pass it on into the editProgress function. I guess use if statements to pull out the info from the text input fields of the edit modal. Only pick them out if they don't equal zero.
+    fbInteraction.retrieveUserProgress(firebaseUser.uid)
+    .then((data) => {
+        // You've got the users data object now, so filter through that to pull out the one that has the firebase id in question, and replace that with the new object.
+        let myObj = null;
 
-                        data[key].sessionDuration = revisedDuration;
-                        console.log("revised: ", data[key]);
-                        
-                        
-                        fbInteraction.editProgress(data[key], entryToEdit);
-                    }
-                }
-                // printIt.printTrackerButtons();
-            });  
-        } else {
-            console.log("IMPOSSIBLE!");
+        for(let key in data) {
+            if(key === entryToEdit) {
+                myObj = data[key];
+                // That data[key] is the exact object you want to edit. SO alter that object to equal the new values, then pass it on into the editProgress function. I guess use if statements to pull out the info from the text input fields of the edit modal. Only pick them out if they don't equal zero.
+
+                data[key].sessionDuration = revisedDuration;
+                return data[key];  
+            }
         }
-      });
-});
+    })
+    .then((data) => {
+         return fbInteraction.editProgress(data, entryToEdit);
+        })
+    .then((data)=>{
+            console.log("passed in data", data);
+            console.log("updated user progress", fbInteraction.retrieveUserProgress(firebaseUser.uid));
+            return fbInteraction.retrieveUserProgress(firebaseUser.uid);        
+    })    
+    .then((data)=>{
+            console.log("DATA", data);
+        
+            let i = 0;
+            mainContainer.innerHTML = ``;
+            
+            for(let key in data) {
+                console.log("lots of data", data);
+                console.log("sessionDuration", data[key].sessionDuration);
+                let sessionDate = new Date(data[key].sessionDate);
+                let userDay = sessionDate.getDay();
+                let userMonth = sessionDate.getMonth();
+                let userDate = sessionDate.getDate();
+                let userYear = sessionDate.getFullYear();
+
+                printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
+                
+                i++;
+            }
+            printIt.printTrackerButtons();
+        });  
+        // console.log("GETTING THIS FAR?", data);
+
+        // let i = 0;
+
+        // for(let key in data) {
+        //     // console.log("data", data);
+        //     // console.log("key: ", key);
+        //     console.log('data[key]',data.sessionDate);
+        //     console.log('data.sessionDuration',data.sessionDuration);
+        //     let userDay = new Date(data.sessionDate).getDay();
+        //     console.log('userDay',userDay);
+        //     let userMonth = new Date(data.sessionDate).getMonth();
+        //     console.log('userMonth',userMonth);
+        //     let userDate = new Date(data.sessionDate).getDate();
+        //     console.log('userDate',userDate);
+        //     let userYear = new Date(data.sessionDate).getFullYear();
+        //     console.log('userYear',userYear);
+        //     printIt.printUserData(i, userDay, userMonth, userDate, userYear, data.sessionDuration, key);
+            
+        //     i++;
+        // }
+        // printIt.printTrackerButtons();
+    // });
+        
+
+        // fbInteraction.retrieveUserProgress(firebaseUser.uid)
+        // .then((data) => {
+        //     console.log("WHAT IS THIS DATA: ", data);
+            
+        // });  
+    });  
 
 },{"./addToFB":1,"./fb-config":3,"./graphData.js":4,"./interaction":5,"./launchSit":6,"./playAudio":8,"./printToDom":9,"./readSliderValue":10,"./timer":11,"easytimer":121,"firebase/app":122,"jquery":126}],8:[function(require,module,exports){
 "use strict";
@@ -777,6 +702,10 @@ console.log("THIS IS THE newVal !!!!!?: ", newVal);
         let toneAlarm = document.getElementById("myAudioTone"); 
         toneAlarm.play();
     }
+    else {
+        let bellAlarm = document.getElementById("myAudioBell"); 
+        bellAlarm.play();
+    }
 }
 
 // INTERVAL
@@ -806,6 +735,11 @@ console.log("THIS IS THE newVal !!!!!?: ", newVal);
             toneInterval.pause(); 
             toneInterval.play(); 
         }
+        else {
+            let bellAlarm = document.getElementById("myAudioBell"); 
+            bellAlarm.play();
+        }
+        
     console.log("play interval audio");
 
     }
@@ -821,12 +755,15 @@ let graphUserInfo = require("./graphData");
 require("./fb-config");
 
 let mainContainer = document.getElementById("mainContentDiv");
+let timerButtons = document.getElementById("timer-buttons");
 
 
 
 
 // This prints the main content to the screen on initial load.
 function printMainScreen() {
+
+    // timerButtons.innerHTML = ``;
 
     mainContainer.innerHTML = `    
     <form id="sliderData1">
@@ -875,7 +812,7 @@ function printMainScreen() {
           <span></span>
           <ul class="rangeSliderLabels">
             <li class="sliderListItemsSound">Bell</li> 
-            <li class="sliderListItemsSound">Block</li> 
+            <li class="sliderListItemsSound">Blocks</li> 
             <li class="sliderListItemsSound">Tone</li> 
           </ul>
         </div>
@@ -900,21 +837,30 @@ function printTimerToPage() {
   mainContainer.innerHTML = `<div id="countdownString">
                               <div class="values text-center" id="countdownTime"></div>
                             </div>`;
-
-  mainContainer.innerHTML += `<div class="text-center" id="sit-btn-container">
+                            timerButtons.innerHTML = `<div class="text-center" id="sit-btn-container">
                                 <button class="btn btn-primary" id="pause-btn">Pause</button>
-                              </div>`;
-
-mainContainer.innerHTML += `<div class="text-center" id="sit-btn-container">
+                              </div><div class="text-center" id="sit-btn-container">
                                 <button class="btn btn-primary" id="stop-btn">Stop</button>
                             </div>`;
 }
 
 function printResumeButtonToPage() {
   console.log("resume yet?");
-  mainContainer.innerHTML += `<div class="text-center" id="sit-btn-container">
+  timerButtons.innerHTML = `<div class="text-center" id="sit-btn-container">
                                 <button class="btn btn-primary" id="resume-btn">Resume</button>
-                            </div>`;
+                            </div><div class="text-center" id="sit-btn-container">
+                            <button class="btn btn-primary" id="stop-btn">Stop</button>
+                        </div>`;
+           
+}
+
+
+function reprintTimerButtons() {
+  timerButtons.innerHTML = `<div class="text-center" id="sit-btn-container">
+  <button class="btn btn-primary" id="pause-btn">Pause</button>
+</div><div class="text-center" id="sit-btn-container">
+  <button class="btn btn-primary" id="stop-btn">Stop</button>
+</div>`;
 }
 
 function printAudioHTMLToPage() {
@@ -938,13 +884,24 @@ function printHowToUse() {
 
 
 function printGraphData() {
+  timerButtons.innerHTML = ``;
   mainContainer.innerHTML = ``;
-  mainContainer.innerHTML += `<canvas class="hide" id="myChart"></canvas>`;
+  // mainContainer.innerHTML += `<canvas class="hide" id="myChart"></canvas>`;
   console.log("Am I hitting the printGraphData function?");
 
 }
 
 function printUserData(idNum, day, month, date, year, duration, key) {
+  console.log("start printing user data");
+  console.log('idNum',idNum);
+  console.log('day',day);
+  console.log('month',month);
+  console.log('date',date);
+  console.log('year',year);
+  console.log('duration',duration);
+  console.log('key',key);
+
+
   let weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   let monthName = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   // mainContainer.innerHTML += `<div>${date} - ${duration} minutes</div>`;
@@ -991,7 +948,7 @@ function refillLoginModal() {
 }
 
 
-module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage, printHowToUse, printGraphData, printUserData, refillLoginModal, printTrackerButtons};
+module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage, printHowToUse, printGraphData, printUserData, refillLoginModal, printTrackerButtons, reprintTimerButtons};
 },{"./fb-config":3,"./graphData":4,"firebase/app":122,"jquery":126}],10:[function(require,module,exports){
 "use strict";
 
@@ -1023,6 +980,10 @@ let printIt = require("./printToDom");
 $(document).on("change", "#slider1", ()=>{
     let newVal = $("#slider1").val();
     $("#slider1").attr("value", newVal);
+// console.log($("li:contains(10)").text());
+//     if($("li:contains(10)").text() === durationValues[newVal].toString()) {
+//         console.log("MATCHED");
+//     }
     console.log(durationValues[newVal]);
     newDuration = durationValues[newVal];
 });   
@@ -1040,27 +1001,6 @@ $(document).on("change", "#slider2", ()=>{
 });  
 
 // // Sound Slider Settings
-
-// let intervalSoundValues = ["audioFiles/singleBell.mp3", "audioFiles/singleBlock.mp3", "audioFiles/singleTone.mp3"];
-// let alarmSoundValues = ["audioFiles/gradualBells.mp3", "audioFiles/gradualBlock.mp3", "audioFiles/gradualTone.mp3"];
-// let newIntervalSound;
-// let newAlarmSound;
-
-// $(document).on("change", "#slider3", ()=>{
-//     let newVal = $("#slider3").val();
-//     $("#slider3").attr("value", newVal);
-
-//     newAlarmSound = alarmSoundValues[newVal];
-//     newIntervalSound = intervalSoundValues[newVal];
-    
-
-//     $("#alertSource").attr("src", newAlarmSound);
-//     $("#intervalSource").attr("src", newIntervalSound);
-
-//     console.log(alarmSoundValues[newVal]);
-//     console.log(intervalSoundValues[newVal]);
-// });  
-    
 
 
 
@@ -1117,10 +1057,6 @@ function timerInitialize() {
 
                 });
                 // console.log();
-
-
-                
-                  
                 } else {
                   // User not logged in
                   console.log("yer users NOT logged in and times up");
@@ -1128,18 +1064,63 @@ function timerInitialize() {
               });
         });
 
+        function runInterval() {
+            if(intervalFlag) {
+                var intervalTimer = new Timer();
+                intervalTimer.start({countdown: true, startValues: {seconds: newIntervalDuration}});
+                intervalTimer.addEventListener('targetAchieved', function (e) {
+                    // When Interval countdown ends, do this:
+                    console.log("INTERVAL");
+                    soundAlert.intervalAlertLaunch();
+                    runInterval();
+                });
+            }
+            document.addEventListener("click", function(e){
+                if(e.target.id === "pause-btn") {
+                    intervalTimer.pause();
+                }
+            });
+
+            document.addEventListener("click", function(e){
+                if(e.target.id === "resume-btn") {
+                    intervalTimer.start();
+
+                        runInterval();
+                    // });
+                }
+            });
+
+
+            document.addEventListener("click", function(e){
+                if(e.target.id === "menuProgress") {
+                    intervalTimer.pause();
+
+                }
+            });
+        }
+        
+        
+        
         // This is a Pause function. Still need a back to home function.
         document.addEventListener("click", function(e){
             if(e.target.id === "pause-btn") {
                 printIt.printResumeButtonToPage();
 
                 timer.pause();
+                
+                document.getElementById("myAudioBell").pause();
+                document.getElementById("myIntervalAudioBell").pause();
+                document.getElementById("myAudioBlock").pause();
+                document.getElementById("myIntervalAudioBlock").pause();
+                document.getElementById("myAudioTone").pause();
+                document.getElementById("myIntervalAudioTone").pause();
                 intervalFlag = false;
             }
         });
 
         document.addEventListener("click", function(e){
             if(e.target.id === "resume-btn") {
+                printIt.reprintTimerButtons();
                 timer.start();
             }
         });
@@ -1149,33 +1130,31 @@ function timerInitialize() {
             if(e.target.id === "stop-btn") {
                 timer.stop();
                 document.getElementById("myAudioBell").pause();
+                document.getElementById("myAudioBell").currentTime = 0;
                 document.getElementById("myAudioBlock").pause();
+                document.getElementById("myAudioBlock").currentTime = 0;
                 document.getElementById("myAudioTone").pause();
+                document.getElementById("myAudioTone").currentTime = 0;
+                document.getElementById("myIntervalAudioBell").pause();
+                document.getElementById("myIntervalAudioBell").currentTime = 0;
+                document.getElementById("myIntervalAudioBlock").pause();
+                document.getElementById("myIntervalAudioBlock").currentTime = 0;
+                document.getElementById("myIntervalAudioTone").pause();
+                document.getElementById("myIntervalAudioTone").currentTime = 0;
+
                 intervalFlag = false;
                 console.log("you clicked stop");
-
+                $("#timer-buttons").hide();
+                // document.getElementById("timer-buttons").innerHTML = ``;
                 printIt.printMainScreen();
             }
+
+            document.addEventListener("click", function(e){
+                if(e.target.id === "menuProgress") {
+                    timer.pause();
+                }
         });
-
-
-// Interval Timer
-
-    function runInterval() {
-        if(intervalFlag) {
-            var intervalTimer = new Timer();
-            intervalTimer.start({countdown: true, startValues: {seconds: newIntervalDuration}});
-            intervalTimer.addEventListener('targetAchieved', function (e) {
-                // When Interval countdown ends, do this:
-                console.log("INTERVAL");
-                soundAlert.intervalAlertLaunch();
-                runInterval();
-            });
-        }
-    }
-
-    // runInterval();
-
+    });
 }
 
     module.exports = {timerInitialize, newDuration};

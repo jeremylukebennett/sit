@@ -35,6 +35,10 @@
     <div id="mainContentDiv">
       <!-- <div id="displayProgressTracker"></div> -->
     </div>
+    <div id="timer-buttons"></div>
+
+
+
 
 
     <!-- Modal "How to Use"-->
@@ -127,16 +131,12 @@
       </div>
       <div class="modal-body">
         <form>
-          <!-- <div class="form-group">
-            <label for="editDateField" class="col-form-label">Date:</label>
-            <input type="text" class="form-control" id="editDateField">
-          </div> -->
 
-          <form action="/action_page.php">
-            Date:
-            <input type="date" class="form-control" id="editDateField">
-            <!-- <input type="submit"> -->
-          </form>
+        <form action="/action_page.php">
+          Date:
+          <input type="date" class="form-control" id="editDateField">
+          <!-- <input type="submit"> -->
+        </form>
 
           <div class="form-group">
             <label for="editDurationInput" class="col-form-label">Duration:</label>
@@ -151,6 +151,13 @@
     </div>
   </div>
 </div>
+
+
+
+<!-- Pause Button -->
+<!-- <div class="text-center" id="sit-btn-container">
+    <button class="btn btn-primary" id="pause-btn">Pause</button>
+</div> -->
 
 
 <!-- Audio Alerts -->
@@ -168,12 +175,12 @@
 
 <!-- BLOCK -->
 <audio id="myAudioBlock">
-  <source src="audioFiles/seconds.mp3" type="audio/mpeg" id="alertSource">
+  <source src="audioFiles/gradualBlocks.mp3" type="audio/mpeg" id="alertSource">
   Your browser does not support the audio element.
 </audio>
 
 <audio id="myIntervalAudioBlock">
-  <source src="audioFiles/bassMarimba.mp3" type="audio/mpeg" id="intervalSource">
+  <source src="audioFiles/singleBlock.mp3" type="audio/mpeg" id="intervalSource">
   Your browser does not support the audio element.
 </audio>
 

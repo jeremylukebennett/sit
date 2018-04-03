@@ -73,12 +73,6 @@ function graphTest() {
         }
       });
 
-
-
-
-
-
-
 }
 
 

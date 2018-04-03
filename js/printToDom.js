@@ -5,12 +5,15 @@ let graphUserInfo = require("./graphData");
 require("./fb-config");
 
 let mainContainer = document.getElementById("mainContentDiv");
+let timerButtons = document.getElementById("timer-buttons");
 
 
 
 
 // This prints the main content to the screen on initial load.
 function printMainScreen() {
+
+    // timerButtons.innerHTML = ``;
 
     mainContainer.innerHTML = `    
     <form id="sliderData1">
@@ -59,7 +62,7 @@ function printMainScreen() {
           <span></span>
           <ul class="rangeSliderLabels">
             <li class="sliderListItemsSound">Bell</li> 
-            <li class="sliderListItemsSound">Block</li> 
+            <li class="sliderListItemsSound">Blocks</li> 
             <li class="sliderListItemsSound">Tone</li> 
           </ul>
         </div>
@@ -84,21 +87,30 @@ function printTimerToPage() {
   mainContainer.innerHTML = `<div id="countdownString">
                               <div class="values text-center" id="countdownTime"></div>
                             </div>`;
-
-  mainContainer.innerHTML += `<div class="text-center" id="sit-btn-container">
+                            timerButtons.innerHTML = `<div class="text-center" id="sit-btn-container">
                                 <button class="btn btn-primary" id="pause-btn">Pause</button>
-                              </div>`;
-
-mainContainer.innerHTML += `<div class="text-center" id="sit-btn-container">
+                              </div><div class="text-center" id="sit-btn-container">
                                 <button class="btn btn-primary" id="stop-btn">Stop</button>
                             </div>`;
 }
 
 function printResumeButtonToPage() {
   console.log("resume yet?");
-  mainContainer.innerHTML += `<div class="text-center" id="sit-btn-container">
+  timerButtons.innerHTML = `<div class="text-center" id="sit-btn-container">
                                 <button class="btn btn-primary" id="resume-btn">Resume</button>
-                            </div>`;
+                            </div><div class="text-center" id="sit-btn-container">
+                            <button class="btn btn-primary" id="stop-btn">Stop</button>
+                        </div>`;
+           
+}
+
+
+function reprintTimerButtons() {
+  timerButtons.innerHTML = `<div class="text-center" id="sit-btn-container">
+  <button class="btn btn-primary" id="pause-btn">Pause</button>
+</div><div class="text-center" id="sit-btn-container">
+  <button class="btn btn-primary" id="stop-btn">Stop</button>
+</div>`;
 }
 
 function printAudioHTMLToPage() {
@@ -122,13 +134,24 @@ function printHowToUse() {
 
 
 function printGraphData() {
+  timerButtons.innerHTML = ``;
   mainContainer.innerHTML = ``;
-  mainContainer.innerHTML += `<canvas class="hide" id="myChart"></canvas>`;
+  // mainContainer.innerHTML += `<canvas class="hide" id="myChart"></canvas>`;
   console.log("Am I hitting the printGraphData function?");
 
 }
 
 function printUserData(idNum, day, month, date, year, duration, key) {
+  console.log("start printing user data");
+  console.log('idNum',idNum);
+  console.log('day',day);
+  console.log('month',month);
+  console.log('date',date);
+  console.log('year',year);
+  console.log('duration',duration);
+  console.log('key',key);
+
+
   let weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   let monthName = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   // mainContainer.innerHTML += `<div>${date} - ${duration} minutes</div>`;
@@ -175,4 +198,4 @@ function refillLoginModal() {
 }
 
 
-module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage, printHowToUse, printGraphData, printUserData, refillLoginModal, printTrackerButtons};
+module.exports = {printMainScreen, printTimerToPage, printAudioHTMLToPage, printResumeButtonToPage, printHowToUse, printGraphData, printUserData, refillLoginModal, printTrackerButtons, reprintTimerButtons};

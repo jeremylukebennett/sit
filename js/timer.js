@@ -20,6 +20,10 @@ let printIt = require("./printToDom");
 $(document).on("change", "#slider1", ()=>{
     let newVal = $("#slider1").val();
     $("#slider1").attr("value", newVal);
+// console.log($("li:contains(10)").text());
+//     if($("li:contains(10)").text() === durationValues[newVal].toString()) {
+//         console.log("MATCHED");
+//     }
     console.log(durationValues[newVal]);
     newDuration = durationValues[newVal];
 });   
@@ -37,27 +41,6 @@ $(document).on("change", "#slider2", ()=>{
 });  
 
 // // Sound Slider Settings
-
-// let intervalSoundValues = ["audioFiles/singleBell.mp3", "audioFiles/singleBlock.mp3", "audioFiles/singleTone.mp3"];
-// let alarmSoundValues = ["audioFiles/gradualBells.mp3", "audioFiles/gradualBlock.mp3", "audioFiles/gradualTone.mp3"];
-// let newIntervalSound;
-// let newAlarmSound;
-
-// $(document).on("change", "#slider3", ()=>{
-//     let newVal = $("#slider3").val();
-//     $("#slider3").attr("value", newVal);
-
-//     newAlarmSound = alarmSoundValues[newVal];
-//     newIntervalSound = intervalSoundValues[newVal];
-    
-
-//     $("#alertSource").attr("src", newAlarmSound);
-//     $("#intervalSource").attr("src", newIntervalSound);
-
-//     console.log(alarmSoundValues[newVal]);
-//     console.log(intervalSoundValues[newVal]);
-// });  
-    
 
 
 
@@ -114,10 +97,6 @@ function timerInitialize() {
 
                 });
                 // console.log();
-
-
-                
-                  
                 } else {
                   // User not logged in
                   console.log("yer users NOT logged in and times up");
@@ -125,18 +104,63 @@ function timerInitialize() {
               });
         });
 
+        function runInterval() {
+            if(intervalFlag) {
+                var intervalTimer = new Timer();
+                intervalTimer.start({countdown: true, startValues: {seconds: newIntervalDuration}});
+                intervalTimer.addEventListener('targetAchieved', function (e) {
+                    // When Interval countdown ends, do this:
+                    console.log("INTERVAL");
+                    soundAlert.intervalAlertLaunch();
+                    runInterval();
+                });
+            }
+            document.addEventListener("click", function(e){
+                if(e.target.id === "pause-btn") {
+                    intervalTimer.pause();
+                }
+            });
+
+            document.addEventListener("click", function(e){
+                if(e.target.id === "resume-btn") {
+                    intervalTimer.start();
+
+                        runInterval();
+                    // });
+                }
+            });
+
+
+            document.addEventListener("click", function(e){
+                if(e.target.id === "menuProgress") {
+                    intervalTimer.pause();
+
+                }
+            });
+        }
+        
+        
+        
         // This is a Pause function. Still need a back to home function.
         document.addEventListener("click", function(e){
             if(e.target.id === "pause-btn") {
                 printIt.printResumeButtonToPage();
 
                 timer.pause();
+                
+                document.getElementById("myAudioBell").pause();
+                document.getElementById("myIntervalAudioBell").pause();
+                document.getElementById("myAudioBlock").pause();
+                document.getElementById("myIntervalAudioBlock").pause();
+                document.getElementById("myAudioTone").pause();
+                document.getElementById("myIntervalAudioTone").pause();
                 intervalFlag = false;
             }
         });
 
         document.addEventListener("click", function(e){
             if(e.target.id === "resume-btn") {
+                printIt.reprintTimerButtons();
                 timer.start();
             }
         });
@@ -146,33 +170,31 @@ function timerInitialize() {
             if(e.target.id === "stop-btn") {
                 timer.stop();
                 document.getElementById("myAudioBell").pause();
+                document.getElementById("myAudioBell").currentTime = 0;
                 document.getElementById("myAudioBlock").pause();
+                document.getElementById("myAudioBlock").currentTime = 0;
                 document.getElementById("myAudioTone").pause();
+                document.getElementById("myAudioTone").currentTime = 0;
+                document.getElementById("myIntervalAudioBell").pause();
+                document.getElementById("myIntervalAudioBell").currentTime = 0;
+                document.getElementById("myIntervalAudioBlock").pause();
+                document.getElementById("myIntervalAudioBlock").currentTime = 0;
+                document.getElementById("myIntervalAudioTone").pause();
+                document.getElementById("myIntervalAudioTone").currentTime = 0;
+
                 intervalFlag = false;
                 console.log("you clicked stop");
-
+                $("#timer-buttons").hide();
+                // document.getElementById("timer-buttons").innerHTML = ``;
                 printIt.printMainScreen();
             }
+
+            document.addEventListener("click", function(e){
+                if(e.target.id === "menuProgress") {
+                    timer.pause();
+                }
         });
-
-
-// Interval Timer
-
-    function runInterval() {
-        if(intervalFlag) {
-            var intervalTimer = new Timer();
-            intervalTimer.start({countdown: true, startValues: {seconds: newIntervalDuration}});
-            intervalTimer.addEventListener('targetAchieved', function (e) {
-                // When Interval countdown ends, do this:
-                console.log("INTERVAL");
-                soundAlert.intervalAlertLaunch();
-                runInterval();
-            });
-        }
-    }
-
-    // runInterval();
-
+    });
 }
 
     module.exports = {timerInitialize, newDuration};

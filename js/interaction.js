@@ -108,7 +108,6 @@ function deleteProgressEntry(songId) {
 	});
 }
 
-
 function editProgress(songFormObj, songId) {
 	return new Promise((resolve, reject) => {
 		$.ajax({
@@ -116,7 +115,9 @@ function editProgress(songFormObj, songId) {
 			type: 'PUT',
 			data: JSON.stringify(songFormObj)   // This is the object that will go into the FB ID object. So when you edit data, reload it into this object and then reup *that* object to firebase here. So you'll need the FB id, which yo've got, and the reformed obj which you don't yet. But that will be the same as 'songFormObj' in this context.
 		}).done((data) => {
-			resolve(data);
+      console.log("What is data? ", data);
+      resolve(data);
+      
 		});
 	});
 }
@@ -138,8 +139,9 @@ userSignUp.addEventListener("click", e => {
 
 userLogOut.addEventListener("click", e => {
   console.log("you logged out");
-  printIt.refillLoginModal();
+  // printIt.refillLoginModal();
   fbConfig.auth().signOut();
+  location.reload();
 });
 
 

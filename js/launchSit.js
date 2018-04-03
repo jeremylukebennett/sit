@@ -18,7 +18,4 @@ function countdownScreen() {
     sitCountdown.timerInitialize();
 }
 
-
-
-
 module.exports = {countdownScreen};

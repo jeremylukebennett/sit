@@ -142,6 +142,7 @@ function printGraphData() {
 }
 
 function printUserData(idNum, day, month, date, year, duration, key) {
+  console.log("start printing user data");
   let weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   let monthName = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   // mainContainer.innerHTML += `<div>${date} - ${duration} minutes</div>`;

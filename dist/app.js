@@ -417,16 +417,20 @@ trackProgressMenuOption.addEventListener("click", e => {
         fbInteraction.retrieveUserProgress(firebaseUser.uid)
         .then((data) => {
             let i = 0;
+            console.log("data: ", data);
             
             for(let key in data) {
-                let userDay = new Date(data.sessionDate).getDay();
-                let userMonth = new Date(data.sessionDate).getMonth();
-                let userDate = new Date(data.sessionDate).getDate();
-                let userYear = new Date(data.sessionDate).getFullYear();
-                console.log("NUMBER", i);
-                console.log("data.sessionDate", data.sessionDate);
-                console.log("data[key].sessionDuration", data[key].sessionDuration);
-                
+                let sessionDate = new Date(data[key].sessionDate);
+                console.log('sessionDate',sessionDate);
+                let userDay = sessionDate.getDay();
+                console.log('userDay',userDay);
+                let userMonth = sessionDate.getMonth();
+                console.log('userMonth',userMonth);
+                let userDate = sessionDate.getDate();
+                console.log('userDate',userDate);
+                let userYear = sessionDate.getFullYear();
+                console.log('userYear',userYear);
+
                 printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
                 
                 i++;
@@ -472,34 +476,6 @@ trackProgressMenuOption.addEventListener("click", e => {
 // MAKE SAVE BUTTON LAUNCH TRACK PROGRESS REFRESH
 
 let saveEdit = document.getElementById("save-edit-btn");
-
-// saveEdit.addEventListener("click", e => {
-//     printIt.printGraphData();
-//     console.log("You clicked save");
-    
-//     // Need to check user and retrieve user's data:
-//         var firebaseUser = firebase.auth().currentUser;
-
-//         fbInteraction.retrieveUserProgress(firebaseUser.uid)
-//         .then((data) => {
-//             let i = 0;
-            
-//             for(let key in data) {
-//                 let userDay = new Date(data.sessionDate).getDay();
-//                 let userMonth = new Date(data.sessionDate).getMonth();
-//                 let userDate = new Date(data.sessionDate).getDate();
-//                 let userYear = new Date(data.sessionDate).getFullYear();
-//                 console.log("NUMBER", i);
-//                 console.log("data.sessionDate", data.sessionDate);
-//                 console.log("data[key].sessionDuration", data[key].sessionDuration);
-                
-//                 printIt.printUserData(i, userDay, userMonth, userDate, userYear, data.sessionDuration, key);
-                
-//                 i++;
-//             }
-//             printIt.printTrackerButtons();
-//         });  
-//   });
 
   const userLogOutMenuOption = document.getElementById("menuLogOutOption");
 
@@ -875,6 +851,7 @@ function printGraphData() {
 }
 
 function printUserData(idNum, day, month, date, year, duration, key) {
+  console.log("start printing user data");
   let weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   let monthName = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   // mainContainer.innerHTML += `<div>${date} - ${duration} minutes</div>`;

@@ -433,6 +433,20 @@ trackProgressMenuOption.addEventListener("click", e => {
         });  
   });
 
+  const userLogOutMenuOption = document.getElementById("menuLogOutOption");
+
+
+  userLogOutMenuOption.addEventListener("click", e => {
+    console.log("you logged out, now you need to figure out how to get the graph to go away");
+    console.log("did it go away?");
+    console.log("Interaction.userLogOutMenuOption.printIt.refillLoginModal", printIt);
+    
+    printIt.refillLoginModal();
+    fbConfig.auth().signOut().then((result)=>{
+    });
+    window.location.reload()
+  });
+
   const trackMenuProgressFromLogIn = document.getElementById("user-progress");
 
   document.addEventListener("click", function(e){

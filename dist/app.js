@@ -412,24 +412,18 @@ trackProgressMenuOption.addEventListener("click", e => {
     printIt.printGraphData();
     
     // Need to check user and retrieve user's data:
-    console.log("SURELY THIS DIDNT WORK: ", firebaseUser);
+    // console.log("SURELY THIS DIDNT WORK: ", firebaseUser);
             
         fbInteraction.retrieveUserProgress(firebaseUser.uid)
         .then((data) => {
             let i = 0;
-            console.log("data: ", data);
             
             for(let key in data) {
                 let sessionDate = new Date(data[key].sessionDate);
-                console.log('sessionDate',sessionDate);
                 let userDay = sessionDate.getDay();
-                console.log('userDay',userDay);
                 let userMonth = sessionDate.getMonth();
-                console.log('userMonth',userMonth);
                 let userDate = sessionDate.getDate();
-                console.log('userDate',userDate);
                 let userYear = sessionDate.getFullYear();
-                console.log('userYear',userYear);
 
                 printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
                 
@@ -477,27 +471,6 @@ trackProgressMenuOption.addEventListener("click", e => {
 
 let saveEdit = document.getElementById("save-edit-btn");
 
-  const userLogOutMenuOption = document.getElementById("menuLogOutOption");
-
-
-  userLogOutMenuOption.addEventListener("click", e => {
-    console.log("you logged out, now you need to figure out how to get the graph to go away");
-    console.log("did it go away?");
-    console.log("Interaction.userLogOutMenuOption.printIt.refillLoginModal", printIt);
-    
-    printIt.refillLoginModal();
-    fbConfig.auth().signOut().then((result)=>{
-    location.reload();
-    });
-  });
-
-  document.addEventListener("click", function(e){
-    if(e.target.id === "back-btn") {
-      console.log("go back??");
-      console.log('printIt', printIt);
-      printIt.printMainScreen();
-    }
-  });
 
 
 // ============================================================================================================

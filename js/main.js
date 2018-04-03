@@ -60,7 +60,6 @@ trackProgressMenuOption.addEventListener("click", e => {
 
   const userLogOutMenuOption = document.getElementById("menuLogOutOption");
 
-
   userLogOutMenuOption.addEventListener("click", e => {
     console.log("you logged out, now you need to figure out how to get the graph to go away");
     console.log("did it go away?");
@@ -72,15 +71,17 @@ trackProgressMenuOption.addEventListener("click", e => {
     window.location.reload();
   });
 
-  const trackMenuProgressFromLogIn = document.getElementById("user-progress");
-
+  
   document.addEventListener("click", function(e){
-    if(e.target.id === "back-btn") {
-      console.log("go back??");
-      console.log('printIt', printIt);
-      printIt.printMainScreen();
-    }
-  });
+      if(e.target.id === "back-btn") {
+          console.log("go back??");
+          console.log('printIt', printIt);
+          printIt.printMainScreen();
+        }
+    });
+
+// TRACK PROGRESS FROM THE LOGIN PAGE
+    const trackMenuProgressFromLogIn = document.getElementById("user-progress");
 
   trackMenuProgressFromLogIn.addEventListener("click", e => {
     printIt.printGraphData();
@@ -89,19 +90,22 @@ trackProgressMenuOption.addEventListener("click", e => {
 
     var firebaseUser = firebase.auth().currentUser;
 
+    printIt.printGraphData();
+    
+    // Need to check user and retrieve user's data:
+    // console.log("SURELY THIS DIDNT WORK: ", firebaseUser);
+            
         fbInteraction.retrieveUserProgress(firebaseUser.uid)
         .then((data) => {
             let i = 0;
             
             for(let key in data) {
-                let userDay = new Date(data.sessionDate).getDay();
-                let userMonth = new Date(data.sessionDate).getMonth();
-                let userDate = new Date(data.sessionDate).getDate();
-                let userYear = new Date(data.sessionDate).getFullYear();
-                console.log("NUMBER", i);
-                console.log("data.sessionDate", data.sessionDate);
-                console.log("data[key].sessionDuration", data[key].sessionDuration);
-                
+                let sessionDate = new Date(data[key].sessionDate);
+                let userDay = sessionDate.getDay();
+                let userMonth = sessionDate.getMonth();
+                let userDate = sessionDate.getDate();
+                let userYear = sessionDate.getFullYear();
+
                 printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);
                 
                 i++;

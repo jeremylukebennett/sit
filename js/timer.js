@@ -42,27 +42,6 @@ $(document).on("change", "#slider2", ()=>{
 
 // // Sound Slider Settings
 
-// let intervalSoundValues = ["audioFiles/singleBell.mp3", "audioFiles/singleBlock.mp3", "audioFiles/singleTone.mp3"];
-// let alarmSoundValues = ["audioFiles/gradualBells.mp3", "audioFiles/gradualBlock.mp3", "audioFiles/gradualTone.mp3"];
-// let newIntervalSound;
-// let newAlarmSound;
-
-// $(document).on("change", "#slider3", ()=>{
-//     let newVal = $("#slider3").val();
-//     $("#slider3").attr("value", newVal);
-
-//     newAlarmSound = alarmSoundValues[newVal];
-//     newIntervalSound = intervalSoundValues[newVal];
-    
-
-//     $("#alertSource").attr("src", newAlarmSound);
-//     $("#intervalSource").attr("src", newIntervalSound);
-
-//     console.log(alarmSoundValues[newVal]);
-//     console.log(intervalSoundValues[newVal]);
-// });  
-    
-
 
 
 

@@ -275,7 +275,6 @@ function deleteProgressEntry(songId) {
 	});
 }
 
-
 function editProgress(songFormObj, songId) {
 	return new Promise((resolve, reject) => {
 		$.ajax({

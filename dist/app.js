@@ -812,7 +812,7 @@ function printMainScreen() {
           <span></span>
           <ul class="rangeSliderLabels">
             <li class="sliderListItemsSound">Bell</li> 
-            <li class="sliderListItemsSound">Block</li> 
+            <li class="sliderListItemsSound">Blocks</li> 
             <li class="sliderListItemsSound">Tone</li> 
           </ul>
         </div>
@@ -1064,17 +1064,56 @@ function timerInitialize() {
               });
         });
 
+        function runInterval() {
+            if(intervalFlag) {
+                var intervalTimer = new Timer();
+                intervalTimer.start({countdown: true, startValues: {seconds: newIntervalDuration}});
+                intervalTimer.addEventListener('targetAchieved', function (e) {
+                    // When Interval countdown ends, do this:
+                    console.log("INTERVAL");
+                    soundAlert.intervalAlertLaunch();
+                    runInterval();
+                });
+            }
+            document.addEventListener("click", function(e){
+                if(e.target.id === "pause-btn") {
+                    intervalTimer.pause();
+                }
+            });
+
+            document.addEventListener("click", function(e){
+                if(e.target.id === "resume-btn") {
+                    intervalTimer.start();
+
+                        runInterval();
+                    // });
+                }
+            });
+
+
+            document.addEventListener("click", function(e){
+                if(e.target.id === "menuProgress") {
+                    intervalTimer.pause();
+
+                }
+            });
+        }
+        
+        
+        
         // This is a Pause function. Still need a back to home function.
         document.addEventListener("click", function(e){
             if(e.target.id === "pause-btn") {
                 printIt.printResumeButtonToPage();
-                
-
 
                 timer.pause();
-                // document.getElementById("myAudioBell").pause();
-                // document.getElementById("myAudioBlock").pause();
-                // document.getElementById("myAudioTone").pause();
+                
+                document.getElementById("myAudioBell").pause();
+                document.getElementById("myIntervalAudioBell").pause();
+                document.getElementById("myAudioBlock").pause();
+                document.getElementById("myIntervalAudioBlock").pause();
+                document.getElementById("myAudioTone").pause();
+                document.getElementById("myIntervalAudioTone").pause();
                 intervalFlag = false;
             }
         });
@@ -1091,14 +1130,17 @@ function timerInitialize() {
             if(e.target.id === "stop-btn") {
                 timer.stop();
                 document.getElementById("myAudioBell").pause();
+                document.getElementById("myAudioBell").currentTime = 0;
                 document.getElementById("myAudioBlock").pause();
+                document.getElementById("myAudioBlock").currentTime = 0;
                 document.getElementById("myAudioTone").pause();
+                document.getElementById("myAudioTone").currentTime = 0;
                 document.getElementById("myIntervalAudioBell").pause();
+                document.getElementById("myIntervalAudioBell").currentTime = 0;
                 document.getElementById("myIntervalAudioBlock").pause();
+                document.getElementById("myIntervalAudioBlock").currentTime = 0;
                 document.getElementById("myIntervalAudioTone").pause();
-
-
-
+                document.getElementById("myIntervalAudioTone").currentTime = 0;
 
                 intervalFlag = false;
                 console.log("you clicked stop");
@@ -1106,26 +1148,13 @@ function timerInitialize() {
                 // document.getElementById("timer-buttons").innerHTML = ``;
                 printIt.printMainScreen();
             }
+
+            document.addEventListener("click", function(e){
+                if(e.target.id === "menuProgress") {
+                    timer.pause();
+                }
         });
-
-
-// Interval Timer
-
-    function runInterval() {
-        if(intervalFlag) {
-            var intervalTimer = new Timer();
-            intervalTimer.start({countdown: true, startValues: {seconds: newIntervalDuration}});
-            intervalTimer.addEventListener('targetAchieved', function (e) {
-                // When Interval countdown ends, do this:
-                console.log("INTERVAL");
-                soundAlert.intervalAlertLaunch();
-                runInterval();
-            });
-        }
-    }
-
-    // runInterval();
-
+    });
 }
 
     module.exports = {timerInitialize, newDuration};

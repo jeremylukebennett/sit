@@ -62,7 +62,7 @@ function printMainScreen() {
           <span></span>
           <ul class="rangeSliderLabels">
             <li class="sliderListItemsSound">Bell</li> 
-            <li class="sliderListItemsSound">Block</li> 
+            <li class="sliderListItemsSound">Blocks</li> 
             <li class="sliderListItemsSound">Tone</li> 
           </ul>
         </div>

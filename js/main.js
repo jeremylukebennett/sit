@@ -60,6 +60,14 @@ trackProgressMenuOption.addEventListener("click", e => {
 
   const trackMenuProgressFromLogIn = document.getElementById("user-progress");
 
+  document.addEventListener("click", function(e){
+    if(e.target.id === "back-btn") {
+      console.log("go back??");
+      console.log('printIt', printIt);
+      printIt.printMainScreen();
+    }
+  });
+
   trackMenuProgressFromLogIn.addEventListener("click", e => {
     printIt.printGraphData();
     
@@ -115,12 +123,18 @@ $(document).on("click", ".user-progress-deletes", function (e) {
                 console.log("WHEN YOU Click DELETE THIS IS THE REMAINING USER DATA: ", data);
                 
                 for(let key in data) {
-                    let userDay = new Date(data.sessionDate).getDay();
-                    let userMonth = new Date(data.sessionDate).getMonth();
-                    let userDate = new Date(data.sessionDate).getDate();
-                    let userYear = new Date(data.sessionDate).getFullYear();
+                    // let sessionDate = new Date(data[key].sessionDate);
+
+                    let userDay = new Date(data[key].sessionDate).getDay();
+                    console.log('userDay',userDay);
+                    let userMonth = new Date(data[key].sessionDate).getMonth();
+                    console.log('userMonth',userMonth);
+                    let userDate = new Date(data[key].sessionDate).getDate();
+                    console.log('userDate',userDate);
+                    let userYear = new Date(data[key].sessionDate).getFullYear();
+                    console.log('userYear',userYear);
                     console.log("NUMBER", i);
-                    console.log("data.sessionDate", data.sessionDate);
+                    // console.log("data.sessionDate", data.sessionDate);
                     console.log("data[key].sessionDuration", data[key].sessionDuration);
                     
                     printIt.printUserData(i, userDay, userMonth, userDate, userYear, data[key].sessionDuration, key);

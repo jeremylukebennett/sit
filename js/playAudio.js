@@ -60,6 +60,10 @@ console.log("THIS IS THE newVal !!!!!?: ", newVal);
         let toneAlarm = document.getElementById("myAudioTone"); 
         toneAlarm.play();
     }
+    else {
+        let bellAlarm = document.getElementById("myAudioBell"); 
+        bellAlarm.play();
+    }
 }
 
 // INTERVAL
@@ -89,6 +93,11 @@ console.log("THIS IS THE newVal !!!!!?: ", newVal);
             toneInterval.pause(); 
             toneInterval.play(); 
         }
+        else {
+            let bellAlarm = document.getElementById("myAudioBell"); 
+            bellAlarm.play();
+        }
+        
     console.log("play interval audio");
 
     }

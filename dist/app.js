@@ -55,14 +55,6 @@ let database = firebase.database();
     console.log('fbCreds',fbCreds);
     return fbCreds;
   };
-  // firebase.auth().onAuthStateChanged(firebaseUser => {
-    
-  // });
-
-
-  console.log("is fb-config connected?");
-  // console.log(userDuration.newDuration);
-  // addUserSessionLength(userDuration.newDuration);
 
   module.exports = firebase;
 
@@ -758,7 +750,7 @@ let mainContainer = document.getElementById("mainContentDiv");
 let timerButtons = document.getElementById("timer-buttons");
 
 
-
+// insert function to get values of sliders and insert in the "value"  section below.
 
 // This prints the main content to the screen on initial load.
 function printMainScreen() {
@@ -770,7 +762,7 @@ function printMainScreen() {
 
         <div class="form-group" id="testing-width">
         <label for="duration-setting" class="slider-titles">Duration:</label>
-        <input id="slider1" type="range" min="0" max="5" value="0">
+        <input id="slider1" type="range" min="0" max="5" value="0"> 
         <span></span>
         <ul class="rangeSliderLabels">
             <li class="sliderListItemsDuration" id="fiveMinOption">5</li> 
@@ -1070,19 +1062,24 @@ function timerInitialize() {
                 intervalTimer.start({countdown: true, startValues: {seconds: newIntervalDuration}});
                 intervalTimer.addEventListener('targetAchieved', function (e) {
                     // When Interval countdown ends, do this:
-                    console.log("INTERVAL");
-                    soundAlert.intervalAlertLaunch();
-                    runInterval();
+                    if(intervalFlag) {
+                        console.log("INTERVAL");
+                        soundAlert.intervalAlertLaunch();
+                        runInterval();
+                    }
                 });
             }
             document.addEventListener("click", function(e){
                 if(e.target.id === "pause-btn") {
+                    console.log("pause event");
                     intervalTimer.pause();
                 }
             });
 
             document.addEventListener("click", function(e){
                 if(e.target.id === "resume-btn") {
+                    console.log("resume event");
+
                     intervalTimer.start();
 
                         runInterval();
@@ -1093,6 +1090,8 @@ function timerInitialize() {
 
             document.addEventListener("click", function(e){
                 if(e.target.id === "menuProgress") {
+                    console.log("clicked menu progress");
+
                     intervalTimer.pause();
 
                 }
@@ -1145,7 +1144,6 @@ function timerInitialize() {
                 intervalFlag = false;
                 console.log("you clicked stop");
                 $("#timer-buttons").hide();
-                // document.getElementById("timer-buttons").innerHTML = ``;
                 printIt.printMainScreen();
             }
 

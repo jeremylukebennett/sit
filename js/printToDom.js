@@ -8,7 +8,7 @@ let mainContainer = document.getElementById("mainContentDiv");
 let timerButtons = document.getElementById("timer-buttons");
 
 
-
+// insert function to get values of sliders and insert in the "value"  section below.
 
 // This prints the main content to the screen on initial load.
 function printMainScreen() {
@@ -20,7 +20,7 @@ function printMainScreen() {
 
         <div class="form-group" id="testing-width">
         <label for="duration-setting" class="slider-titles">Duration:</label>
-        <input id="slider1" type="range" min="0" max="5" value="0">
+        <input id="slider1" type="range" min="0" max="5" value="0"> 
         <span></span>
         <ul class="rangeSliderLabels">
             <li class="sliderListItemsDuration" id="fiveMinOption">5</li> 

@@ -25,14 +25,6 @@ let database = firebase.database();
     console.log('fbCreds',fbCreds);
     return fbCreds;
   };
-  // firebase.auth().onAuthStateChanged(firebaseUser => {
-    
-  // });
-
-
-  console.log("is fb-config connected?");
-  // console.log(userDuration.newDuration);
-  // addUserSessionLength(userDuration.newDuration);
 
   module.exports = firebase;
 

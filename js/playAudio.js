@@ -95,7 +95,9 @@ console.log("THIS IS THE newVal !!!!!?: ", newVal);
         }
         else {
             let bellAlarm = document.getElementById("myAudioBell"); 
-            bellAlarm.play();
+            let bellInterval = document.getElementById("myIntervalAudioBell"); 
+
+            bellInterval.play(); // this should be playing the interval alarm, not the regular alarm
         }
         
     console.log("play interval audio");

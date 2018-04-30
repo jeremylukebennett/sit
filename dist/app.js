@@ -729,7 +729,9 @@ console.log("THIS IS THE newVal !!!!!?: ", newVal);
         }
         else {
             let bellAlarm = document.getElementById("myAudioBell"); 
-            bellAlarm.play();
+            let bellInterval = document.getElementById("myIntervalAudioBell"); 
+
+            bellInterval.play(); // this should be playing the interval alarm, not the regular alarm
         }
         
     console.log("play interval audio");
@@ -964,7 +966,7 @@ let timerDiv = document.getElementById("countdownString");
 let graphIt = require("./graphData");
 
 // Main alarm slider settings
-let intervalFlag = true;
+let intervalFlag = false;
 let durationValues = [5, 10, 15, 20, 25, 30];
 let newDuration = 5;
 let printIt = require("./printToDom");
@@ -987,6 +989,7 @@ let newIntervalDuration;
 
 $(document).on("change", "#slider2", ()=>{
     let newVal = $("#slider2").val();
+    intervalFlag = true;
     $("#slider2").attr("value", newVal);
     console.log(intervalDurationValues[newVal]);
     newIntervalDuration = intervalDurationValues[newVal];
@@ -1007,9 +1010,10 @@ function timerInitialize() {
 
 // Main Timer
     var timer = new Timer();
-    console.log("SHOULD RUN INTERVAL FUNCTION NOW");
-    intervalFlag = true;
-    runInterval();
+        if(intervalFlag) {
+            console.log("SHOULD RUN INTERVAL FUNCTION NOW");
+            runInterval();
+        }
         timer.start({countdown: true, startValues: {seconds: newDuration}});
         $('#countdownString .values').html(timer.getTimeValues().toString());
 

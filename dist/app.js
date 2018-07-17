@@ -813,8 +813,6 @@ function printMainScreen() {
 
       </form>
       
-
-      
       
       <div class="text-center" id="sit-btn-container">
         <button type="button" class="btn btn-primary" id="sit-btn">Sit!</button>
@@ -1084,10 +1082,10 @@ function timerInitialize() {
                 if(e.target.id === "resume-btn") {
                     console.log("resume event");
 
+                    intervalFlag = true;
                     intervalTimer.start();
 
                         runInterval();
-                    // });
                 }
             });
 
@@ -1097,7 +1095,6 @@ function timerInitialize() {
                     console.log("clicked menu progress");
 
                     intervalTimer.pause();
-
                 }
             });
         }

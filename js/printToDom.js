@@ -69,8 +69,6 @@ function printMainScreen() {
 
       </form>
       
-
-      
       
       <div class="text-center" id="sit-btn-container">
         <button type="button" class="btn btn-primary" id="sit-btn">Sit!</button>

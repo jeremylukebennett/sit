@@ -60,7 +60,7 @@ function timerInitialize() {
             console.log("SHOULD RUN INTERVAL FUNCTION NOW");
             runInterval();
         }
-        timer.start({countdown: true, startValues: {seconds: newDuration}});
+        timer.start({countdown: true, startValues: {minutes: newDuration}});
         $('#countdownString .values').html(timer.getTimeValues().toString());
 
         timer.addEventListener('secondsUpdated', function (e) {
@@ -109,7 +109,7 @@ function timerInitialize() {
         function runInterval() {
             if(intervalFlag) {
                 var intervalTimer = new Timer();
-                intervalTimer.start({countdown: true, startValues: {seconds: newIntervalDuration}});
+                intervalTimer.start({countdown: true, startValues: {minutes: newIntervalDuration}});
                 intervalTimer.addEventListener('targetAchieved', function (e) {
                     // When Interval countdown ends, do this:
                     if(intervalFlag) {
@@ -130,10 +130,10 @@ function timerInitialize() {
                 if(e.target.id === "resume-btn") {
                     console.log("resume event");
 
+                    intervalFlag = true;
                     intervalTimer.start();
 
                         runInterval();
-                    // });
                 }
             });
 
@@ -143,7 +143,6 @@ function timerInitialize() {
                     console.log("clicked menu progress");
 
                     intervalTimer.pause();
-
                 }
             });
         }

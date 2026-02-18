@@ -81,7 +81,7 @@ function sendUserDurationAndDate(value) {
 function retrieveUserProgress(user){
   console.log("This is the user that's being passed: ", user);
   return $.ajax({
-      url: `${fbConfig.config().databaseURL}//progress.json?orderBy="user"&equalTo="${user}"`
+      url: `${fbConfig.config().databaseURL}/progress.json?orderBy="user"&equalTo="${user}"`
    }).done((resolve) => {
      console.log("from retrieve user progress function. This should index through the collections and give: ", resolve);
     //  Call function here to display data on screen and pass the 'resolve' inside
